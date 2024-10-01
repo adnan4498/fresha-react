@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "tartufoo-bold";
+  src: url("../public/fonts/tartuffo/Tartuffo_Trial-Bold-BF643371dae156a.otf");
+}
+
+@font-face {
+  font-family: "roberto-light";
+  src: url("../public/fonts/rooberto/RoobertPRO-Light.woff");
+}
+
+@font-face {
+  font-family: "roberto-medium";
+  src: url("../public/fonts/rooberto/RoobertPRO-Medium.woff");
+}
+
+@font-face {
+  font-family: "roberto-bold";
+  src: url("../public/fonts/rooberto/RoobertPRO-Bold.woff");
+}
+
+h1{
+  @apply text-4xl;
+  font-family: "tartufoo-bold";
+}
+
+h2{
+  font-family: "Roberto-bold";
+}
+
+p{
+  font-family: "Roberto-bold";
+}
+
+h3{
+  font-family: "Roberto-light";
+}
+
+input.ant-input.css-dev-only-do-not-override-ccdg5a::placeholder{
+  color: #454c4e;
+  font-family: "Roberto-medium";
+}
+
+span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outlined.py-3.flex.gap-3{
+  border: 1px solid lightgray;
+  border-radius: 8px;
+}
