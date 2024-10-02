@@ -33,23 +33,46 @@ h1{
 }
 
 h2{
-  font-family: "Roberto-bold";
+  @apply text-[28px];
+  font-family: "roberto-bold";
 }
 
 p{
-  font-family: "Roberto-bold";
+  font-family: "roberto-bold";
+}
+
+span{
+  font-family: "roberto-medium";
 }
 
 h3{
-  font-family: "Roberto-light";
+  font-family: "roberto-light";
 }
 
 input.ant-input.css-dev-only-do-not-override-ccdg5a::placeholder{
   color: #454c4e;
-  font-family: "Roberto-medium";
+  font-family: "roberto-medium";
 }
 
 span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outlined.py-3.flex.gap-3{
   border: 1px solid lightgray;
   border-radius: 8px;
+}
+
+.ant-card-body{
+  padding: 13px !important;
+}
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-card-bordered {
+  border: 2px solid rgb(239, 238, 238);
+}
+
+.full-width-class{
+  left: 50%;
+	margin-left: -50vw;
+	margin-right: -50vw;
+	max-width: 100vw;
+	position: relative;
+	right: 50%;
+	width: 100vw;
 }

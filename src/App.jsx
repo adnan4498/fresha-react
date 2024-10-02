@@ -1,7 +1,7 @@
-import Container from "./container/Container";
-import HeroSection from "./homeComponents/HeroSection";
-import Header from "./shared/Header";
-import { Button, Drawer, Radio, Space } from "antd";
+
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
+import Home from "./Home";
+import DynamicCategory from "./pages/categories/DynamicCategory";
 
 function App() {
   return (
@@ -10,11 +10,10 @@ function App() {
       asdasd
      </div> */}
 
-      <Container>
-        <Header />
-        <HeroSection />
-
-      </Container>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dynamicCategory" element={<DynamicCategory />} />
+        </Routes>
     </>
   );
 }
