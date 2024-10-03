@@ -5,11 +5,12 @@ import Header from "./shared/Header";
 import { Button, Drawer, Radio, Space } from "antd";
 
 function Home() {
+
   return (
     <>
-        <HeroSection />
-        <GetAppQrBtn />
-        <SalonCarousels />
+      <HeroSection />
+      <GetAppQrBtn />
+      <SalonCarousels />
     </>
   );
 }

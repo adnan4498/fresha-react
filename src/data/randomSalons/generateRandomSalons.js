@@ -10,7 +10,7 @@ export const generateRandomSalons = function(countryMergedSalons){
     
     let getSalonIds = getMergedCopy.map((item) => item.id);
     
-    // generating random salons for dubai
+    // generating random salons (shuffling id's)
     for (let i = 0; i < getMergedCopy.length; i++) {
       let randomNum = Math.floor(Math.random() * getMergedCopy.length);
       if (getSalonIds.includes(randomNum)) {
@@ -22,7 +22,7 @@ export const generateRandomSalons = function(countryMergedSalons){
       } else {
         --i;
       }
-      if (randomMergedSalons.length == 8) {
+      if (randomMergedSalons.length == getMergedCopy.length) {
         break;
       }
     }

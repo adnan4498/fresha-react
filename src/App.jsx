@@ -10,10 +10,12 @@ function App() {
       asdasd
      </div> */}
 
-        <Routes>
+     <Home />
+
+        {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dynamicCategory" element={<DynamicCategory />} />
-        </Routes>
+        </Routes> */}
     </>
   );
 }

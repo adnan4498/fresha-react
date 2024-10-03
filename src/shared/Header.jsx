@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../public/images/logo4.png";
 import { Button, Drawer, Radio, Space } from "antd";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [open, setOpen] = useState(false);
@@ -15,10 +16,11 @@ const Header = () => {
   return (
     <div>
       <div className="flex justify-between">
-        <div className="w-[74px]">
-          <img src={logo} />
-        </div>
-
+        <Link to={"/"}>
+          <div className="w-[74px]">
+            <img src={logo} />
+          </div>
+        </Link>
         <Button type="primary" onClick={showDrawer}>
           X
         </Button>

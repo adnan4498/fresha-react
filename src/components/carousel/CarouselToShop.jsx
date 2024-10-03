@@ -4,7 +4,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
 
-const CarouselComp = ({countrySalons}) => {
+const CarouselToShop = ({countrySalons}) => {
 
   const responsive = {
     superLargeDesktop: {
@@ -41,7 +41,7 @@ const CarouselComp = ({countrySalons}) => {
               }}
               cover={<img alt="example" src={item.img1} className='h-36 object-cover' />}
             > <Link
-              to={`/dynamic-category/${item.category}`}
+              to={`/dynamic-category/${item.category}/${item.city}/${item.name}`}
             >
                 <div>
                   <p className='text-lg truncate'>{item.name}</p>
@@ -69,4 +69,4 @@ const CarouselComp = ({countrySalons}) => {
   )
 }
 
-export default CarouselComp
+export default CarouselToShop

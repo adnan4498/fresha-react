@@ -46,7 +46,13 @@ span{
 }
 
 h3{
+  font-family: "roberto-medium";
+  color : #454c4e
+}
+
+h4{
   font-family: "roberto-light";
+  color : black
 }
 
 input.ant-input.css-dev-only-do-not-override-ccdg5a::placeholder{
@@ -76,3 +82,25 @@ span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outli
 	right: 50%;
 	width: 100vw;
 }
+
+.hair-salon-bg-banner{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1)), url("../public/images/salons/hairSalon/hair-salon-banner.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.eye-brows-and-lashes-bg-banner{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1)), url("../public/images/salons/eyesBrowAndLashes/eye-brows-and-lashes-banner.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.barber-shop-bg-banner{
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1)), url("../public/images/salons/barberSalon/barber-shop-banner.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+

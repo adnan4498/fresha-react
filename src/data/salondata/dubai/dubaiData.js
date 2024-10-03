@@ -11,6 +11,7 @@ export const sharjahSalons = [
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",
     img1: tribeImg,
     speciality: "Hair Salon",
+    gender: "Men only",
   },
   {
     id: 1,
@@ -20,6 +21,7 @@ export const sharjahSalons = [
     address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
     img1: eyeLashImg,
     speciality: "Eyebrows & Lashes",
+    gender: "Women only",
   },
 ];
 
@@ -32,6 +34,7 @@ export const abuDhabiSalons = [
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",
     img1: tribeImg,
     speciality: "Barber Shop",
+    gender: "Men only",
   },
   {
     id: 1,
@@ -41,6 +44,7 @@ export const abuDhabiSalons = [
     address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
     img1: eyeLashImg,
     speciality: "Hair Salon",
+    gender: "Women only",
   },
 ];
 
@@ -53,6 +57,7 @@ export const AjmanSalons = [
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",
     img1: tribeImg,
     speciality: "Eyebrows & Lashes",
+    gender: "Men only",
   },
   {
     id: 1,
@@ -62,6 +67,7 @@ export const AjmanSalons = [
     address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
     img1: eyeLashImg,
     speciality: "Barber Shop",
+    gender: "Women only",
   },
 ];
 
@@ -74,6 +80,7 @@ export const FujairahSalons = [
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",
     img1: tribeImg,
     speciality: "Barber Shop",
+    gender: "Men only",
   },
   {
     id: 1,
@@ -83,13 +90,18 @@ export const FujairahSalons = [
     address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
     img1: eyeLashImg,
     speciality: "Barber Shop",
+    gender: "Women only",
   },
 ];
 
-const dubaiSalonsMerged = sharjahSalons.concat(abuDhabiSalons, AjmanSalons, FujairahSalons);
+const dubaiSalonsMerged = sharjahSalons.concat(
+  abuDhabiSalons,
+  AjmanSalons,
+  FujairahSalons
+);
 
-let allDubaiSalons = generateRandomSalons(dubaiSalonsMerged)
+let allDubaiSalons = generateRandomSalons(dubaiSalonsMerged);
 
-console.log(allDubaiSalons, "all dubai salons");
+// console.log(allDubaiSalons, "all dubai salons");
 
 export default allDubaiSalons;
