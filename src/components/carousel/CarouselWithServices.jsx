@@ -15,7 +15,7 @@ const CarouselWithServices = ({ salons }) => {
                         }}
                         cover={<img alt="example" src={item.img1} className='h-36 object-cover' />}
                     > <Link
-                        to={`/dynamic-category/${item.category}/${item.city}`}
+                        to={`/dynamic-category/${item.category}/${item.city}/${item.name}`}
                     >
                             <div>
                                 <p className='text-lg truncate'>{item.name}</p>
