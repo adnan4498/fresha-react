@@ -5,7 +5,7 @@ import { generateRandomSalons } from "../../randomSalons/generateRandomSalons";
 export const sharjahSalons = [
   {
     id: 0,
-    name: "Tribes Men's and Spa Salon ",
+    name: "Tribes Dubai",
     rating: "4.9",
     reviews: "193",
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",

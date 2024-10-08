@@ -19,7 +19,7 @@ const BreadCrumbs = () => {
 
   let bread = [category, city, name];
 
-  console.log(bread, "bread");
+  // console.log(bread, "bread");
 
   return (
     <>
@@ -36,14 +36,14 @@ const BreadCrumbs = () => {
           </>
       ))} */}
 
-      <div className="text-xs flex gap-2">
-        <div>
+      <div className="text-sm flex gap-2">
+        <div className="w-16">
           <Link to={"/"}>Home - </Link>
         </div>
-        <ul className="whitespace-nowrap overflow-hidden flex items-center gap-[6px]">
+        <ul className="whitespace-nowrap overflow-y-scroll flex items-center gap-[6px]">
           {bread.map((item, index) => (
             <>
-              <li className="text-xs " key={index}>
+              <li className="text-sm " key={index}>
                 {item != undefined && (
                   <Link
                     to={

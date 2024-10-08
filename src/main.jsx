@@ -60,19 +60,17 @@ const router = createBrowserRouter([
 ]);
 
 // now Link={"/"} on navbar logo will work
-function NavbarWrapper() { 
+function NavbarWrapper() {
     return (
         <div>
             <Header />
-            <Outlet/>
+            <Outlet />
         </div>
     )
 }
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <React.StrictMode>
-        <Container>
-            <RouterProvider router={router} />
-        </Container>
-    </React.StrictMode>
+    <Container>
+        <RouterProvider router={router} />
+    </Container>
 );
