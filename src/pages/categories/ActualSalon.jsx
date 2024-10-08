@@ -11,14 +11,6 @@ const ActualSalon = () => {
 
   const [starCount, setStarCount] = useState([])
 
-  var customerStarsCount = []
-
-  useEffect(() => {
-    console.log(customerStarsCount, "hiii")
-    // setStarCount(customerStarsCount)
-  }, [customerStarsCount])
-  
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -110,19 +102,15 @@ const ActualSalon = () => {
 
   let customers = theSalon.map(item => item.customerReviews)
 
-  console.log(customers, "customers")
+  let getStars = function (item) {
+    let countingStars = []
 
-  let getStars = (customerStars) => {
-
-    while (customerStarsCount.length < customerStars) {
-      // setStarCount("star")
-      customerStarsCount.push("stars")
+    for (let i = 0; i < item; i++) {
+      countingStars.push([<StarFilled />])
     }
 
-    console.log(customerStarsCount, "ssss")
-    // setStarCount(customerStarsCount)
+    return [countingStars].map(item => item)
   }
-
 
   return (
     <>
@@ -254,7 +242,6 @@ const ActualSalon = () => {
           <div className="flex flex-col gap-4">
             {customers[0].map((item, index) => (
               <div className="flex gap-2 items-center">
-                {getStars(item.customerReviewStars)}
                 <div className="w-16">
                   <img src={item.customerImg} className="rounded-full w-full" />
                 </div>
@@ -265,11 +252,8 @@ const ActualSalon = () => {
 
                   <h4>{item.customerReviewStars}</h4>
 
-                  <div>{customerStarsCount.map((item, index) => (
-                    <div className="text-3xl">
-                      <StarFilled />
-                    </div>
-                  ))}</div>
+                  {[item.customerReviewStars].map(item => getStars(item))}
+
                 </div>
               </div>
             ))}
