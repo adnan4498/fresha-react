@@ -134,7 +134,7 @@ export const karachiSalons = [
         customerName: "John Doe",
         reviewDateTime: "Tue, 8 oct 2024 at 10:07pm",
         customerImg: "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 4,
+        customerReviewStars: 3,
         customerReviewMessage: "Best hair treatment in town, totally worth the price.",
       },
     ],
