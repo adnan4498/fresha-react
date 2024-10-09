@@ -8,8 +8,6 @@ import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import { Tabs } from "antd";
 
 const ActualSalon = () => {
-  const [starCount, setStarCount] = useState([]);
-
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -89,50 +87,39 @@ const ActualSalon = () => {
   });
 
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
-
-  let stars = [];
-  let ratingDigit = theSalon[0].rating.slice(0, 1);
-
-  while (stars.length < ratingDigit) {
-    stars.push("star");
-  }
-
   let customers = theSalon.map((item) => item.customerReviews);
-  console.log(customers, "customers");
 
-  let getStars = []
+  const getSalonStars = () => {
+    let salonStars = [];
+    let ratingDigit = theSalon[0].rating.slice(0, 1);
 
-  customers[0].map(item => getStars.push(item.customerReviewStars))
-
-  // console.log(getStars, "ggggg")
-
-  let getStarArray = []
-  let cc 
-
-  getStars.forEach((item, index) =>{
-    let dummyArr = []
-    console.log(dummyArr , "dummy arr before")
-    for(let i = 0; i < item; i++){
-      dummyArr.push("stars")
+    while (salonStars.length < ratingDigit) {
+      salonStars.push("star");
     }
-    console.log(dummyArr , "dummy arr after")
-    getStarArray.push(dummyArr)
 
-    cc = getStarArray.concat([dummyArr])
-  })
-  console.log(getStarArray, "new star array")
+    return salonStars;
+  };
 
-  // let aaa = [5]
-  // let bbb = [15]
+  let getCustomerStars = (item) => {
+    let countingStars = [];
 
-  // let cc = aaa.concat([bbb])
+    for (let i = 0; i < item; i++) {
+      countingStars.push([item]);
+    }
 
-  console.log(cc.pop() , "ccc,c,c")
+    return countingStars;
+  };
+
+  let getTimings = theSalon[0].openingTimes;
+
+  // console.log(getTimings, "the timings")
+
+  // Object.entries(getTimings).forEach((item, index) =>{
+  //   console.log(item[1][0].closing)
+  // })
 
   return (
     <>
-      {/* <div>Actual Salon</div> */}
-
       <div className="mt-5">
         <BreadCrumbs />
       </div>
@@ -198,8 +185,6 @@ const ActualSalon = () => {
             <h2>Team</h2>
           </div>
 
-          {/* {console.log(theSalon[0].teamMembers[0].memberImg, "tttt")} */}
-
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
               <div className="relative">
@@ -241,7 +226,7 @@ const ActualSalon = () => {
           </div>
 
           <div className="flex gap-[10px] mt-4">
-            {stars.map((item) => (
+            {getSalonStars().map((item) => (
               <div className="text-3xl">
                 <StarFilled />
               </div>
@@ -261,24 +246,79 @@ const ActualSalon = () => {
 
           <hr className="my-5"></hr>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
             {customers[0].map((item, index) => (
-              <div className="flex gap-2 items-center">
-                <div className="w-16">
-                  <img src={item.customerImg} className="rounded-full w-full" />
-                </div>
+              <>
+                {index <= 5 ? (
+                  <>
+                    <div className="flex gap-2 items-center mt-4">
+                      <div className="w-16">
+                        <img
+                          src={item.customerImg}
+                          className="rounded-full w-full"
+                        />
+                      </div>
 
-                <div>
-                  <h4>{item.customerName}</h4>
-                  <h4>{item.reviewDateTime}</h4>
-
-                  <div className="flex">
-                    {getStarArray.map(item => <StarFilled />)}
-                  </div>
-                </div>
-              </div>
+                      <div>
+                        <h4>{item.customerName}</h4>
+                        <h4>{item.reviewDateTime}</h4>
+                      </div>
+                    </div>
+                    <div className="">
+                      {getCustomerStars(item.customerReviewStars).map(
+                        (item) => (
+                          <StarFilled />
+                        )
+                      )}
+                      <h3>{item.customerReviewMessage}</h3>
+                    </div>
+                  </>
+                ) : (
+                  ""
+                )}
+              </>
             ))}
           </div>
+
+          <div className="text-lg border border-gray-300 rounded-lg text-center py-2 mt-10">
+            <p>See all</p>
+          </div>
+        </div>
+
+        <div className="mb-5">
+          <h2 className="mb-3">About</h2>
+
+          {theSalon.map((item, index) => (
+            <h3>{item.about}</h3>
+          ))}
+        </div>
+
+        <div>
+          <h2 className="mb-3">Opening Times</h2>
+          {Object.entries(getTimings).map((item, index) => (
+            <div className="flex justify-between">
+              <div>{item[0]}</div>
+
+              {item[1][0].closed ? (
+                item[1][0]?.closed
+              ) : (
+                <div className="flex gap-2">
+                  <div>{item[1][0].opening}</div>-
+                  <div>{item[1][0].closing}</div>
+                </div>
+              )}
+
+              {/* {console.log(item[1], "1111")} */}
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <h2 className="mb-3 mt-5">Additional information</h2>
+
+          {theSalon[0].additionalInformation.map((item, index) => (
+            <div>{item}</div>
+          ))}
         </div>
       </div>
     </>
