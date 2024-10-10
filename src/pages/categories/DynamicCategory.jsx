@@ -17,7 +17,7 @@ import globalSalons from "../../data/salondata/global/globalSalonData";
 const DynamicCategory = () => {
   let urlParam = useParams();
 
-  console.log(urlParam, "use");
+  // console.log(urlParam, "use");
 
   let allDubai = allDubaiSalons;
   let allPakistan = allPakistanSalons;
@@ -34,15 +34,15 @@ const DynamicCategory = () => {
   let categoryImg;
   let bgBanner;
 
-  if (urlParam.category == "hair-salon") {
+  if (urlParam.category.includes("hair-salon")) {
     categoryName = "Hair Salons";
     categoryImg = hairSalonBanner;
     bgBanner = "hair-salon-bg-banner";
-  } else if (urlParam.category == "eyebrows-lashes") {
+  } else if (urlParam.category.includes("eyebrows-lashes")) {
     categoryName = "Eye Salons";
     categoryImg = barberShopBanner;
     bgBanner = "eye-brows-and-lashes-bg-banner";
-  } else if (urlParam.category == "barber-shop") {
+  } else if (urlParam.category.includes("barber-shop")) {
     categoryName = "Barber Shop";
     categoryImg = eyeBrowBanner;
     bgBanner = "barber-shop-bg-banner";

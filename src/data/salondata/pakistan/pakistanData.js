@@ -265,17 +265,53 @@ export const karachiSalons = [
       ],
       Sunday: [
         {
-          closed : "closed"
+          closed: "closed",
         },
       ],
     },
-    additionalInformation : ["Instant Booking " , "Pay by app"]
+    additionalInformation: ["Instant Booking ", "Pay by app"],
   },
-
-
 
   {
     id: 1,
+    name: "karachi 2",
+    rating: "4.8",
+    reviews: "700",
+    city: "karachi",
+    address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
+    img1: eyeLashImg,
+    innerImgs: [
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+    ],
+    speciality: "Eyebrows & Lashes",
+    category: "eyebrows-lashes",
+    gender: "Unisex",
+    salonSlug: "multan-1",
+  },
+
+  {
+    id: 2,
+    name: "karachi 2",
+    rating: "4.8",
+    reviews: "700",
+    city: "karachi",
+    address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
+    img1: eyeLashImg,
+    innerImgs: [
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+    ],
+    speciality: "Eyebrows & Lashes",
+    category: "eyebrows-lashes",
+    gender: "Unisex",
+    salonSlug: "multan-1",
+  },
+
+  {
+    id: 3,
     name: "karachi 2",
     rating: "4.8",
     reviews: "700",

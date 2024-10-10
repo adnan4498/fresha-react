@@ -6,6 +6,7 @@ import Carousel from "react-multi-carousel";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import { Tabs } from "antd";
+import CarouselComp from "../../components/carousel/CarouselComp";
 
 const ActualSalon = () => {
   const responsive = {
@@ -30,6 +31,11 @@ const ActualSalon = () => {
   };
 
   let match = useMatches();
+
+  // get same city salons but not the actual salon (its already being displayed)
+  let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
+
+  console.log(getNearbySalons, "get nearby salons")
 
   let getCitySalons = globalSalons.filter(
     (item) => item.name == match[0].params.name
@@ -319,6 +325,32 @@ const ActualSalon = () => {
           {theSalon[0].additionalInformation.map((item, index) => (
             <div>{item}</div>
           ))}
+        </div>
+
+        <div className="my-6">
+          <h2>Google Map Here</h2>
+
+          <div className="mt-5">
+            {theSalon.map(item => item.address)} 
+            <span className="text-blue-700"> Get direction</span>
+          </div>
+        </div>
+
+        <div>
+          <h2>Venues nearby</h2>
+
+          <div>
+          <CarouselComp countrySalons={getNearbySalons} />
+          </div>
+        </div>
+
+        
+        <div className="my-6">
+          <h2>Treat yourself anytime, anywhere</h2>
+
+          <div className="text-sm border border-black w-52 bg-black text-white rounded-full text-center py-2 mt-4">
+              <p>Other businesses in Muscat</p>
+            </div>
         </div>
       </div>
     </>

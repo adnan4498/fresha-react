@@ -7,6 +7,6 @@ let dubaiSalons = allDubaiSalons
 
 let merge = pkSalons.concat(dubaiSalons)
 
-let globalSalons = generateRandomSalons(merge)
+let globalSalons =  generateRandomSalons(merge)
 
 export default globalSalons
