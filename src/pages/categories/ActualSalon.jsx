@@ -7,6 +7,7 @@ import { StarFilled, StarOutlined } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import { Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
+import SubCategories from "../../components/subCategories/SubCategories";
 
 const ActualSalon = () => {
   const responsive = {
@@ -35,7 +36,7 @@ const ActualSalon = () => {
   // get same city salons but not the actual salon (its already being displayed)
   let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
 
-  console.log(getNearbySalons, "get nearby salons")
+  // console.log(getNearbySalons, "get nearby salons")
 
   let getCitySalons = globalSalons.filter(
     (item) => item.name == match[0].params.name
@@ -124,13 +125,20 @@ const ActualSalon = () => {
   //   console.log(item[1][0].closing)
   // })
 
+  let testHairs = "hairs"
+
+  let dummyTest = ["hairs"]
+
+  dummyTest.includes(testHairs) ? console.log("found") : console.log("not found")
+
+
   return (
     <>
-      <div className="mt-5">
+      <div className="mt-5 relative">
         <BreadCrumbs />
       </div>
 
-      <div className=" mt-10">
+      <div className="mt-10 overflow-x-hidden">
         <div className="full-width-class">
           <Carousel responsive={responsive}>
             {allSalonImgs.map((item, index) => (
@@ -140,6 +148,8 @@ const ActualSalon = () => {
             ))}
           </Carousel>
         </div>
+
+
 
         <div>
           {theSalon.map((item, index) => (
@@ -331,7 +341,7 @@ const ActualSalon = () => {
           <h2>Google Map Here</h2>
 
           <div className="mt-5">
-            {theSalon.map(item => item.address)} 
+            {theSalon.map(item => item.address)}
             <span className="text-blue-700"> Get direction</span>
           </div>
         </div>
@@ -340,19 +350,28 @@ const ActualSalon = () => {
           <h2>Venues nearby</h2>
 
           <div>
-          <CarouselComp countrySalons={getNearbySalons} />
+            <CarouselComp countrySalons={getNearbySalons} />
           </div>
         </div>
 
-        
+
         <div className="my-6">
           <h2>Treat yourself anytime, anywhere</h2>
 
           <div className="text-sm border border-black w-52 bg-black text-white rounded-full text-center py-2 mt-4">
-              <p>Other businesses in Muscat</p>
-            </div>
+            <p>{`Other businesses in ${match[1].params.city}`}</p>
+          </div>
         </div>
+
+        <div className=" overflow-x-scroll">
+          <SubCategories salons={getNearbySalons} />
+        </div>
+
       </div>
+
+      {/* <div className=" bg-red-500 sticky bottom-0">
+        asdsad
+      </div> */}
     </>
   );
 };

@@ -274,60 +274,464 @@ export const karachiSalons = [
 
   {
     id: 1,
-    name: "karachi 2",
+    name: "Royal Spa and Salon",
     rating: "4.8",
-    reviews: "700",
+    reviews: "320",
     city: "karachi",
-    address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
-    img1: eyeLashImg,
+    address: "Street 22, Qurum Heights, Muscat, Oman",
+    img1: tribeImg,
     innerImgs: [
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/royalSpa/royal-spa-inner-1.jpg",
+      "../../../../public/images/salons/royalSpa/royal-spa-inner-2.jpg",
+      "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
-    speciality: "Eyebrows & Lashes",
-    category: "eyebrows-lashes",
+    speciality: "Luxury Spa",
+    category: "luxury-spa",
     gender: "Unisex",
-    salonSlug: "multan-1",
+    salonSlug: "muscat-royal-1",
+    services: {
+      features: [
+        {
+          name: "Royal Bath",
+          duration: "150 min",
+          price: "OMR 35",
+          details: "4 services",
+        },
+        { name: "Aromatherapy Massage", duration: "90 min", price: "OMR 40" },
+        { name: "Beard Shaping", duration: "30 min", price: "OMR 3" },
+        { name: "Full Body Wax", duration: "120 min", price: "OMR 30" },
+        {
+          name: "Hydrating Facial",
+          duration: "60 min",
+          price: "OMR 25",
+        },
+        { name: "Deep Tissue Massage", duration: "90 min", price: "OMR 35" },
+        { name: "Swedish Massage", duration: "60 min", price: "OMR 28" },
+      ],
+      hair_and_beard: [
+        { name: "Haircut", duration: "45 min", price: "OMR 5" },
+        { name: "Beard Shaping", duration: "30 min", price: "OMR 3" },
+        {
+          name: "Haircut & Beard Shaping",
+          duration: "60 min",
+          price: "OMR 7",
+        },
+        {
+          name: "Hydrating Hair Treatment",
+          duration: "90 min",
+          price: "OMR 20",
+        },
+      ],
+      massage: [
+        { name: "Full Body Massage", duration: "90 min", price: "OMR 35" },
+        { name: "Swedish Massage", duration: "60 min", price: "OMR 28" },
+        { name: "Aromatherapy Massage", duration: "90 min", price: "OMR 40" },
+      ],
+      spa: [
+        { name: "Royal Bath", duration: "150 min", price: "OMR 35" },
+        { name: "Facial Treatment", duration: "60 min", price: "OMR 18" },
+        { name: "Pedicure", duration: "40 min", price: "OMR 10" },
+      ],
+      waxing: [
+        { name: "Full Body Wax", duration: "120 min", price: "OMR 30" },
+        { name: "Leg Wax", duration: "45 min", price: "OMR 15" },
+        { name: "Arm Wax", duration: "30 min", price: "OMR 10" },
+      ],
+      packages: [
+        {
+          name: "Royal Indulgence",
+          duration: "180 min",
+          price: "OMR 50",
+          details: "5 services",
+        },
+        { name: "Bridal Package", duration: "360 min", price: "OMR 100" },
+      ],
+    },
+    teamMembers: [
+      {
+        memberName: "Hassan",
+        memberRating: 4.7,
+        memberSpeciality: "Hair Stylist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+      {
+        memberName: "Aisha",
+        memberRating: 4.9,
+        memberSpeciality: "Spa Specialist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+      {
+        memberName: "Kevin",
+        memberRating: 4.5,
+        memberSpeciality: "Massage Therapist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+      },
+    ],
+    customerReviews: [
+      {
+        customerName: "Salim Al-Busaidi",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        reviewDateTime: "Mon, 2 oct 2024 at 2:15pm",
+        customerReviewStars: 5,
+        customerReviewMessage: "Amazing service! The best spa experience.",
+      },
+      {
+        customerName: "Lina Farooq",
+        reviewDateTime: "Thu, 5 oct 2024 at 6:50pm",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        customerReviewStars: 4,
+        customerReviewMessage: "The massage was excellent, will come again!",
+      },
+    ],
+    about:
+      "A luxury spa and salon in Muscat offering high-end spa treatments and hair services. Located at Qurum Heights with a beautiful ambiance and professional staff.",
+    openingTimes: {
+      Monday: [
+        {
+          opening: "09:00",
+          closing: "22:00",
+        },
+      ],
+      Tuesday: [
+        {
+          opening: "09:00",
+          closing: "22:00",
+        },
+      ],
+      Wednesday: [
+        {
+          opening: "09:00",
+          closing: "22:00",
+        },
+      ],
+      Thursday: [
+        {
+          opening: "09:00",
+          closing: "22:00",
+        },
+      ],
+      Friday: [
+        {
+          opening: "09:00",
+          closing: "22:00",
+        },
+      ],
+      Saturday: [
+        {
+          opening: "12:00",
+          closing: "20:00",
+        },
+      ],
+      Sunday: [
+        {
+          closed: "closed",
+        },
+      ],
+    },
+    additionalInformation: ["Pre-booking required", "Parking Available"],
   },
 
   {
     id: 2,
-    name: "karachi 2",
-    rating: "4.8",
-    reviews: "700",
+    name: "Bella Beauty Lounge",
+    rating: "4.7",
+    reviews: "210",
     city: "karachi",
-    address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
-    img1: eyeLashImg,
+    address: "12th Avenue, Beach Road, Salalah, Oman",
+    img1: tribeImg,
     innerImgs: [
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/bellaLounge/bella-inner-1.jpg",
+      "../../../../public/images/salons/bellaLounge/bella-inner-2.jpg",
+      "../../../../public/images/salons/bellaLounge/bella-inner-3.jpg",
     ],
-    speciality: "Eyebrows & Lashes",
-    category: "eyebrows-lashes",
-    gender: "Unisex",
-    salonSlug: "multan-1",
+    speciality: "Beauty & Wellness",
+    category: "beauty-lounge",
+    gender: "Women only",
+    salonSlug: "salalah-bella-1",
+    services: {
+      features: [
+        {
+          name: "Scrub Facial",
+          duration: "180 min",
+          price: "OMR 40",
+          details: "4 services",
+        },
+        { name: "Moroccan Bath", duration: "90 min", price: "OMR 25" },
+        { name: "Manicure", duration: "60 min", price: "OMR 10" },
+        { name: "Body Scrub", duration: "60 min", price: "OMR 20" },
+        {
+          name: "Hydration Facial",
+          duration: "60 min",
+          price: "OMR 18",
+        },
+      ],
+      hair_and_beard: [
+        { name: "Haircut", duration: "45 min", price: "OMR 7" },
+        { name: "Hair Treatment", duration: "90 min", price: "OMR 15" },
+      ],
+      massage: [
+        { name: "Relaxing Massage", duration: "60 min", price: "OMR 30" },
+        { name: "Deep Tissue Massage", duration: "90 min", price: "OMR 40" },
+      ],
+      spa: [
+        { name: "Moroccan Bath", duration: "90 min", price: "OMR 25" },
+        { name: "Facial Treatment", duration: "60 min", price: "OMR 15" },
+        { name: "Pedicure", duration: "45 min", price: "OMR 8" },
+      ],
+      waxing: [
+        { name: "Full Body Wax", duration: "90 min", price: "OMR 22" },
+        { name: "Arm Wax", duration: "30 min", price: "OMR 10" },
+        { name: "Leg Wax", duration: "45 min", price: "OMR 12" },
+      ],
+      packages: [
+        {
+          name: "Bridal Package",
+          duration: "300 min",
+          price: "OMR 80",
+          details: "5 services",
+        },
+        { name: "Relax & Refresh Package", duration: "240 min", price: "OMR 50" },
+      ],
+    },
+    teamMembers: [
+      {
+        memberName: "Lina",
+        memberRating: 4.9,
+        memberSpeciality: "Spa Specialist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+      {
+        memberName: "Sarah",
+        memberRating: 4.7,
+        memberSpeciality: "Beauty Therapist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+      },
+    ],
+    customerReviews: [
+      {
+        customerName: "Fatima Al-Lawati",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        reviewDateTime: "Thu, 7 oct 2024 at 3:30pm",
+        customerReviewStars: 5,
+        customerReviewMessage: "A perfect pampering experience, loved it!",
+      },
+      {
+        customerName: "Zara Ibrahim",
+        reviewDateTime: "Mon, 10 oct 2024 at 5:45pm",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        customerReviewStars: 4,
+        customerReviewMessage: "Great facial treatment, very refreshing.",
+      },
+    ],
+    about:
+      "Bella Beauty Lounge is a women-only beauty and wellness lounge located in Salalah, Oman, offering a range of luxurious beauty treatments and spa services.",
+    openingTimes: {
+      Monday: [
+        {
+          opening: "09:00",
+          closing: "21:00",
+        },
+      ],
+      Tuesday: [
+        {
+          opening: "09:00",
+          closing: "21:00",
+        },
+      ],
+      Wednesday: [
+        {
+          opening: "09:00",
+          closing: "21:00",
+        },
+      ],
+      Thursday: [
+        {
+          opening: "09:00",
+          closing: "21:00",
+        },
+      ],
+      Friday: [
+        {
+          opening: "12:00",
+          closing: "20:00",
+        },
+      ],
+      Saturday: [
+        {
+          opening: "12:00",
+          closing: "20:00",
+        },
+      ],
+      Sunday: [
+        {
+          closed: "closed",
+        },
+      ],
+    },
+    additionalInformation: ["Ladies Only", "Free Wi-Fi"],
   },
 
   {
     id: 3,
-    name: "karachi 2",
-    rating: "4.8",
-    reviews: "700",
+    name: "Gentlemen's Corner Salon",
+    rating: "4.9",
+    reviews: "185",
     city: "karachi",
-    address: "Office 1992, Al Jannat Street, Sharjah, Dubai",
-    img1: eyeLashImg,
+    address: "Suite 32, Al Majaz Tower, Sohar, Oman",
+    img1: tribeImg,
     innerImgs: [
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
-      "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
+      "../../../../public/images/salons/gentlemenCorner/gentlemen-inner-1.jpg",
+      "../../../../public/images/salons/gentlemenCorner/gentlemen-inner-2.jpg",
+      "../../../../public/images/salons/gentlemenCorner/gentlemen-inner-3.jpg",
     ],
-    speciality: "Eyebrows & Lashes",
-    category: "eyebrows-lashes",
-    gender: "Unisex",
-    salonSlug: "multan-1",
-  },
+    speciality: "Barber Shop",
+    category: "barber-shop",
+    gender: "Men only",
+    salonSlug: "sohar-gentlemen-1",
+    services: {
+      features: [
+        {
+          name: "Premium Beard Grooming",
+          duration: "60 min",
+          price: "OMR 10",
+          details: "Includes hot towel shave",
+        },
+        { name: "Classic Haircut", duration: "45 min", price: "OMR 6" },
+        { name: "Hair Coloring", duration: "60 min", price: "OMR 12" },
+        { name: "Head Massage", duration: "30 min", price: "OMR 5" },
+        {
+          name: "Full Body Massage",
+          duration: "90 min",
+          price: "OMR 25",
+        },
+      ],
+      hair_and_beard: [
+        { name: "Haircut", duration: "45 min", price: "OMR 6" },
+        { name: "Beard Grooming", duration: "60 min", price: "OMR 10" },
+        {
+          name: "Haircut & Beard Grooming",
+          duration: "75 min",
+          price: "OMR 14",
+        },
+        {
+          name: "Hair Coloring",
+          duration: "60 min",
+          price: "OMR 12",
+        },
+      ],
+      massage: [
+        { name: "Full Body Massage", duration: "90 min", price: "OMR 25" },
+        { name: "Head Massage", duration: "30 min", price: "OMR 5" },
+      ],
+      spa: [
+        { name: "Facial Treatment", duration: "45 min", price: "OMR 15" },
+        { name: "Foot Reflexology", duration: "30 min", price: "OMR 10" },
+      ],
+      waxing: [
+        { name: "Back Wax", duration: "60 min", price: "OMR 15" },
+        { name: "Chest Wax", duration: "45 min", price: "OMR 12" },
+      ],
+      packages: [
+        {
+          name: "Gentleman's Deluxe Package",
+          duration: "150 min",
+          price: "OMR 40",
+          details: "Haircut, beard grooming, and facial treatment",
+        },
+      ],
+    },
+    teamMembers: [
+      {
+        memberName: "Fahad",
+        memberRating: 4.9,
+        memberSpeciality: "Beard Specialist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+      {
+        memberName: "Ali",
+        memberRating: 4.8,
+        memberSpeciality: "Hair Stylist",
+        memberImg:
+        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+    ],
+    customerReviews: [
+      {
+        customerName: "Omar Al-Harthi",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        reviewDateTime: "Wed, 1 oct 2024 at 4:00pm",
+        customerReviewStars: 5,
+        customerReviewMessage:
+          "Best beard grooming experience, highly professional.",
+      },
+      {
+        customerName: "Hassan Ali",
+        reviewDateTime: "Fri, 10 oct 2024 at 5:30pm",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+        customerReviewStars: 4,
+        customerReviewMessage:
+          "Great service, but the prices are slightly high for a haircut.",
+      },
+    ],
+    about:
+      "Gentlemen's Corner offers a unique barbershop experience in Sohar. Specializing in premium grooming services including beard grooming, haircuts, and massages.",
+    openingTimes: {
+      Monday: [
+        {
+          opening: "10:00",
+          closing: "22:00",
+        },
+      ],
+      Tuesday: [
+        {
+          opening: "10:00",
+          closing: "22:00",
+        },
+      ],
+      Wednesday: [
+        {
+          opening: "10:00",
+          closing: "22:00",
+        },
+      ],
+      Thursday: [
+        {
+          opening: "10:00",
+          closing: "22:00",
+        },
+      ],
+      Friday: [
+        {
+          opening: "10:00",
+          closing: "22:00",
+        },
+      ],
+      Saturday: [
+        {
+          opening: "12:00",
+          closing: "20:00",
+        },
+      ],
+      Sunday: [
+        {
+          closed: "closed",
+        },
+      ],
+    },
+    additionalInformation: ["Walk-ins Welcome", "Online Booking Available"],
+  }
 ];
 
 export const lahoreSalons = [

@@ -16,6 +16,7 @@ import Message from "./components/Message";
 import Salon from "./pages/categories/Salon";
 import CitySalons from "./pages/categories/CitySalons";
 import ActualSalon from "./pages/categories/ActualSalon";
+import SubCategorySalons from "./pages/categories/SubCategorySalons";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
             {
                 path: "/dynamic-category/:category/:city",
                 element: <CitySalons />,
+                errorElement: <ErrorPage />,
+            },
+            {
+                path: "/dynamic-category/:category/:subCategory",
+                element: <SubCategorySalons />,
                 errorElement: <ErrorPage />,
             },
             {
