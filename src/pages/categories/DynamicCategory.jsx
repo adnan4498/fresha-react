@@ -38,7 +38,7 @@ const DynamicCategory = () => {
     categoryName = "Hair Salons";
     categoryImg = hairSalonBanner;
     bgBanner = "hair-salon-bg-banner";
-  } else if (urlParam.category.includes("eyebrows-lashes")) {
+  } else if (urlParam.category.includes("nail-salon")) {
     categoryName = "Eye Salons";
     categoryImg = barberShopBanner;
     bgBanner = "eye-brows-and-lashes-bg-banner";

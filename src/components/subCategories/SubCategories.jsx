@@ -6,7 +6,7 @@ const SubCategories = ({ salons }) => {
 
     let navigate = useNavigate()
 
-    let allCitySalonsServicesName = []
+    let allCitySalonsServiceNames = []
 
     const getServiceNamesFromSalon = () => {
         let getServices = salons.map(item => item.services)
@@ -45,26 +45,33 @@ const SubCategories = ({ salons }) => {
         // make Set object to array
         // populating the global variable allCitySalonsServicesName
         for (let i of removeDuplicates) {
-            allCitySalonsServicesName.push(i)
+            allCitySalonsServiceNames.push(i)
         }
     }
 
-    const generateSubCategoryLink = (subCategoryName) =>{
-        let getCategory = settingSubCategoryName(subCategoryName)
-        let subCategory = subCategoryName
+    const generateSubCategoryLink = (subCategory) =>{
+        let getCategory = settingSubCategoryName(subCategory)
 
-        let settingUrl = `/dynamic-category/${getCategory}/${subCategory}`
+        let city = "karachi"
+
+        let subCategoryAndCity = [subCategory , city]
+
+        let joined = subCategoryAndCity.join(" ")
+
+        console.log(joined, "ghhh")
+
+        let subCategoryUrl = `/dynamic-category/${getCategory}/subCategoryRouteKey/${joined}`
 
         console.log(getCategory, "gg")
 
-        // navigate(settingUrl)
+        navigate(subCategoryUrl)
     }
 
-    console.log(allCitySalonsServicesName, "all city salons")
+    console.log(allCitySalonsServiceNames, "all city salons")
 
     return (
         <div className='grid grid-flow-col grid-rows-6 gap-3 w-[1700px]'>
-            {allCitySalonsServicesName.map((item, index) => (
+            {allCitySalonsServiceNames.map((item, index) => (
                 <div onClick={() => generateSubCategoryLink(item)}>
                     <div>
                         {item}

@@ -4,7 +4,7 @@ import { Link, useLocation, useMatches } from "react-router-dom";
 const BreadCrumbs = () => {
   let matches = useMatches();
 
-  const { category, city, name } = matches[0].params;
+  const { category, city, subCategory, name } = matches[0].params;
 
   // let crumbs = matches
   //     // first get rid of any matches that don't have handle and crumb
@@ -17,7 +17,7 @@ const BreadCrumbs = () => {
   // console.log(city, "the city");
   // console.log(name, "the name");
 
-  let bread = [category, city, name];
+  let bread = [category, city, subCategory, name];
 
   // console.log(bread, "bread");
 
@@ -50,7 +50,9 @@ const BreadCrumbs = () => {
                       item == category
                         ? `/dynamic-category/${category}`
                         : item == city
-                        ? `/dynamic-category/${category}/${city}`
+                        ? `/dynamic-category/${category}/cityRouteKey/${city}`
+                         : item == subCategory
+                        ? `/dynamic-category/${category}/subCategoryRouteKey/${subCategory}`
                         : ""
                     }
                   >

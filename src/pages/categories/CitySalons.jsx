@@ -7,7 +7,7 @@ import BreadCrumbs from '../../components/breadCrumbs/BreadCrumbs'
 const CitySalons = () => {
 
     let match = useMatches()
-    const { category, city, name } = match[0].params;
+    const { category, city, subCategory, name } = match[0].params;
 
 
     console.log(match, "match")
@@ -21,7 +21,7 @@ const CitySalons = () => {
   return (
     <>
    <div className='my-3'> <BreadCrumbs /> </div>
-    <h2 className='my-6'>Best {category} near me in {city}</h2>
+    <h2 className='my-6'>Best {subCategory ? subCategory : category} near me in {city}</h2>
     <div className='mt-10'>
         <CarouselWithServices salons={getCitySalonsOnCategory} />
     </div>
