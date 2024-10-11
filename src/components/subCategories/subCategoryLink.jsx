@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SubCategoryLink = () => {
+const SubCategoryLink = ({item}) => {
   return (
     <div>SubCategoryLink</div>
   )

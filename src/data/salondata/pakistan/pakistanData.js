@@ -353,28 +353,28 @@ export const karachiSalons = [
         memberRating: 4.7,
         memberSpeciality: "Hair Stylist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },
       {
         memberName: "Aisha",
         memberRating: 4.9,
         memberSpeciality: "Spa Specialist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },
       {
         memberName: "Kevin",
         memberRating: 4.5,
         memberSpeciality: "Massage Therapist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+          "../../../../public/images/salons/hairSalon/female-barber-img.webp",
       },
     ],
     customerReviews: [
       {
         customerName: "Salim Al-Busaidi",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         reviewDateTime: "Mon, 2 oct 2024 at 2:15pm",
         customerReviewStars: 5,
         customerReviewMessage: "Amazing service! The best spa experience.",
@@ -383,7 +383,7 @@ export const karachiSalons = [
         customerName: "Lina Farooq",
         reviewDateTime: "Thu, 5 oct 2024 at 6:50pm",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         customerReviewStars: 4,
         customerReviewMessage: "The massage was excellent, will come again!",
       },
@@ -495,7 +495,11 @@ export const karachiSalons = [
           price: "OMR 80",
           details: "5 services",
         },
-        { name: "Relax & Refresh Package", duration: "240 min", price: "OMR 50" },
+        {
+          name: "Relax & Refresh Package",
+          duration: "240 min",
+          price: "OMR 50",
+        },
       ],
     },
     teamMembers: [
@@ -504,21 +508,21 @@ export const karachiSalons = [
         memberRating: 4.9,
         memberSpeciality: "Spa Specialist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },
       {
         memberName: "Sarah",
         memberRating: 4.7,
         memberSpeciality: "Beauty Therapist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+          "../../../../public/images/salons/hairSalon/female-barber-img.webp",
       },
     ],
     customerReviews: [
       {
         customerName: "Fatima Al-Lawati",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         reviewDateTime: "Thu, 7 oct 2024 at 3:30pm",
         customerReviewStars: 5,
         customerReviewMessage: "A perfect pampering experience, loved it!",
@@ -527,7 +531,7 @@ export const karachiSalons = [
         customerName: "Zara Ibrahim",
         reviewDateTime: "Mon, 10 oct 2024 at 5:45pm",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         customerReviewStars: 4,
         customerReviewMessage: "Great facial treatment, very refreshing.",
       },
@@ -655,21 +659,21 @@ export const karachiSalons = [
         memberRating: 4.9,
         memberSpeciality: "Beard Specialist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },
       {
         memberName: "Ali",
         memberRating: 4.8,
         memberSpeciality: "Hair Stylist",
         memberImg:
-        "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },
     ],
     customerReviews: [
       {
         customerName: "Omar Al-Harthi",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         reviewDateTime: "Wed, 1 oct 2024 at 4:00pm",
         customerReviewStars: 5,
         customerReviewMessage:
@@ -679,7 +683,7 @@ export const karachiSalons = [
         customerName: "Hassan Ali",
         reviewDateTime: "Fri, 10 oct 2024 at 5:30pm",
         customerImg:
-        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         customerReviewStars: 4,
         customerReviewMessage:
           "Great service, but the prices are slightly high for a haircut.",
@@ -731,7 +735,7 @@ export const karachiSalons = [
       ],
     },
     additionalInformation: ["Walk-ins Welcome", "Online Booking Available"],
-  }
+  },
 ];
 
 export const lahoreSalons = [
