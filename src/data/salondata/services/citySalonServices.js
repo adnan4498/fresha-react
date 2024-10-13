@@ -1,7 +1,6 @@
 const getCitySalonServices = function (salons) {
   let allCitySalonsServices = [];
 
-
   // refactor the code, consistency needed in loops
   const getServiceNamesFromSalon = () => {
     let getServices = salons.map((item) => item.services);
