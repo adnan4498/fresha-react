@@ -51,34 +51,48 @@ const CitySalons = () => {
   const gettingSingleSalonServices = () => {
     let citySalons = []
 
-    for(let items of getCitySalons){
+    for (let items of getCitySalons) {
       citySalons.push(items)
     }
 
-    let parentSalonServices = []
+    let singleServices = []
 
-    for(let items in citySalons[0]){
-      console.log(citySalons[items], "items")
+    for (let item of citySalons) {
+      singleServices.push(item.services)
     }
 
-    console.log(citySalons, "salonsss")
+    let salonNameObj = []
 
-    // console.log(getCityServices, "sss")
+    for (let i = 0; i < salonNameObj.length; i++) {
+      console.log(salonNameObj[i])
+    }
 
-    // let citySalonsOnSubCategory = getCitySalons.filter(item => item.category = category)
+    let getSingleValues = []
+    let getSingleServices = []
+
+    for (let i = 0; i < singleServices.length; i++) {
+      getSingleValues.push(Object.values(singleServices[i]))
+    }
+
+    for (let salon of citySalons) {
+      console.log(salon)
+      for (let servicesArray of singleServices) {
+
+        for (let items of getSingleValues) {
+
+          for (let services of items) {
+
+            for (let serviceNames of services) {
+
+            }
+          }
+        }
+      }
+    }
+
   }
 
   gettingSingleSalonServices()
-
-  for (let items of getCitySalons) {
-
-    for (let services in items.services) {
-      // console.log(services, "items")
-    }
-  }
-
-  console.log(getCitySalons, "get city")
-  // console.log(citySalonsOnSubCategory, "salons on sub-categorys")
 
   return (
     <div>
