@@ -48,8 +48,12 @@ const CitySalons = () => {
 
   // let getCityServices = getCitySalonServices(getCitySalons)
 
+  // 4 services arrays, pushed in salons array of object as allServices
+  let getAllServices = []
+
   const gettingSingleSalonServices = () => {
     let citySalons = []
+    let getSingleValues = []
 
     for (let items of getCitySalons) {
       citySalons.push(items)
@@ -61,38 +65,32 @@ const CitySalons = () => {
       singleServices.push(item.services)
     }
 
-    let salonNameObj = []
-
-    for (let i = 0; i < salonNameObj.length; i++) {
-      console.log(salonNameObj[i])
-    }
-
-    let getSingleValues = []
-    let getSingleServices = []
-
     for (let i = 0; i < singleServices.length; i++) {
       getSingleValues.push(Object.values(singleServices[i]))
     }
 
-    for (let salon of citySalons) {
-      console.log(salon)
-      for (let servicesArray of singleServices) {
 
-        for (let items of getSingleValues) {
-
-          for (let services of items) {
-
-            for (let serviceNames of services) {
-
-            }
-          }
-        }
-      }
+    const getSingleItem = (salonItem) => {
+      getAllServices = getAllServices.concat([salonItem])
     }
 
+    
+    getSingleValues.forEach((item, index) => {
+      getSingleItem(item)
+    })
+    
   }
 
   gettingSingleSalonServices()
+
+  // console.log(getAllServices, "g")
+
+  let aa = [1,2]
+  let bb = [3,4]
+
+  let cc = aa.concat(bb)
+
+  console.log(cc)
 
   return (
     <div>
