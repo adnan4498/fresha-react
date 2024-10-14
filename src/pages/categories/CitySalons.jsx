@@ -40,14 +40,16 @@ const CitySalons = () => {
   seperateSubCategoryAndCity();
 
   let getCity = city || getCityFromSubCategory;
-  let getCitySalons = globalSalons.filter((item) => item.city == getCity);
+  let citySalons = globalSalons.filter((item) => item.city == getCity);
+
+  console.log(citySalons, "get city salons")
 
   let citySalonsOnSubCategory = [];
 
   const makingOfAllServicesArray = () => {
     let citySalonsServices = [];
 
-    getCitySalons.forEach((item) => citySalonsServices.push(item.services));
+    citySalons.forEach((item) => citySalonsServices.push(item.services));
 
     let servicesWithoutTitles = [];
 
@@ -61,36 +63,42 @@ const CitySalons = () => {
       (item) => (getAllServices = getAllServices.concat([item]))
     );
 
-    // got all services without titles as arrays and pushed back in getCitySalons array
+    // got all services without titles as arrays and pushed back in citySalons array
     // so salons can be filter out based on sub-category service name
     getAllServices.forEach((item, i) =>
-      Object.assign(getCitySalons[i], { allServices: item })
+      Object.assign(citySalons[i], { allServices: item })
     );
 
-    console.log(getAllServices, "gg")
+    let servicesWithNamesAndPrice = [];
 
-    let servicesWithNames = []
+    for (let item of getAllServices) {
+      servicesWithNamesAndPrice.push([]);
+    }
 
-    for(let i = 0; i < getAllServices.length; i++){
-
-      for(let j = 0; j < getAllServices[i].length; j++){
-        // console.log(getAllServices[i][j])
-        for(let k = 0; k < getAllServices[i][j].length; k++){
-          servicesWithNames.push(getAllServices[i][j][k])
+    for (let i = 0; i < getAllServices.length; i++) {
+      for (let j = 0; j < getAllServices[i].length; j++) {
+        for (let k = 0; k < getAllServices[i][j].length; k++) {
+          servicesWithNamesAndPrice[i].push(getAllServices[i][j][k]);
         }
       }
-    } 
+    }
 
-    console.log(servicesWithNames, "s")
+    for (let i = 0; i < citySalons.length; i++) {
+      for (let j = 0; j < servicesWithNamesAndPrice.length; j++) {
+        Object.assign(citySalons[i], {serviceNameAndPrice : servicesWithNamesAndPrice[i]})
+      }
+    }
+
+    
+
+
 
   };
 
   makingOfAllServicesArray();
 
-
-
   const getSubCategorySalons = () => {
-    for (let items of getCitySalons) {
+    for (let items of citySalons) {
       for (let services of items.allServices) {
         for (let service of services) {
           service.name == getSubCategory && citySalonsOnSubCategory.push(items);
@@ -100,7 +108,6 @@ const CitySalons = () => {
   };
 
   getSubCategorySalons();
-
 
   return (
     <div>
@@ -113,8 +120,9 @@ const CitySalons = () => {
         {getCityFromSubCategory ? getCityFromSubCategory : city}
       </h2>
       <div className="mt-10">
-        <CarouselWithServices salons={citySalonsOnSubCategory} />
+        <CarouselWithServices salons={getSubCategory ? citySalonsOnSubCategory : citySalons} />
       </div>
+
     </div>
   );
 };

@@ -4,8 +4,24 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CarouselWithServices = ({ salons }) => {
-
-//   console.log(salons, "the salons");
+//   console.log(salons, "salons");
+  const sliceNameAndPrice = (item) => {
+    //   console.log(item.serviceNameAndPrice, "item");
+    let slicedServices = item.serviceNameAndPrice.slice(0, 4);
+    return (
+      <>
+        {slicedServices.map((item, i) => (
+          <div className="flex justify-between my-5">
+            <div>
+              <p className="text-base">{item.name}</p>
+              <span>{item.duration}</span>
+            </div>
+            <div>{item.price}</div>
+          </div>
+        ))}
+      </>
+    );
+  };
 
   return (
     <div>
@@ -48,6 +64,12 @@ const CarouselWithServices = ({ salons }) => {
               </div>
               <div className="border border-blue-200 rounded-full w-fit text-center mt-2 bg-blue-100 text-blue-600">
                 <span className="text-sm font-medium px-2">{item.gender}</span>
+              </div>
+
+              <div className="mt-5">{sliceNameAndPrice(item)}</div>
+
+              <div>
+                <h3 className="text-blue-500">See all services</h3>
               </div>
             </Link>
           </Card>
