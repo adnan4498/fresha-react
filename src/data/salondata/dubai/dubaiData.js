@@ -1,6 +1,6 @@
 import tribeImg from "../../../../public/images/salons/pakistan/karachi/tribesSalon/tribe-1.jpg";
 import eyeLashImg from "../../../../public/images/salons/pakistan/karachi/eyelashLadiesSalon/eye-lash-salon-2.jpg";
-import { generateRandomSalons } from "../../randomSalons/generateRandomSalons";
+import { generateRandomSalons } from "../../../ownModules/randomSalons/generateRandomSalons";
 
 export const sharjahSalons = [
   {

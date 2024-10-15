@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import settingSubCategoryName from "../../data/categoryData/categoryAndSubCategory";
+import settingSubCategoryName from "../../ownModules/categoryData/categoryAndSubCategory";
+import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
 const SubCategories = ({ salons }) => {
   let navigate = useNavigate();
@@ -33,20 +34,20 @@ const SubCategories = ({ salons }) => {
       }
     }
 
-    removingDuplicates(servicesNames);
+    allCitySalonsServiceNames = removingDuplicates(servicesNames)
   };
 
   getServiceNamesFromSalon();
 
-  function removingDuplicates(servicesNames) {
-    let removeDuplicates = new Set(servicesNames);
+//   function removingDuplicates(servicesNames) {
+//     let removeDuplicates = new Set(servicesNames);
 
-    // make Set object to array
-    // populating the global variable allCitySalonsServicesName
-    for (let i of removeDuplicates) {
-      allCitySalonsServiceNames.push(i);
-    }
-  }
+//     // make Set object to array
+//     // populating the global variable allCitySalonsServicesName
+//     for (let i of removeDuplicates) {
+//       allCitySalonsServiceNames.push(i);
+//     }
+//   }
 
   const generateSubCategoryLink = (subCategory) => {
     let getCategory = settingSubCategoryName(subCategory);

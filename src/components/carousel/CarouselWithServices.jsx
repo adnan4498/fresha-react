@@ -3,14 +3,41 @@ import { Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const CarouselWithServices = ({ salons }) => {
-//   console.log(salons, "salons");
+const CarouselWithServices = ({
+  salons,
+  subCategoryName,
+  seperatedSubCategoryNames,
+}) => {
+  let pushServices = [];
+  let getFirstServices = [];
   const sliceNameAndPrice = (item) => {
-    //   console.log(item.serviceNameAndPrice, "item");
     let slicedServices = item.serviceNameAndPrice.slice(0, 4);
+
+    let firstServiceName = item.serviceNameAndPrice.filter(
+      (item) => item.name == subCategoryName
+    );
+
+    for (let serviceName of item.serviceNameAndPrice) {
+      for (let firstName of firstServiceName) {
+        serviceName.name == firstName.name ? getFirstServices.push(firstName) : "";
+      }
+    }
+
+    for (let serviceName of item.serviceNameAndPrice) {
+      let servicesInString = serviceName.name.split(" ").join("");
+      for (let subName of seperatedSubCategoryNames) {
+        let nameToString = subName.join("");
+        servicesInString.includes(nameToString) &&
+          pushServices.push(serviceName);
+      }
+    }
+
+    
+
     return (
       <>
-        {slicedServices.map((item, i) => (
+        {/* {slicedServices.map((item, i) => ( */}
+        {getFirstServices.map((item, i) => (
           <div className="flex justify-between my-5">
             <div>
               <p className="text-base">{item.name}</p>

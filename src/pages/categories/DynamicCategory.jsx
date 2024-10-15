@@ -7,7 +7,7 @@ import { Button, Card } from "antd";
 import Carousel from "react-multi-carousel";
 import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
 import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
-import { generateRandomSalons } from "../../data/randomSalons/generateRandomSalons";
+import { generateRandomSalons } from "../../ownModules/randomSalons/generateRandomSalons";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import { StarFilled } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";

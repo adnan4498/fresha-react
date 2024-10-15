@@ -3,6 +3,7 @@ import { useMatches } from "react-router-dom";
 import globalSalons from "../../data/salondata/global/globalSalonData";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
+import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
 const CitySalons = () => {
   let match = useMatches();
@@ -42,8 +43,7 @@ const CitySalons = () => {
   let getCity = city || getCityFromSubCategory;
   let citySalons = globalSalons.filter((item) => item.city == getCity);
 
-  console.log(citySalons, "get city salons")
-
+  // console.log(citySalons, "ss")
   let citySalonsOnSubCategory = [];
 
   const makingOfAllServicesArray = () => {
@@ -78,30 +78,46 @@ const CitySalons = () => {
     for (let i = 0; i < getAllServices.length; i++) {
       for (let j = 0; j < getAllServices[i].length; j++) {
         for (let k = 0; k < getAllServices[i][j].length; k++) {
+          // !servicesWithNamesAndPrice[i].name.includes(getAllServices[i][j][k]) &&
           servicesWithNamesAndPrice[i].push(getAllServices[i][j][k]);
+          console.log(servicesWithNamesAndPrice)
         }
       }
     }
 
+    // console.log(servicesWithNamesAndPrice, "gas")
+    console.log(servicesWithNamesAndPrice);
+
     for (let i = 0; i < citySalons.length; i++) {
       for (let j = 0; j < servicesWithNamesAndPrice.length; j++) {
-        Object.assign(citySalons[i], {serviceNameAndPrice : servicesWithNamesAndPrice[i]})
+        Object.assign(citySalons[i], {
+          serviceNameAndPrice: servicesWithNamesAndPrice[i],
+        });
       }
     }
 
-    
-
-
-
+    // console.log(servicesWithNamesAndPrice)
   };
 
   makingOfAllServicesArray();
+
+  let subCategoryNamesArray = getSubCategory.split(" ");
+
+  let seperatedSubCategoryNames = [];
+  subCategoryNamesArray.map((item) => seperatedSubCategoryNames.push([item]));
+
+  let gettingSubCategorySalons = [];
 
   const getSubCategorySalons = () => {
     for (let items of citySalons) {
       for (let services of items.allServices) {
         for (let service of services) {
-          service.name == getSubCategory && citySalonsOnSubCategory.push(items);
+          for (let seperatedNames of seperatedSubCategoryNames) {
+            service.name.includes(getSubCategory) &&
+              gettingSubCategorySalons.push(items);
+            service.name.includes(seperatedNames) &&
+              gettingSubCategorySalons.push(items);
+          }
         }
       }
     }
@@ -109,20 +125,29 @@ const CitySalons = () => {
 
   getSubCategorySalons();
 
+  citySalonsOnSubCategory = removingDuplicates(gettingSubCategorySalons);
+
+  let salonsToRender = getSubCategory ? citySalonsOnSubCategory : citySalons;
+  let categoryNameToRender = getSubCategory ? getSubCategory : category;
+  let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
+
+  // citySalonsOnSubCategory.map(item => console.log(item, "item"))
+
   return (
     <div>
       <div className="my-3">
-        {" "}
-        <BreadCrumbs />{" "}
+        <BreadCrumbs />
       </div>
       <h2 className="my-6">
-        Best {getSubCategory ? getSubCategory : category} near me in{" "}
-        {getCityFromSubCategory ? getCityFromSubCategory : city}
+        Best {categoryNameToRender} near me in {cityNameToRender}
       </h2>
       <div className="mt-10">
-        <CarouselWithServices salons={getSubCategory ? citySalonsOnSubCategory : citySalons} />
+        <CarouselWithServices
+          salons={salonsToRender}
+          seperatedSubCategoryNames={seperatedSubCategoryNames}
+          subCategoryName={getSubCategory}
+        />
       </div>
-
     </div>
   );
 };

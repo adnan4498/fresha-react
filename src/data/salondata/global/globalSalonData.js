@@ -1,4 +1,4 @@
-import { generateRandomSalons } from "../../randomSalons/generateRandomSalons";
+import { generateRandomSalons } from "../../../ownModules/randomSalons/generateRandomSalons";
 import allDubaiSalons from "../dubai/dubaiData";
 import allPakistanSalons from "../pakistan/pakistanData";
 
