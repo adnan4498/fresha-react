@@ -32,8 +32,6 @@ const CarouselWithServices = ({
       }
     }
 
-    
-
     return (
       <>
         {/* {slicedServices.map((item, i) => ( */}

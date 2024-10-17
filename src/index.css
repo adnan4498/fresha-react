@@ -27,6 +27,15 @@
   src: url("../public/fonts/rooberto/RoobertPRO-Bold.woff");
 }
 
+.roberto-medium{
+  font-family: "roberto-medium";
+  src: url("../public/fonts/rooberto/RoobertPRO-Light.woff");
+}
+
+.text-clr-1{
+  color : #0d1619
+}
+
 h1{
   @apply text-4xl;
   font-family: "tartufoo-bold";
@@ -104,3 +113,13 @@ span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outli
   background-position: center;
 }
 
+
+/* antd drawer */
+
+.ant-drawer-content-wrapper{
+  height: 100vh !important;
+}
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-drawer .ant-drawer-header{
+  border-bottom: 0px 
+}

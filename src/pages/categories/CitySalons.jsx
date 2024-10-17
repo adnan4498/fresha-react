@@ -78,15 +78,10 @@ const CitySalons = () => {
     for (let i = 0; i < getAllServices.length; i++) {
       for (let j = 0; j < getAllServices[i].length; j++) {
         for (let k = 0; k < getAllServices[i][j].length; k++) {
-          // !servicesWithNamesAndPrice[i].name.includes(getAllServices[i][j][k]) &&
           servicesWithNamesAndPrice[i].push(getAllServices[i][j][k]);
-          console.log(servicesWithNamesAndPrice)
         }
       }
     }
-
-    // console.log(servicesWithNamesAndPrice, "gas")
-    console.log(servicesWithNamesAndPrice);
 
     for (let i = 0; i < citySalons.length; i++) {
       for (let j = 0; j < servicesWithNamesAndPrice.length; j++) {
@@ -96,15 +91,71 @@ const CitySalons = () => {
       }
     }
 
+    let checkDups = [];
+
+
+
+    for (let i = 0; i < servicesWithNamesAndPrice.length; i++) {
+      for (let j = 0; j < servicesWithNamesAndPrice[i].length; j++) {
+        if(checkDups.length == 0){
+          checkDups.push(servicesWithNamesAndPrice[i][j])
+        }
+        else if(checkDups.length != 0){
+          // console.log(checkDups[i]?.name , "hi")
+          // checkDups[i]?.name.includes(servicesWithNamesAndPrice[i][j].name) == false ? checkDups
+        }
+      }
+    }
+
+    let aa = [5]
+    let bb = [5]
+
+    aa.includes(bb) == true ? console.log("included") : console.log("not included")
+
+    // let cc = aa.includes(bb)
+    // console.log(cc)
+
+
+    // console.log(checkDups)
+
     // console.log(servicesWithNamesAndPrice)
+
+    //   servicesWithNamesAndPrice = servicesWithNamesAndPrice.map((item , i) => (
+    //   item.filter((items, index) =>(
+    //     console.log(items, "ii  ")
+    //   ))
+    // ))
+
+    // let checkingDups = [];
+
+    // for (let i = 0; i < servicesWithNamesAndPrice.length; i++) {
+    //   for (let j = 0; j < servicesWithNamesAndPrice[i].length; j++) {
+    //     checkingDups.indexOf(servicesWithNamesAndPrice[i][j].name) == -1
+    //       ? checkingDups.push(servicesWithNamesAndPrice[i][j])
+    //       : "";
+    //       console.log(checkingDups[i], "checking dups")
+
+    //   }
+    // }
+
+    // // console.log(checkingDups, "checking dups")
+
+    // let arr = ["a", "b", "b", "c", "d",]
+    // let getArr = []
+
+    // for(let i = 0; i < arr.length; i++){
+    //   getArr.indexOf(arr[i]) == -1 ? getArr.push(arr[i]) : ""
+    // }
+
+    // console.log(getArr, "gar")
   };
 
   makingOfAllServicesArray();
 
-  let subCategoryNamesArray = getSubCategory.split(" ");
+  let subCategoryNamesArray = getSubCategory?.split(" ");
 
   let seperatedSubCategoryNames = [];
-  subCategoryNamesArray.map((item) => seperatedSubCategoryNames.push([item]));
+  subCategoryNamesArray?.map((item) => seperatedSubCategoryNames.push([item]));
 
   let gettingSubCategorySalons = [];
 
@@ -127,11 +178,22 @@ const CitySalons = () => {
 
   citySalonsOnSubCategory = removingDuplicates(gettingSubCategorySalons);
 
+  // let aaa = []
+  // let bbb = [1,2,3,4,5,6]
+
+  // aaa.forEach((item, i) => {
+  //   bbb.forEach((items, index) =>{
+  //     aaa.push(items)
+  //   })
+  // })
+
+  // console.log(aaa)
+
+  // console.log(checkDups, "check dups")
+
   let salonsToRender = getSubCategory ? citySalonsOnSubCategory : citySalons;
   let categoryNameToRender = getSubCategory ? getSubCategory : category;
   let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
-
-  // citySalonsOnSubCategory.map(item => console.log(item, "item"))
 
   return (
     <div>
