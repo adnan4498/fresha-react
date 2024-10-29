@@ -132,16 +132,23 @@ const CitySalons = () => {
   let categoryNameToRender = getSubCategory ? getSubCategory : category;
   let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
 
-  console.log(salonsToRender, "subCategory actual salon")
-  console.log(citySalonsOnSeperatedSubCategory, "seperated salon")
-  console.log(citySalons, "citySalons")
+  // console.log(salonsToRender, "subCategory actual salon")
+  // console.log(citySalonsOnSeperatedSubCategory, "seperated salon")
+  // console.log(citySalons, "citySalons")
 
   let otherSimillarSalons = []
 
+  // for(let i = 0; i < salonsToRender.length; i++){
+  //   for(let j = 0; j < citySalonsOnSeperatedSubCategory.length; j++){
+  //     let checkDups = salonsToRender.some(item => citySalonsOnSeperatedSubCategory[j].name.includes(item.name)) 
+  //     !checkDups && otherSimillarSalons.push(citySalonsOnSeperatedSubCategory[j])
+  //   }
+  // }
+
   for(let i = 0; i < salonsToRender.length; i++){
-    for(let j = 0; j < citySalonsOnSeperatedSubCategory.length; j++){
-      let checkDups = salonsToRender.some(item => citySalonsOnSeperatedSubCategory[j].name.includes(item.name)) 
-      !checkDups && otherSimillarSalons.push(citySalonsOnSeperatedSubCategory[j])
+    for(let j = 0; j < citySalons.length; j++){
+      let checkDups = salonsToRender.some(item => citySalons[j].name.includes(item.name)) 
+      !checkDups && otherSimillarSalons.push(citySalons[j])
     }
   }
 

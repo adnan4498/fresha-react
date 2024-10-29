@@ -13,7 +13,8 @@ const CarouselWithServices = ({
   const sliceNameAndPrice = (mapItem, firstNameBg) => {
     let pushServices = [];
     let getFirstServices = [];
-    console.log(mapItem, "map items");
+    let randomServices = []
+    // console.log(mapItem, "map items");
     let firstServiceName = mapItem.serviceNameAndPrice.filter(
       (item) => item.name == subCategoryName
     );
@@ -38,9 +39,9 @@ const CarouselWithServices = ({
 
     let getSet = removingDuplicates(pushServices);
 
-    let renderSalonsItems = getSet.filter(
-      (item, i) => item.name == subCategoryName
-    );
+    // let renderSalonsItems = getSet.filter(
+    //   (item, i) => item.name == subCategoryName
+    // );
 
     // adding subCategoryName at first in renderingArray
     getSet.forEach((item) => {
@@ -50,15 +51,31 @@ const CarouselWithServices = ({
     let getSet2 = removingDuplicates(getSet);
 
     console.log(getSet2, "gs");
+    console.log(getFirstServices, "push");
+
+    for (let ss of mapItem.serviceNameAndPrice) {
+      randomServices.push(ss)
+    }
+
+    console.log(randomServices, "random")
 
     // add comments for what this logic does
+
+    let renderSalons = getSet2.length >= 4 ? getSet2 : randomServices
+    renderSalons = renderSalons.slice(0,4)
+
+    let aa = [1,2]
+
+    aa.length <= 4 ? console.log("hello") : console.log("world")
+    // console.log(aa.length)
 
     return (
       <>
         {/* {getFirstServices.map((item, i) => (*/}
         {/* {pushServices.map((item, i) => ( */}
         {/* {renderSalonsItems?.map((item, i) => ( */}
-        {getSet2.map((item, i) => (
+        {/* {getSet2.map((item, i) => ( */}
+        {renderSalons.map((item, i) => (
           <div className={`${i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""} flex justify-between my-5`}>
             <div>
               <p className="text-base">{item.name}</p>
