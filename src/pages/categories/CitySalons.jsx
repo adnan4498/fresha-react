@@ -43,20 +43,17 @@ const CitySalons = () => {
   let getCity = city || getCityFromSubCategory;
   let citySalons = globalSalons.filter((item) => item.city == getCity);
 
-  let citySalonsOnSubCategory = [];
-
   const makingOfAllServicesArray = () => {
     let citySalonsServices = [];
+    let servicesWithoutTitles = [];
+    let getAllServices = [];
+    let servicesWithNamesAndPrice = [];
 
     citySalons.forEach((item) => citySalonsServices.push(item.services));
-
-    let servicesWithoutTitles = [];
 
     citySalonsServices.forEach((item) =>
       servicesWithoutTitles.push(Object.values(item))
     );
-
-    let getAllServices = [];
 
     servicesWithoutTitles.forEach(
       (item) => (getAllServices = getAllServices.concat([item]))
@@ -68,16 +65,18 @@ const CitySalons = () => {
       Object.assign(citySalons[i], { allServices: item })
     );
 
-    let servicesWithNamesAndPrice = [];
-
+    // each empty array will get services
     for (let item of getAllServices) {
       servicesWithNamesAndPrice.push([]);
     }
 
+    // extracting services of salons in order
+    // and pushing into servicesWithNamesAndPrice
     for (let i = 0; i < getAllServices.length; i++) {
       for (let services of getAllServices[i]) {
         for (let service of services) {
-          // this logic will prevent duplicates to be pushed
+          // prevents duplicates to be pushed
+          // first item gets pushed by default (servicesWithNamesAndPrice is empty at first)
           let duplicateFound = servicesWithNamesAndPrice[i]?.some((item) =>
             service.name.includes(item.name)
           );
@@ -86,6 +85,8 @@ const CitySalons = () => {
       }
     }
 
+    // pick salon in order, pushes serviceWithNameAndPrice obj into it
+    // each salon gets accurate obj
     for (let i = 0; i < citySalons.length; i++) {
       for (let j = 0; j < servicesWithNamesAndPrice.length; j++) {
         Object.assign(citySalons[i], {
@@ -97,64 +98,62 @@ const CitySalons = () => {
 
   makingOfAllServicesArray();
 
-  let subCategoryNamesArray = getSubCategory?.split(" ");
+  const seperatingSubCategoryNames = () => {
+    let seperatedNames = [];
+    let subCategoryNamesArray = getSubCategory?.split(" ");
 
-  let seperatedSubCategoryNames = [];
-  subCategoryNamesArray?.map((item) => seperatedSubCategoryNames.push([item]));
+    subCategoryNamesArray?.forEach((item) => seperatedNames.push([item]));
 
-  let getSubCategorySalons = [];
-  let getSubCategorySeperatedSalons = []
+    return seperatedNames;
+  };
+
+  let seperatedSubCategoryNames = seperatingSubCategoryNames();
 
   const gettingSubCategorySalons = () => {
+    let salonsOnSubCategory = [];
+    let getSubCategorySeperatedSalons = [];
+
     for (let items of citySalons) {
       for (let services of items.allServices) {
         for (let service of services) {
           for (let seperatedNames of seperatedSubCategoryNames) {
             // this will get excat subCategory Salon
             service.name.includes(getSubCategory) &&
-              getSubCategorySalons.push(items);
+              salonsOnSubCategory.push(items);
 
-            // this will get salons that match seperated subCategory names eg : hair-coloring ( hair & coloring )
+            // this will get salons that match seperated subCategory names
+            // eg : hair-coloring ( hair & coloring )
             service.name.includes(seperatedNames) &&
-            getSubCategorySeperatedSalons.push(items);
+              getSubCategorySeperatedSalons.push(items);
           }
         }
       }
     }
+
+    return (salonsOnSubCategory = removingDuplicates(salonsOnSubCategory));
   };
 
-  gettingSubCategorySalons();
-
-  citySalonsOnSubCategory = removingDuplicates(getSubCategorySalons);
-  let citySalonsOnSeperatedSubCategory = removingDuplicates(getSubCategorySeperatedSalons);
+  let citySalonsOnSubCategory = gettingSubCategorySalons();
 
   let salonsToRender = getSubCategory ? citySalonsOnSubCategory : citySalons;
   let categoryNameToRender = getSubCategory ? getSubCategory : category;
   let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
 
-  // console.log(salonsToRender, "subCategory actual salon")
-  // console.log(citySalonsOnSeperatedSubCategory, "seperated salon")
-  // console.log(citySalons, "citySalons")
-
-  let otherSimillarSalons = []
-
-  // for(let i = 0; i < salonsToRender.length; i++){
-  //   for(let j = 0; j < citySalonsOnSeperatedSubCategory.length; j++){
-  //     let checkDups = salonsToRender.some(item => citySalonsOnSeperatedSubCategory[j].name.includes(item.name)) 
-  //     !checkDups && otherSimillarSalons.push(citySalonsOnSeperatedSubCategory[j])
-  //   }
-  // }
-
-  for(let i = 0; i < salonsToRender.length; i++){
-    for(let j = 0; j < citySalons.length; j++){
-      let checkDups = salonsToRender.some(item => citySalons[j].name.includes(item.name)) 
-      !checkDups && otherSimillarSalons.push(citySalons[j])
+  let gettingOtherSimmillarSalons = () => {
+    let getOtherSimillarSalons = [];
+    for (let i = 0; i < citySalons.length; i++) {
+      // prevents duplicates to be pushed
+      let duplicateFound = salonsToRender.some((item) =>
+        citySalons[i].name.includes(item.name)
+      );
+      duplicateFound ? "" : getOtherSimillarSalons.push(citySalons[i]);
     }
-  }
+    return (getOtherSimillarSalons = removingDuplicates(
+      getOtherSimillarSalons
+    ));
+  };
 
-  otherSimillarSalons = removingDuplicates(otherSimillarSalons)
-
-  console.log(otherSimillarSalons, "22")
+  let otherSimillarSalons = gettingOtherSimmillarSalons();
 
   return (
     <div>

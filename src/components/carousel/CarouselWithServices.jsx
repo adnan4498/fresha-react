@@ -1,6 +1,6 @@
 import { StarFilled } from "@ant-design/icons";
 import { Card } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
@@ -10,73 +10,73 @@ const CarouselWithServices = ({
   subCategoryName,
   seperatedSubCategoryNames,
 }) => {
-  const sliceNameAndPrice = (mapItem, firstNameBg) => {
-    let pushServices = [];
-    let getFirstServices = [];
-    let randomServices = []
-    // console.log(mapItem, "map items");
-    let firstServiceName = mapItem.serviceNameAndPrice.filter(
-      (item) => item.name == subCategoryName
-    );
+  let firstNameBg = true;
 
-    for (let serviceName of mapItem.serviceNameAndPrice) {
-      for (let firstName of firstServiceName) {
-        serviceName.name == firstName.name
-          ? getFirstServices.push(firstName)
-          : "";
-      }
-    }
+  // salon is single salon item from salons 
+  const sliceNameAndPrice = (salon, firstNameBg) => {
+    let getServices = [];
+    let otherSimilarServices = [];
+    let renderServices;
 
-    for (let serviceName of mapItem.serviceNameAndPrice) {
-      let servicesInString = serviceName.name.split(" ").join("");
-      for (let subName of seperatedSubCategoryNames) {
-        let nameToString = subName.join("");
-        if (servicesInString.includes(nameToString)) {
-          pushServices.push(serviceName);
+    let getServicesFromSalon = () => {
+      for (let serviceName of salon.serviceNameAndPrice) {
+        let servicesInString = serviceName.name.split(" ").join("");
+        for (let subName of seperatedSubCategoryNames) {
+          let nameToString = subName.join("");
+          if (servicesInString.includes(nameToString)) {
+            getServices.push(serviceName);
+          }
         }
       }
-    }
+    };
 
-    let getSet = removingDuplicates(pushServices);
+    getServicesFromSalon();
 
-    // let renderSalonsItems = getSet.filter(
-    //   (item, i) => item.name == subCategoryName
-    // );
+    let getServicesWithoutDup = removingDuplicates(getServices);
 
-    // adding subCategoryName at first in renderingArray
-    getSet.forEach((item) => {
-      item.name == subCategoryName && getSet.unshift(item);
+    // adding subCategoryName at first in following Array
+    getServicesWithoutDup.forEach((item) => {
+      item.name == subCategoryName && getServicesWithoutDup.unshift(item);
     });
 
-    let getSet2 = removingDuplicates(getSet);
+    let subCategoryNameAtTopArr = removingDuplicates(getServicesWithoutDup);
 
-    console.log(getSet2, "gs");
-    console.log(getFirstServices, "push");
-
-    for (let ss of mapItem.serviceNameAndPrice) {
-      randomServices.push(ss)
+    // pushing other similar services
+    for (let services of salon.serviceNameAndPrice) {
+      otherSimilarServices.push(services);
     }
 
-    console.log(randomServices, "random")
+    let addingExtraServices = () => {
+      // adds extra services to fill the (show 4 services) criteria
+      if (subCategoryNameAtTopArr.length != 0) {
+        let getLength = subCategoryNameAtTopArr.length;
 
-    // add comments for what this logic does
+        // adds services against lenght eg: if lenth is 1, adds 3 services to make it 4
+        let loopLength =
+          getLength == 1 ? 3 : getLength == 2 ? 2 : getLength == 3 ? 1 : "";
 
-    let renderSalons = getSet2.length >= 4 ? getSet2 : randomServices
-    renderSalons = renderSalons.slice(0,4)
+        for (let i = 0; i < loopLength; i++) {
+          subCategoryNameAtTopArr.push(otherSimilarServices[i]);
+        }
+        renderServices = subCategoryNameAtTopArr;
+      } else {
+        renderServices = otherSimilarServices;
+      }
+    };
 
-    let aa = [1,2]
+    addingExtraServices();
 
-    aa.length <= 4 ? console.log("hello") : console.log("world")
-    // console.log(aa.length)
+    // only show 4 services
+    renderServices = renderServices?.slice(0, 4);
 
     return (
       <>
-        {/* {getFirstServices.map((item, i) => (*/}
-        {/* {pushServices.map((item, i) => ( */}
-        {/* {renderSalonsItems?.map((item, i) => ( */}
-        {/* {getSet2.map((item, i) => ( */}
-        {renderSalons.map((item, i) => (
-          <div className={`${i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""} flex justify-between my-5`}>
+        {renderServices?.map((item, i) => (
+          <div
+            className={`${
+              i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""
+            } flex justify-between my-5`}
+          >
             <div>
               <p className="text-base">{item.name}</p>
               <span>{item.duration}</span>
@@ -87,8 +87,6 @@ const CarouselWithServices = ({
       </>
     );
   };
-
-  let firstNameBg = true
 
   return (
     <>
@@ -136,7 +134,9 @@ const CarouselWithServices = ({
                   </span>
                 </div>
 
-                <div className="mt-5">{sliceNameAndPrice(item, firstNameBg)}</div>
+                <div className="mt-5">
+                  {sliceNameAndPrice(item, firstNameBg)}
+                </div>
 
                 <div>
                   <h3 className="text-blue-500">See all services</h3>
@@ -147,65 +147,63 @@ const CarouselWithServices = ({
         ))}
       </div>
 
-      {/* {otherSimillarSalons.length != 0 && (
-        <> */}
-          <h2> Salons with Similar Services </h2>
+      <h2> Salons with Similar Services </h2>
 
-          <div>
-            {otherSimillarSalons.map((item, index) => (
-              <div key={index} className=" my-10">
-                <Card
-                  hoverable
-                  style={{}}
-                  cover={
-                    <img
-                      alt="example"
-                      src={item.img1}
-                      className="h-36 object-cover"
-                    />
-                  }
-                >
-                  {" "}
-                  <Link
-                    to={`/dynamic-category/${item.category}/${item.city}/${item.name}`}
-                  >
-                    <div>
-                      <p className="text-lg truncate">{item.name}</p>
-                    </div>
-                    <div className="flex gap-[6px]">
-                      <div>
-                        <span className="font-bold ">
-                          {item.rating} <StarFilled />
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-[#616769] font-semibold">
-                          ({item.reviews})
-                        </span>
-                      </div>
-                    </div>
-                    <div>
-                      <span className="line-clamp-1 text-[#838b8d]">
-                        {item.address}
-                      </span>
-                    </div>
-                    <div className="border border-blue-200 rounded-full w-fit text-center mt-2 bg-blue-100 text-blue-600">
-                      <span className="text-sm font-medium px-2">
-                        {item.gender}
-                      </span>
-                    </div>
+      <div>
+        {otherSimillarSalons.map((item, index) => (
+          <div key={index} className=" my-10">
+            <Card
+              hoverable
+              style={{}}
+              cover={
+                <img
+                  alt="example"
+                  src={item.img1}
+                  className="h-36 object-cover"
+                />
+              }
+            >
+              {" "}
+              <Link
+                to={`/dynamic-category/${item.category}/${item.city}/${item.name}`}
+              >
+                <div>
+                  <p className="text-lg truncate">{item.name}</p>
+                </div>
+                <div className="flex gap-[6px]">
+                  <div>
+                    <span className="font-bold ">
+                      {item.rating} <StarFilled />
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-[#616769] font-semibold">
+                      ({item.reviews})
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <span className="line-clamp-1 text-[#838b8d]">
+                    {item.address}
+                  </span>
+                </div>
+                <div className="border border-blue-200 rounded-full w-fit text-center mt-2 bg-blue-100 text-blue-600">
+                  <span className="text-sm font-medium px-2">
+                    {item.gender}
+                  </span>
+                </div>
 
-                    <div className="mt-5">{sliceNameAndPrice(item)}</div>
+                <div className="mt-5">{sliceNameAndPrice(item)}</div>
 
-                    <div>
-                      <h3 className="text-blue-500">See all services</h3>
-                    </div>
-                  </Link>
-                </Card>
-              </div>
-            ))}
+                <div>
+                  <h3 className="text-blue-500">See all services</h3>
+                </div>
+              </Link>
+            </Card>
           </div>
-        {/* </>
+        ))}
+      </div>
+      {/* </>
       )} */}
     </>
   );
