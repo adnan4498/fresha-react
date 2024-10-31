@@ -193,7 +193,7 @@ const CarouselWithServices = ({
           <TopReviewsSalons />
         </> 
       )}
-    </>
+    </> 
   );
 };
 
