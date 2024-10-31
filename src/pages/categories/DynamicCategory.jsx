@@ -40,11 +40,11 @@ const DynamicCategory = () => {
     bgBanner = "hair-salon-bg-banner";
   } else if (urlParam.category.includes("nail-salon")) {
     categoryName = "Eye Salons";
-    categoryImg = barberShopBanner;
+    categoryImg = eyeBrowBanner;
     bgBanner = "eye-brows-and-lashes-bg-banner";
   } else if (urlParam.category.includes("barber-shop")) {
     categoryName = "Barber Shop";
-    categoryImg = eyeBrowBanner;
+    categoryImg = barberShopBanner;
     bgBanner = "barber-shop-bg-banner";
   }
 
@@ -86,6 +86,9 @@ const DynamicCategory = () => {
       name: "India",
     },
   ];
+
+  let isSeperatedCategory = false
+  let showTopReviewsSalons = false
 
   return (
     <div>
@@ -154,7 +157,7 @@ const DynamicCategory = () => {
                             </div>
                         ))}
                     </Carousel> */}
-          <CarouselWithServices salons={allGlobalSalons} />
+          <CarouselWithServices salons={allGlobalSalons} isSeperatedCategory={isSeperatedCategory} showTopReviewsSalons={showTopReviewsSalons} />
         </div>
       </div>
     </div>

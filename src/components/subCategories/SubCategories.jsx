@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import settingSubCategoryName from "../../ownModules/categoryData/categoryAndSubCategory";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
-const SubCategories = ({ salons }) => {
+const SubCategories = ({ salon }) => {
   let navigate = useNavigate();
 
-  let allCitySalonsServiceNames = [];
+  console.log(salon, "salon ")
 
   const getServiceNamesFromSalon = () => {
-    let getServices = salons.map((item) => item.services);
+    let getServices = salon.map((item) => item.services);
     let serviceTitles = [];
 
     for (let items in getServices) {
@@ -29,30 +29,20 @@ const SubCategories = ({ salons }) => {
     let servicesNames = [];
 
     for (let i = 0; i < servicesByThereTitles.length; i++) {
-      for (let j = 0; j < servicesByThereTitles[i].length; j++) {
+      for (let j = 0; j < servicesByThereTitles[i]?.length; j++) {
         servicesNames.push(servicesByThereTitles[i][j].name);
       }
     }
 
-    allCitySalonsServiceNames = removingDuplicates(servicesNames)
+    return servicesNames = removingDuplicates(servicesNames)
   };
 
-  getServiceNamesFromSalon();
-
-//   function removingDuplicates(servicesNames) {
-//     let removeDuplicates = new Set(servicesNames);
-
-//     // make Set object to array
-//     // populating the global variable allCitySalonsServicesName
-//     for (let i of removeDuplicates) {
-//       allCitySalonsServiceNames.push(i);
-//     }
-//   }
+  let allCitySalonsServiceNames = getServiceNamesFromSalon();
 
   const generateSubCategoryLink = (subCategory) => {
     let getCategory = settingSubCategoryName(subCategory);
 
-    let city = "karachi";
+    let city = salon[0].city
 
     let subCategoryAndCity = [subCategory, city];
 
@@ -63,7 +53,7 @@ const SubCategories = ({ salons }) => {
     navigate(subCategoryUrl);
   };
 
-  console.log(allCitySalonsServiceNames, "all city salons");
+  console.log(allCitySalonsServiceNames, "all city salon");
 
   return (
     <div className="grid grid-flow-col grid-rows-6 gap-3 w-[1700px]">

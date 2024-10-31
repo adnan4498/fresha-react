@@ -16,6 +16,8 @@ const CitySalons = () => {
   let getSubCategory;
   let getCityFromSubCategory;
 
+  // console.log(globalSalons, "global")
+
   const seperateSubCategoryAndCity = () => {
     let allCities = [
       "karachi",
@@ -23,10 +25,17 @@ const CitySalons = () => {
       "islamabad",
       "multan",
       "sharjah",
-      "abuDhabi",
+      "Abu Dhabi",
       "ajman",
       "fujairah",
+      "salalah",
+      "muscat",
+      "sohar",
+      "nizwa",
     ];
+
+    console.log(match)
+
 
     let findCityIndex;
     for (let item of allCities) {
@@ -139,11 +148,14 @@ const CitySalons = () => {
   let categoryNameToRender = getSubCategory ? getSubCategory : category;
   let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
 
+  // console.log(city, "city")
+  // console.log(getCityFromSubCategory, "getCityFromSubCategory")
+
   let gettingOtherSimmillarSalons = () => {
     let getOtherSimillarSalons = [];
     for (let i = 0; i < citySalons.length; i++) {
       // prevents duplicates to be pushed
-      let duplicateFound = salonsToRender.some((item) =>
+      let duplicateFound = salonsToRender?.some((item) =>
         citySalons[i].name.includes(item.name)
       );
       duplicateFound ? "" : getOtherSimillarSalons.push(citySalons[i]);
@@ -158,6 +170,9 @@ const CitySalons = () => {
   // actual sub-category salon and other simmilar salons merged
   let concatedSalonAndOtherSalons = salonsToRender.concat(otherSimillarSalons)
 
+  let isSeperatedCategory = true 
+  let showTopReviewsSalons = true
+
   return (
     <div>
       <div className="my-3">
@@ -170,7 +185,11 @@ const CitySalons = () => {
         <CarouselWithServices
           salons={concatedSalonAndOtherSalons}
           seperatedSubCategoryNames={seperatedSubCategoryNames}
+          isSeperatedCategory={isSeperatedCategory}
+          showTopReviewsSalons={showTopReviewsSalons}
+          categoryName={categoryNameToRender}
           subCategoryName={getSubCategory}
+          cityName={cityNameToRender}
         />
       </div>
     </div>

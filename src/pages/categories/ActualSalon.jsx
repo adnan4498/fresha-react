@@ -32,6 +32,8 @@ const ActualSalon = () => {
   };
 
   let match = useMatches();
+  
+  console.log(match, "match")
 
   // get same city salons but not the actual salon (its already being displayed)
   let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
@@ -364,14 +366,11 @@ const ActualSalon = () => {
         </div>
 
         <div className=" overflow-x-scroll">
-          <SubCategories salons={getNearbySalons} />
+          <SubCategories salon={getNearbySalons} />
         </div>
 
       </div>
 
-      {/* <div className=" bg-red-500 sticky bottom-0">
-        asdsad
-      </div> */}
     </>
   );
 };

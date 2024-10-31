@@ -4,11 +4,16 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 import { useState } from "react";
+import TopReviewsSalons from "../reviews/TopReviewsSalons";
 
 const CarouselWithServices = ({
   salons,
   subCategoryName,
   seperatedSubCategoryNames,
+  isSeperatedCategory,
+  showTopReviewsSalons,
+  categoryName,
+  cityName,
 }) => {
   let firstNameBg = true;
 
@@ -16,6 +21,8 @@ const CarouselWithServices = ({
   const sliceNameAndPrice = (salon, firstNameBg) => {
     let getServices = [];
     let otherSimilarServices = [];
+
+    console.log(salon, "salon");
 
     let getServicesFromSalon = () => {
       for (let serviceName of salon.serviceNameAndPrice) {
@@ -29,7 +36,8 @@ const CarouselWithServices = ({
       }
     };
 
-    getServicesFromSalon();
+    // only for parents sending seperatedSubCategoryNames prop
+    isSeperatedCategory && getServicesFromSalon();
 
     let getServicesWithoutDup = removingDuplicates(getServices);
 
@@ -63,7 +71,7 @@ const CarouselWithServices = ({
       }
     };
 
-    let renderServices  = addingExtraServices();
+    let renderServices = addingExtraServices();
 
     // only show 4 services
     renderServices = renderServices?.slice(0, 4);
@@ -88,23 +96,23 @@ const CarouselWithServices = ({
     );
   };
 
-  // extracts single (other simillar salon) name 
+  // extracts single (other simillar salon) name
   const showOtherSalonHeading = () => {
     let otherSalonsArr = [];
 
     for (let salon of salons) {
-      let isOtherSalon = salon.serviceNameAndPrice.some((item) =>
+      let isOtherSalon = salon.serviceNameAndPrice?.some((item) =>
         item.name.includes(subCategoryName)
       );
 
-      // push non-sub-category salons 
+      // push non-sub-category salons
       !isOtherSalon && otherSalonsArr.push(salon);
     }
 
     otherSalonsArr = otherSalonsArr.slice(0, 1);
 
     // only single non-sub-category name is enough to show salon heading
-    return otherSalonsArr[0].name;
+    return otherSalonsArr[0]?.name;
   };
 
   // used to show other salon heading
@@ -115,7 +123,10 @@ const CarouselWithServices = ({
       {salons.map((item, index) => (
         <>
           {item.name == otherSalonName && (
-            <h2>Salons with Similar Services </h2>
+            <>
+              {/* <h2>Salons with Similar Services </h2> */}
+              {(firstNameBg = false)}
+            </>
           )}
 
           <div key={index} className=" my-10">
@@ -161,7 +172,8 @@ const CarouselWithServices = ({
                 </div>
 
                 <div className="mt-5">
-                  {sliceNameAndPrice(item, firstNameBg)}
+                  {item.serviceNameAndPrice &&
+                    sliceNameAndPrice(item, firstNameBg)}
                 </div>
 
                 <div>
@@ -173,64 +185,14 @@ const CarouselWithServices = ({
         </>
       ))}
 
-      {/* <h2> Salons with Similar Services </h2> */}
-
-      {/* <div>
-        {otherSimillarSalons.map((item, index) => (
-          <div key={index} className=" my-10">
-            <Card
-              hoverable
-              style={{}}
-              cover={
-                <img
-                  alt="example"
-                  src={item.img1}
-                  className="h-36 object-cover"
-                />
-              }
-            >
-              {" "}
-              <Link
-                to={`/dynamic-category/${item.category}/${item.city}/${item.name}`}
-              >
-                <div>
-                  <p className="text-lg truncate">{item.name}</p>
-                </div>
-                <div className="flex gap-[6px]">
-                  <div>
-                    <span className="font-bold ">
-                      {item.rating} <StarFilled />
-                    </span>
-                  </div>
-                  <div>
-                    <span className="text-[#616769] font-semibold">
-                      ({item.reviews})
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <span className="line-clamp-1 text-[#838b8d]">
-                    {item.address}
-                  </span>
-                </div>
-                <div className="border border-blue-200 rounded-full w-fit text-center mt-2 bg-blue-100 text-blue-600">
-                  <span className="text-sm font-medium px-2">
-                    {item.gender}
-                  </span>
-                </div>
-
-                <div className="mt-5">{sliceNameAndPrice(item)}</div>
-
-                <div>
-                  <h3 className="text-blue-500">See all services</h3>
-                </div>
-              </Link>
-            </Card>
-          </div>
-        ))}
-      </div> */}
-      {/* </>
-      )} */}
+      {showTopReviewsSalons && (
+        <>
+          <h2 className="text-2xl">
+            Top Reviews of {categoryName} near you in {cityName}
+          </h2>
+          <TopReviewsSalons />
+        </>
+      )}
     </>
   );
 };
