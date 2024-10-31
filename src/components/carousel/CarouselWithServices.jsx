@@ -195,6 +195,6 @@ const CarouselWithServices = ({
       )}
     </> 
   );
-};
+}; 
 
 export default CarouselWithServices;
