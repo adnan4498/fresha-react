@@ -155,6 +155,9 @@ const CitySalons = () => {
 
   let otherSimillarSalons = gettingOtherSimmillarSalons();
 
+  // actual sub-category salon and other simmilar salons merged
+  let concatedSalonAndOtherSalons = salonsToRender.concat(otherSimillarSalons)
+
   return (
     <div>
       <div className="my-3">
@@ -165,8 +168,7 @@ const CitySalons = () => {
       </h2>
       <div className="mt-10">
         <CarouselWithServices
-          salons={salonsToRender}
-          otherSimillarSalons={otherSimillarSalons}
+          salons={concatedSalonAndOtherSalons}
           seperatedSubCategoryNames={seperatedSubCategoryNames}
           subCategoryName={getSubCategory}
         />

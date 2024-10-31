@@ -1,22 +1,21 @@
 import { StarFilled } from "@ant-design/icons";
 import { Card } from "antd";
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
+import { useState } from "react";
 
 const CarouselWithServices = ({
   salons,
-  otherSimillarSalons,
   subCategoryName,
   seperatedSubCategoryNames,
 }) => {
   let firstNameBg = true;
 
-  // salon is single salon item from salons 
+  // salon is single salon item from salons
   const sliceNameAndPrice = (salon, firstNameBg) => {
     let getServices = [];
     let otherSimilarServices = [];
-    let renderServices;
 
     let getServicesFromSalon = () => {
       for (let serviceName of salon.serviceNameAndPrice) {
@@ -58,13 +57,13 @@ const CarouselWithServices = ({
         for (let i = 0; i < loopLength; i++) {
           subCategoryNameAtTopArr.push(otherSimilarServices[i]);
         }
-        renderServices = subCategoryNameAtTopArr;
+        return subCategoryNameAtTopArr;
       } else {
-        renderServices = otherSimilarServices;
+        return otherSimilarServices;
       }
     };
 
-    addingExtraServices();
+    let renderServices  = addingExtraServices();
 
     // only show 4 services
     renderServices = renderServices?.slice(0, 4);
@@ -73,6 +72,7 @@ const CarouselWithServices = ({
       <>
         {renderServices?.map((item, i) => (
           <div
+            key={i}
             className={`${
               i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""
             } flex justify-between my-5`}
@@ -88,10 +88,36 @@ const CarouselWithServices = ({
     );
   };
 
+  // extracts single (other simillar salon) name 
+  const showOtherSalonHeading = () => {
+    let otherSalonsArr = [];
+
+    for (let salon of salons) {
+      let isOtherSalon = salon.serviceNameAndPrice.some((item) =>
+        item.name.includes(subCategoryName)
+      );
+
+      // push non-sub-category salons 
+      !isOtherSalon && otherSalonsArr.push(salon);
+    }
+
+    otherSalonsArr = otherSalonsArr.slice(0, 1);
+
+    // only single non-sub-category name is enough to show salon heading
+    return otherSalonsArr[0].name;
+  };
+
+  // used to show other salon heading
+  let otherSalonName = showOtherSalonHeading();
+
   return (
     <>
-      <div>
-        {salons.map((item, index) => (
+      {salons.map((item, index) => (
+        <>
+          {item.name == otherSalonName && (
+            <h2>Salons with Similar Services </h2>
+          )}
+
           <div key={index} className=" my-10">
             <Card
               hoverable
@@ -144,12 +170,12 @@ const CarouselWithServices = ({
               </Link>
             </Card>
           </div>
-        ))}
-      </div>
+        </>
+      ))}
 
-      <h2> Salons with Similar Services </h2>
+      {/* <h2> Salons with Similar Services </h2> */}
 
-      <div>
+      {/* <div>
         {otherSimillarSalons.map((item, index) => (
           <div key={index} className=" my-10">
             <Card
@@ -202,7 +228,7 @@ const CarouselWithServices = ({
             </Card>
           </div>
         ))}
-      </div>
+      </div> */}
       {/* </>
       )} */}
     </>
