@@ -191,7 +191,7 @@ const CarouselWithServices = ({
             Top Reviews of {categoryName} near you in {cityName}
           </h2>
           <TopReviewsSalons />
-        </>
+        </> 
       )}
     </>
   );
