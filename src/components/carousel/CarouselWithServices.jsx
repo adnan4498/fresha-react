@@ -189,7 +189,7 @@ const CarouselWithServices = ({
         <> 
           <h2 className="text-2xl"> 
             Top Reviews of {categoryName} near you in {cityName}
-          </h2>
+          </h2> 
           <TopReviewsSalons />
         </> 
       )}
