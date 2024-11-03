@@ -121,19 +121,6 @@ const ActualSalon = () => {
 
   let getTimings = theSalon[0].openingTimes;
 
-  // console.log(getTimings, "the timings")
-
-  // Object.entries(getTimings).forEach((item, index) =>{
-  //   console.log(item[1][0].closing)
-  // })
-
-  let testHairs = "hairs"
-
-  let dummyTest = ["hairs"]
-
-  dummyTest.includes(testHairs) ? console.log("found") : console.log("not found")
-
-
   return (
     <>
       <div className="mt-5 relative">
@@ -368,9 +355,7 @@ const ActualSalon = () => {
         <div className=" overflow-x-scroll">
           <SubCategories salon={getNearbySalons} />
         </div>
-
       </div>
-
     </>
   );
 };

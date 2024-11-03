@@ -8,7 +8,7 @@ export const sharjahSalons = [
     name: "Tribes Men's and Spa Salon ",
     rating: "5.0",
     reviews: "228",
-    city: "karachi",
+    city: "sharjah",
     address: "Office 1991, Al Ghubrah Street, Sharjah, Dubai",
     img1: tribeImg,
     innerImgs: [
@@ -152,77 +152,6 @@ export const sharjahSalons = [
         customerReviewMessage:
           "Professional staff, loved the atmosphere. Definitely coming back!",
       },
-      {
-        customerName: "Michael Smith",
-        reviewDateTime: "Mon, 14 oct 2024 at 9:20am",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 3,
-        customerReviewMessage:
-          "Good service, but a bit overpriced for the haircut.",
-      },
-      {
-        customerName: "Fatima Noor",
-        reviewDateTime: "Thu, 17 oct 2024 at 5:15pm",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 5,
-        customerReviewMessage: "Exceptional service, the facial was fantastic!",
-      },
-      {
-        customerName: "James Brown",
-        reviewDateTime: "Sun, 20 oct 2024 at 11:30am",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 4,
-        customerReviewMessage:
-          "Great overall experience, would have preferred a shorter wait time.",
-      },
-      {
-        customerName: "Nadia Hossain",
-        reviewDateTime: "Wed, 23 oct 2024 at 1:50pm",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 5,
-        customerReviewMessage:
-          "The massage was absolutely amazing. 10/10 recommend.",
-      },
-      {
-        customerName: "Omar Ali",
-        reviewDateTime: "Fri, 25 oct 2024 at 7:40pm",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 4,
-        customerReviewMessage:
-          "Friendly staff, but the waiting area could be improved.",
-      },
-      {
-        customerName: "Jessica Lee",
-        reviewDateTime: "Mon, 28 oct 2024 at 12:00pm",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 5,
-        customerReviewMessage:
-          "Absolutely loved the haircut! Will be back for sure.",
-      },
-      {
-        customerName: "David Johnson",
-        reviewDateTime: "Wed, 30 oct 2024 at 4:45pm",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 3,
-        customerReviewMessage:
-          "The service was decent but could be more attentive.",
-      },
-      {
-        customerName: "Emily Thompson",
-        reviewDateTime: "Fri, 1 nov 2024 at 8:30am",
-        customerImg:
-          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
-        customerReviewStars: 5,
-        customerReviewMessage:
-          "The best salon experience I've ever had! Highly recommend.",
-      },
     ],
     about:
       "Omans 1st Boho Inspired spa & salon. Located near Muscat Grand Mall,adjacent to Ramez Al Khuwair. We offer the best of hair salon services including haircuts, beard trimming and spa services such as manicure, pedicure, body massage, facial and skin treatments.",
@@ -364,12 +293,16 @@ export const sharjahSalons = [
         reviewDateTime: "Wed, 10 Oct 2024 at 2:00pm",
         customerReviewStars: 5,
         customerReviewMessage: "My skin never felt this good!",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
       },
       {
         customerName: "Alia H.",
         reviewDateTime: "Fri, 18 Oct 2024 at 4:30pm",
         customerReviewStars: 4,
         customerReviewMessage: "Best manicure experience!",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
       },
     ],
     about:
@@ -386,7 +319,7 @@ export const sharjahSalons = [
     name: "Aura Men’s Grooming Studio",
     rating: "4.8",
     reviews: "196",
-    city: "Sharjah",
+    city: "sharjah",
     address: "Al Majaz Waterfront, Block B, Sharjah, UAE",
     img1: tribeImg,
     innerImgs: [
@@ -449,10 +382,14 @@ export const sharjahSalons = [
         reviewDateTime: "Mon, 15 Oct 2024 at 1:00pm",
         customerReviewStars: 5,
         customerReviewMessage: "Very professional and clean atmosphere!",
+        customerImg:
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
       },
       {
         customerName: "Hamza A.",
         reviewDateTime: "Thu, 19 Oct 2024 at 3:00pm",
+        customerImg:
+          "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
         customerReviewStars: 4,
         customerReviewMessage: "Best haircut experience in Sharjah.",
       },
@@ -528,12 +465,16 @@ export const sharjahSalons = [
         reviewDateTime: "Thu, 25 Oct 2024 at 10:30am",
         customerReviewStars: 5,
         customerReviewMessage: "The best spa experience I've ever had!",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
       },
       {
         customerName: "Nadia P.",
         reviewDateTime: "Sun, 28 Oct 2024 at 3:15pm",
         customerReviewStars: 5,
         customerReviewMessage: "The yoga session was rejuvenating.",
+        customerImg:
+        "../../../../public/images/salons/hairSalon/customer-dummy-img2.png",
       },
     ],
     about:

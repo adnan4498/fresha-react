@@ -17,12 +17,13 @@ const CarouselWithServices = ({
 }) => {
   let firstNameBg = true;
 
+
   // salon is single salon item from salons
   const sliceNameAndPrice = (salon, firstNameBg) => {
     let getServices = [];
     let otherSimilarServices = [];
 
-    console.log(salon, "salon");
+    // console.log(salon, "salon");
 
     let getServicesFromSalon = () => {
       for (let serviceName of salon.serviceNameAndPrice) {
@@ -81,9 +82,8 @@ const CarouselWithServices = ({
         {renderServices?.map((item, i) => (
           <div
             key={i}
-            className={`${
-              i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""
-            } flex justify-between my-5`}
+            className={`${i == 0 && firstNameBg ? "bg-[#dae1e2] rounded-lg" : ""
+              } flex justify-between my-5`}
           >
             <div>
               <p className="text-base">{item.name}</p>
@@ -177,7 +177,7 @@ const CarouselWithServices = ({
                 </div>
 
                 <div>
-                  <h3 className="text-blue-500">See all services</h3>
+                  <h3 className="text-[#6950F3]">See all services</h3>
                 </div>
               </Link>
             </Card>
@@ -186,15 +186,41 @@ const CarouselWithServices = ({
       ))}
 
       {showTopReviewsSalons && (
-        <> 
-          <h2 className="text-2xl"> 
-            Top Reviews of {categoryName} near you in {cityName}
-          </h2> 
-          <TopReviewsSalons />
-        </> 
+        <>
+          <div>
+            <h2 className="text-2xl">
+              Top Reviews of {categoryName} near you in {cityName}
+            </h2>
+            <TopReviewsSalons salons={salons} />
+          </div>
+
+          <div>
+            <div>
+              <h2 className="text-[23px] mt-10"> Book your next {categoryName} appointment in {cityName} with Fresha</h2>
+            </div>
+
+            <div className="mt-5 text-">
+              <span>
+                <Link to={"/"} className="text-[#6950F3]"> Fresha </Link> is the number one wellness hub in the world. We're the infusion of excellence you need right now. Fresha can pair you with your perfect <Link className="text-[#6950F3]">{categoryName}</Link> salon,  to offer your favourite treatments in Muscat. Simply search your area and pick your preferred appointment time. We'll even send your appointment reminder straight to your mobile. Just turn up, and we'll sort the rest.
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <span>
+                And we make booking in a breeze. Discover over {salons.length} hair salons in your area that are ready and waiting to make you feel like your best self. Businesses in Muscat are renowned for their top-notch quality, too. Over {salons.length} of them have above 4.5-star reviews. So you can book with confidence. But if you need a little more persuading, there are over 2 million authentic customer reviews on Fresha. With everything in one place, we think you'll find your new favourite spot in no time at all.
+              </span>
+            </div>
+
+            <div className="mt-5">
+              <span>
+                We've booked over 1 billion appointments already at Fresha. And with yours up next, we'll be achieving the next million at any moment. Making those stats possible are Fresha's 110,000 Oman and global business partners. They're using our free <Link className="text-[#6950F3]">booking software</Link>, which is packed with features for managing businesses large and small. We keep on getting better so that our business partners can do the same for you. So after your treatment, email <Link className="text-[#6950F3]"> hello@fresha.com </Link> to let us know how your Muscat appointment went. Go on, make yourself one of the many satisfied Fresha customers by booking in now.
+              </span>
+            </div>
+          </div>
+        </>
       )}
-    </> 
+    </>
   );
-}; 
+};
 
 export default CarouselWithServices;
