@@ -1,10 +1,11 @@
 import { StarFilled } from "@ant-design/icons";
 import { Card } from "antd";
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 import { useState } from "react";
 import TopReviewsSalons from "../reviews/TopReviewsSalons";
+import GetBookingApp from "../getBookingApp/GetBookingApp";
 
 const CarouselWithServices = ({
   salons,
@@ -14,16 +15,26 @@ const CarouselWithServices = ({
   showTopReviewsSalons,
   categoryName,
   cityName,
+  getCountrySalons,
 }) => {
   let firstNameBg = true;
 
+  let loadSameUrl
+
+  useEffect(() => {
+    // window.scrollTo(0, 0)
+    loadSameUrl = window.location.href
+  }, [triggerUseEffect])
+
+  // console.log(salons, "salons")
+
+  function triggerUseEffect() { }
 
   // salon is single salon item from salons
   const sliceNameAndPrice = (salon, firstNameBg) => {
     let getServices = [];
     let otherSimilarServices = [];
 
-    // console.log(salon, "salon");
 
     let getServicesFromSalon = () => {
       for (let serviceName of salon.serviceNameAndPrice) {
@@ -118,6 +129,15 @@ const CarouselWithServices = ({
   // used to show other salon heading
   let otherSalonName = showOtherSalonHeading();
 
+  let cityWithSubCategoryService = []
+
+  // console.log(getCountrySalons, "country")
+  // console.log(subCategoryName, "sub category")
+
+  for(let salons of getCountrySalons[0]){
+    // console.log(salons, "s")
+  }
+
   return (
     <>
       {salons.map((item, index) => (
@@ -201,7 +221,7 @@ const CarouselWithServices = ({
 
             <div className="mt-5 text-">
               <span>
-                <Link to={"/"} className="text-[#6950F3]"> Fresha </Link> is the number one wellness hub in the world. We're the infusion of excellence you need right now. Fresha can pair you with your perfect <Link className="text-[#6950F3]">{categoryName}</Link> salon,  to offer your favourite treatments in Muscat. Simply search your area and pick your preferred appointment time. We'll even send your appointment reminder straight to your mobile. Just turn up, and we'll sort the rest.
+                <Link to={"/"} className="text-[#6950F3]"> Fresha </Link> is the number one wellness hub in the world. We're the infusion of excellence you need right now. Fresha can pair you with your perfect <span onClick={() => triggerUseEffect()}> <Link to={loadSameUrl} className="text-[#6950F3]">{categoryName}</Link> </span> salon,  to offer your favourite treatments in Muscat. Simply search your area and pick your preferred appointment time. We'll even send your appointment reminder straight to your mobile. Just turn up, and we'll sort the rest.
               </span>
             </div>
 
@@ -217,6 +237,22 @@ const CarouselWithServices = ({
               </span>
             </div>
           </div>
+
+          <div>
+            <GetBookingApp />
+          </div>
+
+
+          <div className="mt-10">
+            <h2 className="text-2xl">
+              Browse Cities
+            </h2>
+
+            <div className="mt-5">
+              {categoryName} in 
+            </div>
+          </div>
+
         </>
       )}
     </>

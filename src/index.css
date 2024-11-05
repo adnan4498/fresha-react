@@ -27,6 +27,11 @@
   src: url("../public/fonts/rooberto/RoobertPRO-Bold.woff");
 }
 
+.tartufoo-bold{
+  font-family: "tartufoo-bold";
+  src: url("../public/fonts/tartuffo/Tartuffo_Trial-Bold-BF643371dae156a.otf");
+}
+
 .roberto-medium{
   font-family: "roberto-medium";
   src: url("../public/fonts/rooberto/RoobertPRO-Light.woff");

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useMatches } from "react-router-dom";
 import globalSalons from "../../data/salondata/global/globalSalonData";
-import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import Carousel from "react-multi-carousel";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
