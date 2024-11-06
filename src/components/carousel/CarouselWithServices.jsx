@@ -134,7 +134,7 @@ const CarouselWithServices = ({
   // console.log(getCountrySalons, "country")
   // console.log(subCategoryName, "sub category")
 
-  for(let salons of getCountrySalons[0]){
+  for(let salons of getCountrySalons){
     // console.log(salons, "s")
   }
 
