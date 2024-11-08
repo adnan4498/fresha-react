@@ -72,34 +72,16 @@ const CitySalons = () => {
 
     let removeZeroInCountrySalonsArr = []
 
+    CountrySalons[0].forEach(item => removeZeroInCountrySalonsArr.push(item))
 
-    // // CountrySalons = CountrySalons[0] 
-    // CountrySalons[0].forEach(item => item)
-    CountrySalons[0].forEach(item => removeZeroInCountrySalonsArr.push(item))  
-    
     return removeZeroInCountrySalonsArr
   }
-  
+
   let getCountrySalons = countrySalons()
 
 
-  const makingOfAllServicesArray2 = () => {
-    // allDubaiSalons
-    // allPakistanSalons
-    // allOmanSalons
-
-    // let allCountrySalons = [allDubaiSalons, allOmanSalons, allPakistanSalons]
-
-    // let getCountrySalons = []
-
-    // for (let country of allCountrySalons) {
-    //   for (let salons of country) {
-    //     if (salons.city == getCity) {
-    //       getCountrySalons.push(country)
-    //       break;
-    //     }
-    //   }
-    // }
+  // this will add allServices obj in all salons across country
+  const makingOfAllServicesArray = () => {
 
     let countrySalonsServices = [];
     let countryServicesWithoutTitles = [];
@@ -155,117 +137,28 @@ const CitySalons = () => {
 
   }
 
-  makingOfAllServicesArray2()
+  makingOfAllServicesArray()
 
 
-  // const makingOfAllServicesArray = () => {
-  //   let citySalonsServices = [];
-  //   let servicesWithoutTitles = [];
-  //   let getAllServices = [];
-  //   let servicesWithNamesAndPrice = [];
+  let seperateCityAndCountrySalons = () => {
 
-  //   let theSalons = citySalons.concat(getCountrySalons[0])
+    let seperatedCitySalons = []
 
-
-  //   citySalons.forEach((item) => citySalonsServices.push(item.services));
-
-  //   citySalonsServices.forEach((item) =>
-  //     servicesWithoutTitles.push(Object.values(item))
-  //   );
-
-  //   servicesWithoutTitles.forEach(
-  //     (item) => (getAllServices = getAllServices.concat([item]))
-  //   );
-
-  //   // got all services without titles as arrays and pushed back in citySalons array
-  //   getAllServices.forEach((item, i) =>
-  //     Object.assign(citySalons[i], { allServices: item })
-  //   );
-
-  //   // each empty array will get services
-  //   for (let item of getAllServices) {
-  //     servicesWithNamesAndPrice.push([]);
-  //   }
-
-  //   // extracting services of salons in order
-  //   // and pushing into servicesWithNamesAndPrice
-  //   for (let i = 0; i < getAllServices.length; i++) {
-  //     for (let services of getAllServices[i]) {
-  //       for (let service of services) {
-  //         // prevents duplicates
-  //         // first item gets pushed by default (servicesWithNamesAndPrice is empty at first)
-  //         let duplicateFound = servicesWithNamesAndPrice[i]?.some((item) =>
-  //           service.name.includes(item.name)
-  //         );
-  //         duplicateFound ? "" : servicesWithNamesAndPrice[i]?.push(service);
-  //       }
-  //     }
-  //   }
-
-  //   // pick salon in order, pushes serviceWithNameAndPrice obj into it
-  //   // each salon gets accurate obj
-  //   for (let i = 0; i < citySalons.length; i++) {
-  //     for (let j = 0; j < servicesWithNamesAndPrice.length; j++) {
-  //       Object.assign(citySalons[i], {
-  //         serviceNameAndPrice: servicesWithNamesAndPrice[i],
-  //       });
-  //     }
-  //   }
-
-  // };
-
-  // makingOfAllServicesArray();
-
-
-  let seperatedCitySalons = []
-  let seperatedCountrySalons = []
-
-   for(let i = 0; i < citySalons.length; i++){
-    for(let j = 0; j < getCountrySalons.length; j++ ){
-      if(citySalons[i].name == getCountrySalons[j].name){
-        // console.log(getCou)
-        seperatedCitySalons.push(getCountrySalons[j])
-        getCountrySalons.splice(j, 1)
+    for (let i = 0; i < citySalons.length; i++) {
+      for (let j = 0; j < getCountrySalons.length; j++) {
+        if (citySalons[i].name == getCountrySalons[j].name) {
+          seperatedCitySalons.push(getCountrySalons[j])
+          getCountrySalons.splice(j, 1)
+        }
       }
-      // else{
-      //   seperatedCountrySalons.push(getCountrySalons[j])
-      // }
     }
+
+    // includes allServices obj
+    return seperatedCitySalons
   }
 
-  console.log(seperatedCitySalons, "seperated city")
-  // console.log(seperatedCountrySalons, "seperated country")
-  console.log(getCountrySalons, "getCountrySalons")
-
-
-
-
-
-  // for(let cityItems of  citySalons){
-  //   for(let countryItems of  getCountrySalons){
-  //     if(cityItems.name == countryItems.name){
-  //       seperatedCitySalons.push(countryItems)
-  //       getCountrySalons.splice(countryItems, 0)
-  //     }
-  //     else{
-  //       seperatedCountrySalons.push(countryItems)
-  //     }
-  //   }
-  // }
-
- 
-
-  // let seperatedCountrySalons2 = removingDuplicates(seperatedCountrySalons)
-
-  // console.log(seperatedCountrySalons2, "2")
-
-  // let aaa = ["a", "b", "c", "d"]
-
-  // aaa.splice(3,1)
-
-  // console.log(aaa, "aaa")
-
-  citySalons = seperatedCitySalons
+  // citySalons gets allServices obj 
+  citySalons = seperateCityAndCountrySalons()
 
 
   const seperatingSubCategoryNames = () => {
@@ -310,12 +203,11 @@ const CitySalons = () => {
   let categoryNameToRender = getSubCategory ? getSubCategory : category;
   let cityNameToRender = getCityFromSubCategory ? getCityFromSubCategory : city;
 
-
   let gettingOtherSimmillarSalons = () => {
     let getOtherSimillarSalons = [];
     for (let i = 0; i < citySalons.length; i++) {
       // prevents duplicates to be pushed
-      let duplicateFound = salonsToRender?.some((item) =>
+      let duplicateFound = salonsToRender?.some((item) => 
         citySalons[i].name.includes(item.name)
       );
       duplicateFound ? "" : getOtherSimillarSalons.push(citySalons[i]);

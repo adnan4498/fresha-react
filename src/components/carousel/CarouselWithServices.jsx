@@ -17,6 +17,10 @@ const CarouselWithServices = ({
   cityName,
   getCountrySalons,
 }) => {
+
+  const [cityService, setCityService] = useState()
+
+
   let firstNameBg = true;
 
   let loadSameUrl
@@ -134,9 +138,40 @@ const CarouselWithServices = ({
   // console.log(getCountrySalons, "country")
   // console.log(subCategoryName, "sub category")
 
-  for(let salons of getCountrySalons){
-    // console.log(salons, "s")
+
+  let sameCityServices = () => {
+    let sameServiceInOtherCities = []
+    for (let salons of getCountrySalons) {
+      for (let services of salons.serviceNameAndPrice) {
+        // console.log(services.name == subCategoryName, "salons")
+        services.name == subCategoryName && sameServiceInOtherCities.push(salons)
+      }
+    }
+
+    // let moneyTransfer = "https://tangopay.co.uk/money-transfer/how-long-does-money-transfer-take"
+
+    // let isMoney = moneyTransfer.includes("/money-transfer/")
+
+    // isMoney ? moneyTransfer.replace("/money-transfer/", "/blog/") : ""
+
+    // let aaa = moneyTransfer.replace("/money-transfer/", "/blog/")
+
+    // console.log(aaa, "aaa")
+
+    // console.log(moneyTransfer, "money transfer")
+
+
+    // return sameServiceInOtherCities
+    console.log(sameServiceInOtherCities, "i")
   }
+
+  sameCityServices()
+  // console.log(sameCityServices())
+
+  // setTimeout(() => {
+  // }, 2000);
+
+  // console.log(cityService, "cs")
 
   return (
     <>
@@ -248,9 +283,16 @@ const CarouselWithServices = ({
               Browse Cities
             </h2>
 
-            <div className="mt-5">
-              {categoryName} in 
-            </div>
+            {cityService && (
+              cityService.map((item, i) => (
+                <div key={i} className="mt-5 ">
+                  <div className="flex">
+                    {categoryName} in {item.name}
+                  </div>
+                </div>
+              ))
+            )}
+
           </div>
 
         </>
