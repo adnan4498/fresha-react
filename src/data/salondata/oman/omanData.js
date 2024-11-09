@@ -1469,6 +1469,21 @@ export const nizwaSalons = [
         memberImg: "../../../../public/images/salons/alRawda/member-laila.jpg",
       },
     ],
+    customerReviews: [
+      {
+        customerName: "Nada Al-Balushi",
+        reviewDateTime: "Wed, 20 Sep 2024 at 1:45pm",
+        customerReviewStars: 5,
+        customerReviewMessage: "Loved the gel manicure! Perfect finish.",
+      },
+      {
+        customerName: "Maryam A.",
+        reviewDateTime: "Fri, 8 Sep 2024 at 2:20pm",
+        customerReviewStars: 4,
+        customerReviewMessage:
+          "Sara is amazing, highly recommend her services.",
+      },
+    ],
     openingTimes: {
       Tuesday: [{ opening: "10:00", closing: "20:00" }],
       Sunday: [{ opening: "11:00", closing: "19:00" }],

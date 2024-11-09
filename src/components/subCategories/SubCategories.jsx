@@ -2,11 +2,10 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import settingSubCategoryName from "../../ownModules/categoryData/categoryAndSubCategory";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
+import generateSubCategoryLink from "../../ownModules/categoryData/generateSubCategoryLink";
 
 const SubCategories = ({ salon }) => {
   let navigate = useNavigate();
-
-  console.log(salon, "salon ")
 
   const getServiceNamesFromSalon = () => {
     let getServices = salon.map((item) => item.services);
@@ -39,28 +38,31 @@ const SubCategories = ({ salon }) => {
 
   let allCitySalonsServiceNames = getServiceNamesFromSalon();
 
-  const generateSubCategoryLink = (subCategory) => {
-    let getCategory = settingSubCategoryName(subCategory);
+  // const generateSubCategoryLink = (subCategory) => {
+  //   // let getCategory = settingSubCategoryName(subCategory);
 
-    let city = salon[0].city
+  //   console.log(subCategory, "gg")
+    
+  //   let city = salon[0].city
 
-    let subCategoryAndCity = [subCategory, city];
+  //   let subCategoryAndCity = [subCategory, city];
 
-    subCategoryAndCity = subCategoryAndCity.join(" ");
+  //   subCategoryAndCity = subCategoryAndCity.join(" ");
 
-    let subCategoryUrl = `/dynamic-category/${getCategory}/subCategoryRouteKey/${subCategoryAndCity}`;
+  //   let subCategoryUrl = `/dynamic-category/${subCategory}/subCategoryRouteKey/${subCategoryAndCity}`;
 
-    navigate(subCategoryUrl);
-  };
-
-  console.log(allCitySalonsServiceNames, "all city salon");
+  //   // navigate(subCategoryUrl);
+  // };
 
   return (
     <div className="grid grid-flow-col grid-rows-6 gap-3 w-[1700px]">
       {allCitySalonsServiceNames.map((item, index) => (
-        <div onClick={() => generateSubCategoryLink(item)}>
+        <>
+        {console.log(salon, "iii")}
+        <div onClick={() => generateSubCategoryLink(salon, item, navigate)}>
           <div>{item}</div>
         </div>
+        </>
       ))}
     </div>
   );

@@ -56,6 +56,7 @@ const TopReviewsSalons = ({ salons }) => {
     return countingStars;
   };
 
+
   return (
     <div className=''>
       <div className='text-base mt-2'>

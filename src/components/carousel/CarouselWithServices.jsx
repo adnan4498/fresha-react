@@ -6,6 +6,8 @@ import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicat
 import { useState } from "react";
 import TopReviewsSalons from "../reviews/TopReviewsSalons";
 import GetBookingApp from "../getBookingApp/GetBookingApp";
+import settingSubCategoryName from "../../ownModules/categoryData/categoryAndSubCategory";
+import generateSubCategoryLink from "../../ownModules/categoryData/generateSubCategoryLink";
 
 const CarouselWithServices = ({
   salons,
@@ -18,7 +20,7 @@ const CarouselWithServices = ({
   getCountrySalons,
 }) => {
 
-  const [cityService, setCityService] = useState()
+  let navigate = useNavigate();
 
 
   let firstNameBg = true;
@@ -30,7 +32,6 @@ const CarouselWithServices = ({
     loadSameUrl = window.location.href
   }, [triggerUseEffect])
 
-  // console.log(salons, "salons")
 
   function triggerUseEffect() { }
 
@@ -135,41 +136,28 @@ const CarouselWithServices = ({
 
   let cityWithSubCategoryService = []
 
-  // console.log(getCountrySalons, "country")
-  // console.log(subCategoryName, "sub category")
+  // console.log(subCategoryName)
 
+  // console.log(getCountrySalons, "in carousel")
 
+  let sameServiceInOtherCities = []
   let sameCityServices = () => {
-    let sameServiceInOtherCities = []
     for (let salons of getCountrySalons) {
       for (let services of salons.serviceNameAndPrice) {
-        // console.log(services.name == subCategoryName, "salons")
         services.name == subCategoryName && sameServiceInOtherCities.push(salons)
       }
     }
 
-    // let moneyTransfer = "https://tangopay.co.uk/money-transfer/how-long-does-money-transfer-take"
-
-    // let isMoney = moneyTransfer.includes("/money-transfer/")
-
-    // isMoney ? moneyTransfer.replace("/money-transfer/", "/blog/") : ""
-
-    // let aaa = moneyTransfer.replace("/money-transfer/", "/blog/")
-
-    // console.log(aaa, "aaa")
-
-    // console.log(moneyTransfer, "money transfer")
-
-
-    // return sameServiceInOtherCities
-    console.log(sameServiceInOtherCities, "i")
+    // console.log(sameServiceInOtherCities, "i")
   }
 
   sameCityServices()
+
   // console.log(sameCityServices())
 
-  // setTimeout(() => {
-  // }, 2000);
+  // setInterval(() => {
+  //   console.log(sameCityServices())
+  // }, 3000);
 
   // console.log(cityService, "cs")
 
@@ -283,16 +271,17 @@ const CarouselWithServices = ({
               Browse Cities
             </h2>
 
-            {cityService && (
-              cityService.map((item, i) => (
-                <div key={i} className="mt-5 ">
-                  <div className="flex">
-                    {categoryName} in {item.name}
+            <div className="mt-8">
+              {sameServiceInOtherCities && (
+                sameServiceInOtherCities.map((item, i) => (
+                  <div key={i} onClick={() => generateSubCategoryLink(item, subCategoryName, navigate)} className="mt-3 text-[15px] font-medium">
+                    <div className="flex">
+                      {categoryName} in {item.city}
+                    </div>
                   </div>
-                </div>
-              ))
-            )}
-
+                ))
+              )}
+            </div>
           </div>
 
         </>

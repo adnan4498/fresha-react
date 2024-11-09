@@ -94,7 +94,6 @@ const CitySalons = () => {
       countryServicesWithoutTitles.push(Object.values(item))
     );
 
-
     countryServicesWithoutTitles.forEach(
       (item) => (getAllCountryServices = getAllCountryServices.concat([item]))
     );
@@ -127,14 +126,19 @@ const CitySalons = () => {
 
     // pick salon in order, pushes serviceWithNameAndPrice obj into it
     // each salon gets accurate obj
-    for (let i = 0; i < getCountrySalons.length; i++) {
-      for (let j = 0; j < countryServicesWithNamesAndPrice.length; j++) {
-        Object.assign(getCountrySalons[i], {
-          serviceNameAndPrice: countryServicesWithNamesAndPrice[j],
-        });
-      }
-    }
+    // for (let i = 0; i < getCountrySalons.length; i++) {
+    //   // for (let j = 0; j < countryServicesWithNamesAndPrice.length; j++) {
+    //     Object.assign(getCountrySalons[i], {
+    //       serviceNameAndPrice: countryServicesWithNamesAndPrice[i],
+    //     });
+    //   // }
 
+
+    // }
+
+    // pick salon in order, pushes serviceWithNameAndPrice obj into it
+    getCountrySalons.forEach((item, i) => Object.assign(item, { serviceNameAndPrice: countryServicesWithNamesAndPrice[i] }))
+    
   }
 
   makingOfAllServicesArray()
@@ -207,7 +211,7 @@ const CitySalons = () => {
     let getOtherSimillarSalons = [];
     for (let i = 0; i < citySalons.length; i++) {
       // prevents duplicates to be pushed
-      let duplicateFound = salonsToRender?.some((item) => 
+      let duplicateFound = salonsToRender?.some((item) =>
         citySalons[i].name.includes(item.name)
       );
       duplicateFound ? "" : getOtherSimillarSalons.push(citySalons[i]);
@@ -224,6 +228,7 @@ const CitySalons = () => {
 
   let isSeperatedCategory = true
   let showTopReviewsSalons = true
+
 
   return (
     <div>
