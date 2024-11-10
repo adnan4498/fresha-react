@@ -136,9 +136,6 @@ const CarouselWithServices = ({
 
   let cityWithSubCategoryService = []
 
-  // console.log(subCategoryName)
-
-  // console.log(getCountrySalons, "in carousel")
 
   let sameServiceInOtherCities = []
   let sameCityServices = () => {
@@ -148,18 +145,9 @@ const CarouselWithServices = ({
       }
     }
 
-    // console.log(sameServiceInOtherCities, "i")
   }
 
   sameCityServices()
-
-  // console.log(sameCityServices())
-
-  // setInterval(() => {
-  //   console.log(sameCityServices())
-  // }, 3000);
-
-  // console.log(cityService, "cs")
 
   return (
     <>

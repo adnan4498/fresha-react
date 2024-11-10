@@ -54,11 +54,11 @@ const SubCategories = ({ salon }) => {
   //   // navigate(subCategoryUrl);
   // };
 
+  {console.log(salon, "iii")}
   return (
     <div className="grid grid-flow-col grid-rows-6 gap-3 w-[1700px]">
       {allCitySalonsServiceNames.map((item, index) => (
         <>
-        {console.log(salon, "iii")}
         <div onClick={() => generateSubCategoryLink(salon, item, navigate)}>
           <div>{item}</div>
         </div>
