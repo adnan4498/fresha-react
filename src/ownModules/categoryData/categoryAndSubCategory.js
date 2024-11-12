@@ -12,6 +12,7 @@ const settingSubCategoryName = (subCategoryName) => {
     "Beard Shaping",
     "Haircut",
     "Premium Beard Grooming",
+    "Hair Styling",
   ];
 
   let nailServices = [
@@ -28,6 +29,8 @@ const settingSubCategoryName = (subCategoryName) => {
     "Aromatherapy Massage",
     "Foot Reflexology",
     "Swedish Massage",
+    "Foot Massage",
+    "Ultimate Glam Package",
   ];
 
   let waxServices = [
@@ -49,6 +52,8 @@ const settingSubCategoryName = (subCategoryName) => {
     "Body Scrub",
     "Hydration Facial",
     "Hydrating Facial",
+    "Bridal Makeup Package",
+    "Party Makeup",
   ];
 
   if (hairServices.includes(subCategoryName)) {

@@ -7,8 +7,27 @@ import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import { Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import SubCategories from "../../components/subCategories/SubCategories";
+import { Button, Drawer } from 'antd';
 
 const ActualSalon = () => {
+
+  const [open, setOpen] = useState(false);
+  const [drawerObj, setDrawerObj] = useState({
+    name: "",
+    duration: "",
+    price: "",
+  })
+
+  const showDrawer = (item) => {
+    // setOpen(true);
+
+
+
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -31,29 +50,17 @@ const ActualSalon = () => {
   };
 
   let match = useMatches();
-  
-  console.log(match, "match")
 
   // get same city salons but not the actual salon (its already being displayed)
   let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
-
-  // console.log(getNearbySalons, "get nearby salons")
 
   let getCitySalons = globalSalons.filter(
     (item) => item.name == match[0].params.name
   );
 
   const {
-    id,
-    name,
-    rating,
-    reviews,
-    city,
-    gender,
     img1,
     innerImgs,
-    salonSlug,
-    speciality,
   } = getCitySalons[0];
 
   let theSalon = getCitySalons;
@@ -63,32 +70,69 @@ const ActualSalon = () => {
 
   let getServices = theSalon[0].services;
 
+
+  // service heading first letter capitalized
+  const serviceCapitalized = () => {
+    let capitalized = Object.keys(getServices).map((item) => {
+      let qomaReplaced = item.replaceAll("_", " ")
+
+      let firstLetter = qomaReplaced[0]
+      let makefirstLetterCapital = qomaReplaced[0].toUpperCase()
+
+      let replaceFirstLetter = qomaReplaced.replace(firstLetter, makefirstLetterCapital)
+      return replaceFirstLetter
+    })
+    return capitalized
+  }
+
+  let getServicesCapital = serviceCapitalized()
+
+  let removeUnderscore = () => {
+    let underScoreRemoved = {}
+    let getServiceValues = []
+
+    Object.values(getServices).forEach(item => getServiceValues.push(item))
+
+    for (let i = 0; i < getServicesCapital.length; i++) {
+      underScoreRemoved[getServicesCapital[i]] = Object.values(getServiceValues[i]).map(item => item)
+    }
+    return underScoreRemoved
+  }
+
+  let servicesWithoutUnderscore = removeUnderscore()
+
+
   let tabItems = [];
 
-  Object.entries(getServices).forEach((item, index) => {
+  let getDivs = (item) => {
+    console.log(item)
+  }
+
+  Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
       key: item[0],
       label: <h3 className="text-base text-blue-500"> {item[0]} </h3>,
       children: (
         <>
           {item[1].map((service, index) => (
-            <div className="mt-5">
-              <div>
-                <p className="text-xl">{service.name}</p>
-              </div>
-              <div>
-                <h3>{service.duration}</h3>
-              </div>
+            <div onClick={() => showDrawer(item)} className="mt-5 flex justify-between items-center" >
+              <div onClick={(e) => getDivs(e.target)}>
+                <div>
+                  <p className="text-xl">{service.name}</p>
+                </div>
+                <div>
+                  <h3>{service.duration}</h3>
+                </div>
 
-              <div className="mt-3">
-                <h3>{service.price}</h3>
+                <div className="mt-3">
+                  <h3>{service.price}</h3>
+                </div>
               </div>
-              {/* <hr className="mt-3"></hr> */}
+              <div className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+                Book
+              </div>
             </div>
           ))}
-          <div>
-            <div></div>
-          </div>
         </>
       ),
     });
@@ -183,6 +227,18 @@ const ActualSalon = () => {
             </div>
           </div>
         </div>
+
+        <Button type="primary" >
+          Open
+        </Button>
+        <Drawer title="Basic Drawer" onClose={onClose} open={open} placement={"left"}
+          className="my-drawer2"
+        >
+          {drawerObj.name}
+          {drawerObj.duration}
+          {drawerObj.price}
+        </Drawer>
+
 
         <div className="">
           <div>
@@ -312,7 +368,6 @@ const ActualSalon = () => {
                 </div>
               )}
 
-              {/* {console.log(item[1], "1111")} */}
             </div>
           ))}
         </div>
@@ -354,6 +409,7 @@ const ActualSalon = () => {
         <div className=" overflow-x-scroll">
           <SubCategories salon={getNearbySalons} />
         </div>
+
       </div>
     </>
   );

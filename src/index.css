@@ -121,10 +121,20 @@ span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outli
 
 /* antd drawer */
 
-.ant-drawer-content-wrapper{
+.ant-drawer-content-wrapper  { 
   height: 100vh !important;
 }
 
-:where(.css-dev-only-do-not-override-ccdg5a).ant-drawer .ant-drawer-header{
-  border-bottom: 0px 
+.ant-drawer-content-wrapper .my-drawer2 { 
+  width: 300px !important;
 }
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-drawer .hamburger-drawer-class{
+  border-bottom: 0px; 
+}
+
+:where(.css-dev-only-do-not-override-ccdg5a).ant-drawer-left>.ant-drawer-content-wrapper {
+  box-shadow: 0px 0 0px 0 rgba(0, 0, 0, 0), 0px 0 0px 0px rgba(0, 0, 0, 0), 0px 0 0px 0px rgba(0, 0, 0, 0) !important;
+}
+
+
