@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useMatches } from "react-router-dom";
+import { Link, useLocation, useMatches, useNavigate, useParams } from "react-router-dom";
 import globalSalons from "../../data/salondata/global/globalSalonData";
 import Carousel from "react-multi-carousel";
 import { StarFilled, StarOutlined } from "@ant-design/icons";
@@ -8,48 +8,28 @@ import { Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import SubCategories from "../../components/subCategories/SubCategories";
 import { Button, Drawer } from 'antd';
+import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
+import BookingServices from "../bookings/BookingServices";
 
 const ActualSalon = () => {
+  let location = useLocation();
+
+  let navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
-  const [drawerObj, setDrawerObj] = useState({
-    name: "",
-    duration: "",
-    price: "",
-  })
+  const [drawerObj, setDrawerObj] = useState({})
 
-  const showDrawer = (item) => {
-    // setOpen(true);
-
-
-
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      partialVisibilityGutter: 70,
-    },
-  };
+  let partialVisibilityGutter = 70
+  const responsive = carouselResponsiveCode(partialVisibilityGutter)
 
   let match = useMatches();
+
+  let categoryName = match[0].params.category
+  let cityName = match[0].params.city
+  let salonName = match[0].params.name
+  let hi = "hi"
+
+
 
   // get same city salons but not the actual salon (its already being displayed)
   let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
@@ -104,19 +84,20 @@ const ActualSalon = () => {
 
   let tabItems = [];
 
-  let getDivs = (item) => {
-    console.log(item)
-  }
 
-  Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
-    tabItems.push({
+
+
+  let bb = Object.entries(servicesWithoutUnderscore).map((item, index) => (
+    {
       key: item[0],
       label: <h3 className="text-base text-blue-500"> {item[0]} </h3>,
       children: (
         <>
           {item[1].map((service, index) => (
-            <div onClick={() => showDrawer(item)} className="mt-5 flex justify-between items-center" >
-              <div onClick={(e) => getDivs(e.target)}>
+            <div onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
+              <div
+                onClick={(e) => getServiceParentDiv(e.currentTarget)}
+              >
                 <div>
                   <p className="text-xl">{service.name}</p>
                 </div>
@@ -128,15 +109,66 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              <div className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+              {/* <Link to={`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`}> */}
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: "hi" })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+                Book 
+              </div>
+              {/* </Link> */}
+            </div>
+          ))}
+        </>
+      ),
+    }
+  ));
+
+  console.log(bb, "bbb")
+
+
+  Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
+    tabItems.push({
+      key: item[0],
+      label: <h3 className="text-base text-blue-500"> {item[0]} </h3>,
+      children: (
+        <>
+          {item[1].map((service, index) => (
+            <div onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
+              <div
+                onClick={(e) => getServiceParentDiv(e.currentTarget)}
+              >
+                <div>
+                  <p className="text-xl">{service.name}</p>
+                </div>
+                <div>
+                  <h3>{service.duration}</h3>
+                </div>
+
+                <div className="mt-3">
+                  <h3>{service.price}</h3>
+                </div>
+              </div>
+              {/* <Link to={`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`}> */}
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state:JSON.stringify({hi : bb})   })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
                 Book
               </div>
+              {/* </Link> */}
             </div>
           ))}
         </>
       ),
     });
   });
+
+  let getServiceParentDiv = (parent) => {
+    let childrens = Array.from(parent.children)
+
+    let serviceValueObj = {}
+
+    serviceValueObj.name = childrens[0].textContent
+    serviceValueObj.duration = childrens[1].textContent
+    serviceValueObj.price = childrens[2].textContent
+
+    setDrawerObj(serviceValueObj)
+  }
 
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
@@ -162,6 +194,10 @@ const ActualSalon = () => {
     return countingStars;
   };
 
+  const onClose = () => {
+    setOpen(false);
+  };
+
   let getTimings = theSalon[0].openingTimes;
 
   return (
@@ -169,6 +205,7 @@ const ActualSalon = () => {
       <div className="mt-5 relative">
         <BreadCrumbs />
       </div>
+
 
       <div className="mt-10 overflow-x-hidden">
         <div className="full-width-class">
@@ -228,9 +265,6 @@ const ActualSalon = () => {
           </div>
         </div>
 
-        <Button type="primary" >
-          Open
-        </Button>
         <Drawer title="Basic Drawer" onClose={onClose} open={open} placement={"left"}
           className="my-drawer2"
         >

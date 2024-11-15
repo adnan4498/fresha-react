@@ -13,6 +13,7 @@ import { StarFilled } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import globalSalons from "../../data/salondata/global/globalSalonData";
+import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
 
 const DynamicCategory = () => {
   let urlParam = useParams();
@@ -48,26 +49,8 @@ const DynamicCategory = () => {
     bgBanner = "barber-shop-bg-banner";
   }
 
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      partialVisibilityGutter: 100,
-    },
-  };
+  let partialVisibilityGutter = 100
+  const responsive = carouselResponsiveCode(partialVisibilityGutter)
 
   const categoryInCountries = [
     {

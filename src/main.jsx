@@ -1,10 +1,11 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import * as ReactDOM from "react-dom/client";
 import Container from "./container/Container";
 import {
   createBrowserRouter,
   Outlet,
   RouterProvider,
+  useLocation,
 } from "react-router-dom";
 import "./index.css";
 import Home from "./Home";
@@ -13,6 +14,7 @@ import ErrorPage from "./components/Error/ErrorPage";
 import Header from "./shared/Header";
 import CitySalons from "./pages/categories/CitySalons";
 import ActualSalon from "./pages/categories/ActualSalon";
+import BookingServices from "./pages/bookings/BookingServices";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +48,11 @@ const router = createBrowserRouter([
         element: <ActualSalon />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/dynamic-category/:category/:city/:name/:serviceName",
+        element: <BookingServices />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 
@@ -64,6 +71,13 @@ const router = createBrowserRouter([
 
 // now Link={"/"} on navbar logo will work
 function NavbarWrapper() {
+
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   console.log("Route changed:", location.pathname);
+  // }, [location.pathname]);
+
   return (
     <div>
       <Header />

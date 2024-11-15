@@ -2,29 +2,12 @@ import { StarFilled } from '@ant-design/icons'
 import React from 'react'
 import Carousel from 'react-multi-carousel';
 import { Link } from 'react-router-dom';
+import { carouselResponsiveCode } from '../../ownModules/responsive/responsive';
 
 const TopReviewsSalons = ({ salons }) => {
 
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      partialVisibilityGutter: 20,
-    },
-  };
+  let partialVisibilityGutter = 20
+  const responsive = carouselResponsiveCode(partialVisibilityGutter)
 
   let totalReviews = salons.map(item => Number(item.reviews)).reduce((acc, currentVal) => acc + currentVal)
 
