@@ -48,12 +48,12 @@ const router = createBrowserRouter([
         element: <ActualSalon />,
         errorElement: <ErrorPage />,
       },
-      {
-        path: "/dynamic-category/:category/:city/:name/:serviceName",
-        element: <BookingServices />,
-        errorElement: <ErrorPage />,
-      },
     ],
+  },
+  {
+    path: "/dynamic-category/:category/:city/:name/:serviceName",
+    element: <BookingServices />,
+    errorElement: <ErrorPage />,
   },
 
   // {

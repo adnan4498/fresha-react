@@ -81,48 +81,7 @@ const ActualSalon = () => {
 
   let servicesWithoutUnderscore = removeUnderscore()
 
-
   let tabItems = [];
-
-
-
-
-  let bb = Object.entries(servicesWithoutUnderscore).map((item, index) => (
-    {
-      key: item[0],
-      label: <h3 className="text-base text-blue-500"> {item[0]} </h3>,
-      children: (
-        <>
-          {item[1].map((service, index) => (
-            <div onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
-              <div
-                onClick={(e) => getServiceParentDiv(e.currentTarget)}
-              >
-                <div>
-                  <p className="text-xl">{service.name}</p>
-                </div>
-                <div>
-                  <h3>{service.duration}</h3>
-                </div>
-
-                <div className="mt-3">
-                  <h3>{service.price}</h3>
-                </div>
-              </div>
-              {/* <Link to={`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`}> */}
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: "hi" })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
-                Book 
-              </div>
-              {/* </Link> */}
-            </div>
-          ))}
-        </>
-      ),
-    }
-  ));
-
-  console.log(bb, "bbb")
-
 
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
@@ -133,7 +92,7 @@ const ActualSalon = () => {
           {item[1].map((service, index) => (
             <div onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
               <div
-                onClick={(e) => getServiceParentDiv(e.currentTarget)}
+                onClick={(e) => getServicesTextContext(e.currentTarget)}
               >
                 <div>
                   <p className="text-xl">{service.name}</p>
@@ -146,11 +105,9 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              {/* <Link to={`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`}> */}
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state:JSON.stringify({hi : bb})   })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: ({ ...servicesWithoutUnderscore }) })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
                 Book
               </div>
-              {/* </Link> */}
             </div>
           ))}
         </>
@@ -158,7 +115,7 @@ const ActualSalon = () => {
     });
   });
 
-  let getServiceParentDiv = (parent) => {
+  let getServicesTextContext = (parent) => {
     let childrens = Array.from(parent.children)
 
     let serviceValueObj = {}
