@@ -1,47 +1,74 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Tabs } from "antd";
 import { useLocation } from 'react-router-dom';
 
 const BookingServices = () => {
+    const [activeHeading, setActiveHeading] = useState()
 
     const location = useLocation();
 
     let services = location.state
     let headingRef = useRef()
 
-    function logit() {
-        console.log(window.pageYOffset);
-    }
-
     useEffect(() => {
-        function watchScroll() {
-            window.addEventListener("scroll", logit);
-        }
-        watchScroll();
-        return () => {
-            window.removeEventListener("scroll", logit);
-        };
-    });
 
+        const getAllElements = [...document.querySelectorAll(".headingClass")]
+        const getAllElementsHeadings = document.querySelectorAll(".headingClass")
+
+        window.addEventListener('scroll', () => {
+            (myfunction(getAllElements, getAllElementsHeadings))
+        });
+    }, [])
+
+
+    function myfunction(ele, headings) {
+        const getEleValues = ele.map(el => el.getBoundingClientRect())
+
+        let valueAndHeadingEle = []
+
+        getEleValues.forEach((item, i) => valueAndHeadingEle.push([item, headings[i]]))
+
+        valueAndHeadingEle.forEach((item, i) => {
+            // if(item[0].top <= 300 && item[0].top >= 0){
+            if (item[0].top >= 0 &&
+                item[0].left >= 0 &&
+                item[0].bottom <= (
+                    window.innerHeight ||
+                    document.documentElement.clientHeight) &&
+                item[0].right <= (
+                    window.innerWidth ||
+                    document.documentElement.clientWidth)) {
+
+                let nodeToArr = item[1].textContent.split("")
+                nodeToArr.shift()
+                nodeToArr.pop()
+
+                let heading = nodeToArr.join("")
+                setActiveHeading(heading)
+            }
+        })
+    }
 
     return (
         <>
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
-                        <div className="" key={index}>
+                        <a href={`#${item[0]}`}>
+                        <div id={item[0]} className={`${item[0] == activeHeading && "bg-red-500"}`} key={index}>
                             {item[0]}
                         </div>
+                        </a>
                     ))}
                 </div>
             </div>
 
 
-            <div ref={headingRef} className='my-20'>
+            <div className='my-20'>
                 {Object.entries(services).map((item, index) => (
                     <>
                         <div className='my-10'>
-                            <h2> {item[0]} </h2>
+                            <h2 className='headingClass' ref={headingRef} id={`heading-id-${index}`}> {item[0]} </h2>
                         </div>
                         <div className='w-full'>
                             <>
@@ -72,6 +99,17 @@ const BookingServices = () => {
             </div>
 
 
+            <div id="div1" class="myDiv bg-blue-300">
+                one
+            </div>
+
+            <div class="h-[800px] my-[50px] bg-orange-500">
+                one
+            </div>
+
+            <div id="div2" class="myDiv bg-red-300">
+                one
+            </div>
 
             {/* <div className="text-lg border border-gray-300 rounded-lg text-center py-2 mt-10">
                 <p>Continue</p>
