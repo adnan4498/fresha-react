@@ -3,6 +3,7 @@ import HeroSection from "./homeComponents/HeroSection";
 import SalonCarousels from "./homeComponents/SalonCarousels";
 
 function Home() {
+
   return (
     <>
       <HeroSection />

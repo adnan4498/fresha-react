@@ -51,7 +51,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/dynamic-category/:category/:city/:name/:serviceName",
+    path: "/dynamic-category/:category/:city/:name/bookingService",
     element: <BookingServices />,
     errorElement: <ErrorPage />,
   },

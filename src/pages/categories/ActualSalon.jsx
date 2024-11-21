@@ -10,6 +10,7 @@ import SubCategories from "../../components/subCategories/SubCategories";
 import { Button, Drawer } from 'antd';
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
 import BookingServices from "../bookings/BookingServices";
+import { abuDhabiSalons } from "../../data/salondata/dubai/dubaiData";
 
 const ActualSalon = () => {
   let location = useLocation();
@@ -90,10 +91,12 @@ const ActualSalon = () => {
       children: (
         <>
           {item[1].map((service, index) => (
-            <div onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
-              <div
-                onClick={(e) => getServicesTextContext(e.currentTarget)}
-              >
+            <div key={index} onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                state: {
+                  servicesWithoutUnderscore
+                }
+              })}>
                 <div>
                   <p className="text-xl">{service.name}</p>
                 </div>
@@ -105,7 +108,18 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: ({ ...servicesWithoutUnderscore }) })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+              {/* <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: ({ ...servicesWithoutUnderscore }) })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] "> */}
+              {/* <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { */}
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                state: {
+                  servicesWithoutUnderscore,
+                  serviceInCart: {
+                    name: service.name,
+                    duration: service.duration,
+                    price: service.price,
+                  }
+                }
+              })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
                 Book
               </div>
             </div>
@@ -114,18 +128,6 @@ const ActualSalon = () => {
       ),
     });
   });
-
-  let getServicesTextContext = (parent) => {
-    let childrens = Array.from(parent.children)
-
-    let serviceValueObj = {}
-
-    serviceValueObj.name = childrens[0].textContent
-    serviceValueObj.duration = childrens[1].textContent
-    serviceValueObj.price = childrens[2].textContent
-
-    setDrawerObj(serviceValueObj)
-  }
 
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
@@ -156,6 +158,8 @@ const ActualSalon = () => {
   };
 
   let getTimings = theSalon[0].openingTimes;
+
+
 
   return (
     <>

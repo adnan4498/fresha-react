@@ -1,17 +1,20 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Tabs } from "antd";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useMatches } from 'react-router-dom';
+import { CheckOutlined } from '@ant-design/icons';
 
 const BookingServices = () => {
     const [activeHeading, setActiveHeading] = useState()
+    const [selected, setSelected] = useState([])
+    const [dummyState, setDummyState] = useState([{
+        name : "a"
+    }])
 
     const location = useLocation();
 
-    // const stateValue = useMemo(() => {
-    //     return location.state
-    // }, [])
+    let services = location.state.servicesWithoutUnderscore
 
-    let services = location.state
+    let cartService = location.state.serviceInCart
 
     useEffect(() => {
 
@@ -61,24 +64,37 @@ const BookingServices = () => {
         window.scrollTo({ top: y, behavior: 'smooth' });
     }
 
-    function ScrollToX(e) {
-        // console.log("hello")
-        let div = e.target
+    if (activeHeading) {
+        const div = document.getElementsByClassName(activeHeading)[0]
         div.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
     }
 
+    const handleSelect = (name) => {
+        selected == undefined && setSelected((serviceNames) => [...serviceNames, {name : name}])
+
+        if (selected.includes(name)) {
+            let removeSelected = selected.filter(serviceNames => serviceNames != name)
+            setSelected({name : removeSelected})
+        }
+        else {
+
+            setSelected((serviceNames) => [...serviceNames, {name : name}])
+        }
+    }
+
+    let dummyFunc = () =>{
+        setDummyState(dummyState[0].name = "hi")
+    }
+
+    console.log(dummyState[0].name, "selected")
+
     return (
         <>
-
-            {/* <a href="#div1" onclick="scrollToDiv(); return false;">Link</a> */}
-            {/* <a href="#div1" onClick={(event) => { scrollToDiv(event); event.preventDefault(); }}>div1</a> */}
-
-
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
                         <a href={`#${item[0]}`} onClick={(e) => { scrollToDiv(e); e.preventDefault(); }}>
-                            <div onClick={(e) => ScrollToX(e)} className={`${item[0] == activeHeading && "bg-red-500"} headingDivs`} key={index}>
+                            <div className={`${item[0]} ${item[0] == activeHeading && "text-red-500"} headingDivs`} key={index}>
                                 {item[0]}
                             </div>
                         </a>
@@ -87,16 +103,16 @@ const BookingServices = () => {
             </div>
 
 
-            <div className='my-20'>
+            <div className='my-20 mb-40'>
                 {Object.entries(services).map((item, index) => (
                     <>
-                        <div className='my-10'>
+                        <div className=''>
                             <h2 className='headingClass' id={`${item[0]}`}> {item[0]} </h2>
                         </div>
                         <div className='w-full'>
                             <>
                                 {item[1].map((service, index) => (
-                                    <div className="mt-5 flex justify-between items-center" >
+                                    <div key={index} className="mt-5 flex justify-between items-center" >
                                         <div
                                         >
                                             <div>
@@ -110,9 +126,11 @@ const BookingServices = () => {
                                                 <h3>{service.price}</h3>
                                             </div>
                                         </div>
-                                        <div className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
-                                            Book
+
+                                        <div onClick={() => [handleSelect(service.name), dummyFunc()]} className={`text-xl font-semibold border border-gray-300 ${selected.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
+                                            {selected.includes(service.name) ? <CheckOutlined className='text-white' /> : "+"}
                                         </div>
+
                                     </div>
                                 ))}
                             </>
@@ -122,23 +140,38 @@ const BookingServices = () => {
             </div>
 
 
-            <div id="div1" class="myDiv bg-blue-300">
-                one
+
+            {/* {cartService &&
+                <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
+
+                    <div className=''>
+                        <div>
+                            <h3 className='text-left font-semibold'>
+                                {cartService.price}
+                            </h3>
+                        </div>
+
+                        <div>
+                            <span>1 Service</span>
+                            <span>{cartService.duration}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <p>Continue</p>
+                    </div>
+                </div>} */}
+
+
+            <div className='flex flex-col gap-4'>
+
+                {/* {dummyNums.map((item, i) => (
+                    <div onClick={()=> handleSelect(i)} key={i} className={`${selected.includes(i) && "text-red-500"}`}>
+                        {item}
+                    </div>
+                ))} */}
+
             </div>
 
-            <div class="h-[800px] my-[50px] bg-orange-500">
-                one
-            </div>
-
-            <div id="div2" class="myDiv bg-red-300">
-                one
-            </div>
-
-
-
-            {/* <div className="text-lg border border-gray-300 rounded-lg text-center py-2 mt-10">
-                <p>Continue</p>
-            </div> */}
         </>
     )
 }
