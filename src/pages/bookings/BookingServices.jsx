@@ -5,10 +5,16 @@ import { CheckOutlined } from '@ant-design/icons';
 
 const BookingServices = () => {
     const [activeHeading, setActiveHeading] = useState()
+    // const [selected, setSelected] = useState([{
+    //     name : "",
+    //     price : "",
+    //     numberOfServices : "",
+    //     duration : "",
+    // }])
+
     const [selected, setSelected] = useState([])
-    const [dummyState, setDummyState] = useState([{
-        name : "a"
-    }])
+
+    // const [dummyState, setDummyState] = useState()
 
     const location = useLocation();
 
@@ -69,31 +75,99 @@ const BookingServices = () => {
         div.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
     }
 
-    const handleSelect = (name) => {
-        selected == undefined && setSelected((serviceNames) => [...serviceNames, {name : name}])
+    const handleSelect = (name, duration, price) => {
 
-        if (selected.includes(name)) {
-            let removeSelected = selected.filter(serviceNames => serviceNames != name)
-            setSelected({name : removeSelected})
-        }
-        else {
 
-            setSelected((serviceNames) => [...serviceNames, {name : name}])
+        
+        selected.length == 0 && setSelected((item) => ([...item, { name: name }]))
+        
+        let checkDup = []
+
+        checkDup = selected.map(item => item.name == name)
+
+        let cc = checkDup.includes(true) ? false : true
+
+        for(let i = 0; i < selected.length; i++){
+            // if(selected[i].name == name){
+            //     checkDup.push(true)
+            //     break
+            // } 
+            // // else{
+            // //     checkDup.push(false)
+            // // }   break
         }
+
+        console.log(cc, "cc")
+
+        // if(checkDup.includes(false)){
+        if(cc){
+            setSelected(oldState => ([...oldState, { name: name }]))
+        }
+
+
+
+        
+
+
+
+
+
+
+        
+        // let bb = selected.filter((item, i )=> item.name == name)
+
+        // let cc = selected.map(item => item.name == name )
+
+        // console.log(cc, "cc")
+        
+        // if (cc.includes(true) && bb.length > 0) {
+        //     bb.forEach((item, i) => {
+        //         console.log(i, "hi")
+        //         let removeSelected = selected.filter(oldState => oldState.name != item.name)
+        //         console.log(selected, "selectedwwww")
+        //         setSelected([...selected[i], { name: removeSelected }])
+        //     })
+        // }
+        // else {
+        //     setSelected(oldState => ([...oldState, { name: name }]))
+        // }
+
     }
 
-    let dummyFunc = () =>{
-        setDummyState(dummyState[0].name = "hi")
-    }
+    console.log(selected, "selected")
 
-    console.log(dummyState[0].name, "selected")
+
+    // let aa = [
+    //     {
+    //         name : "adnan"
+    //     },
+    //     {
+    //         name : "adnan1"
+    //     },
+    //     {
+    //         name : "adnan2"
+    //     },
+    // ]
+
+    // let bb = aa.filter(item => item.name != "adnan")
+
+    // console.log(bb, "bb")
+
+    // let dummyFunc = () =>{
+    //     setDummyState((oldState)=> ({...oldState, name : "hi"}))
+    // }
+
+    // console.log(dummyState[0].name, "selected")
+    // console.log(dummyState, "selected2")
+
+
 
     return (
         <>
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
-                        <a href={`#${item[0]}`} onClick={(e) => { scrollToDiv(e); e.preventDefault(); }}>
+                        <a key={index} href={`#${item[0]}`} onClick={(e) => { scrollToDiv(e); e.preventDefault(); }}>
                             <div className={`${item[0]} ${item[0] == activeHeading && "text-red-500"} headingDivs`} key={index}>
                                 {item[0]}
                             </div>
@@ -127,8 +201,8 @@ const BookingServices = () => {
                                             </div>
                                         </div>
 
-                                        <div onClick={() => [handleSelect(service.name), dummyFunc()]} className={`text-xl font-semibold border border-gray-300 ${selected.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
-                                            {selected.includes(service.name) ? <CheckOutlined className='text-white' /> : "+"}
+                                        <div onClick={() => [handleSelect(service.name, service.duration, service.price)]} className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
+                                            {selected.name?.includes(service.name) ? <CheckOutlined className='text-white' /> : "+"}
                                         </div>
 
                                     </div>
