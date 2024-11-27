@@ -76,90 +76,35 @@ const BookingServices = () => {
     }
 
     const handleSelect = (name, duration, price) => {
+        let noDup
 
+        let findDup = selected?.filter(item => item.name == name)
+        findDup.length == 0 && (noDup = true)
 
-        
-        selected.length == 0 && setSelected((item) => ([...item, { name: name }]))
-        
-        let checkDup = []
-
-        checkDup = selected.map(item => item.name == name)
-
-        let cc = checkDup.includes(true) ? false : true
-
-        for(let i = 0; i < selected.length; i++){
-            // if(selected[i].name == name){
-            //     checkDup.push(true)
-            //     break
-            // } 
-            // // else{
-            // //     checkDup.push(false)
-            // // }   break
+        if (noDup) {
+            setSelected(oldState => ([...oldState, { name: name, price: price, duration: duration }]))
         }
-
-        console.log(cc, "cc")
-
-        // if(checkDup.includes(false)){
-        if(cc){
-            setSelected(oldState => ([...oldState, { name: name }]))
+        else {
+            let getItem = selected.filter(item => item.name != name)
+            setSelected(getItem)
         }
-
-
-
-        
-
-
-
-
-
-
-        
-        // let bb = selected.filter((item, i )=> item.name == name)
-
-        // let cc = selected.map(item => item.name == name )
-
-        // console.log(cc, "cc")
-        
-        // if (cc.includes(true) && bb.length > 0) {
-        //     bb.forEach((item, i) => {
-        //         console.log(i, "hi")
-        //         let removeSelected = selected.filter(oldState => oldState.name != item.name)
-        //         console.log(selected, "selectedwwww")
-        //         setSelected([...selected[i], { name: removeSelected }])
-        //     })
-        // }
-        // else {
-        //     setSelected(oldState => ([...oldState, { name: name }]))
-        // }
-
     }
 
     console.log(selected, "selected")
 
 
-    // let aa = [
-    //     {
-    //         name : "adnan"
-    //     },
-    //     {
-    //         name : "adnan1"
-    //     },
-    //     {
-    //         name : "adnan2"
-    //     },
-    // ]
+    let checkTick = (serviceName) => {
 
-    // let bb = aa.filter(item => item.name != "adnan")
+        let checkItem = []
 
-    // console.log(bb, "bb")
+        for (let item of selected) {
+            item.name == serviceName && checkItem.push(item)
+        }
 
-    // let dummyFunc = () =>{
-    //     setDummyState((oldState)=> ({...oldState, name : "hi"}))
-    // }
-
-    // console.log(dummyState[0].name, "selected")
-    // console.log(dummyState, "selected2")
-
+        if (checkItem.length > 0) {
+            return checkItem
+        }
+    }
 
 
     return (
@@ -185,8 +130,8 @@ const BookingServices = () => {
                         </div>
                         <div className='w-full'>
                             <>
-                                {item[1].map((service, index) => (
-                                    <div key={index} className="mt-5 flex justify-between items-center" >
+                                {item[1].map((service, i) => (
+                                    <div key={i} className="mt-5 flex justify-between items-center" >
                                         <div
                                         >
                                             <div>
@@ -202,7 +147,9 @@ const BookingServices = () => {
                                         </div>
 
                                         <div onClick={() => [handleSelect(service.name, service.duration, service.price)]} className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
-                                            {selected.name?.includes(service.name) ? <CheckOutlined className='text-white' /> : "+"}
+                                            {/* {console.log(selected[i], "s")} */}
+                                            {/* {selected[i]?.name?.includes(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"} */}
+                                            {checkTick(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"}
                                         </div>
 
                                     </div>
