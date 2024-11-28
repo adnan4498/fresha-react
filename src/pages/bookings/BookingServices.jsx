@@ -4,37 +4,46 @@ import { useLocation, useMatches } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 
 const BookingServices = () => {
-    const [activeHeading, setActiveHeading] = useState()
-    // const [selected, setSelected] = useState([{
-    //     name : "",
-    //     price : "",
-    //     numberOfServices : "",
-    //     duration : "",
-    // }])
-
-    const [selected, setSelected] = useState([])
-
-    // const [dummyState, setDummyState] = useState()
 
     const location = useLocation();
 
     let services = location.state.servicesWithoutUnderscore
+    let serviceInCart = location.state.serviceInCart
 
-    let cartService = location.state.serviceInCart
+    const [activeHeading, setActiveHeading] = useState()
+    const [selected, setSelected] = useState([serviceInCart])
 
     useEffect(() => {
-
         const getAllElements = [...document.querySelectorAll(".headingClass")]
-
         const getAllElementsHeadings = document.querySelectorAll(".headingClass")
 
         window.addEventListener('scroll', () => {
-            (myfunction(getAllElements, getAllElementsHeadings))
+            (handleScroll(getAllElements, getAllElementsHeadings))
         });
     }, [])
 
 
-    function myfunction(ele, headings) {
+
+
+    // will scroll to selected service by user from previous page
+    useEffect(() => {
+
+        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+        let scrollToService
+
+        for (let items of serviceNameDiv) {
+            for (let item of items) {
+                selected[0].name == item.textContent && (scrollToService = item)
+            }
+        }
+
+        let y = scrollToService.offsetTop - 100
+        window.scroll({ top: y, behavior: 'smooth' })
+
+    }, [])
+
+
+    function handleScroll(ele, headings) {
         const getEleValues = ele.map(el => el.getBoundingClientRect())
 
         let valueAndHeadingEle = []
@@ -90,10 +99,7 @@ const BookingServices = () => {
         }
     }
 
-    console.log(selected, "selected")
-
-
-    let checkTick = (serviceName) => {
+    let handleTick = (serviceName) => {
 
         let checkItem = []
 
@@ -106,6 +112,53 @@ const BookingServices = () => {
         }
     }
 
+    let serviceDuration
+
+    const handleDuration = () => {
+
+        let getDuration = []
+        let replaceMin = []
+
+        selected.forEach(item => getDuration.push(item.duration))
+
+        getDuration.forEach((item) => {
+            let replacing = item.replace("min", "")
+            replaceMin.push(replacing)
+        })
+
+        replaceMin.length > 1 && (serviceDuration = replaceMin.reduce((accu, currentVal) => Number(accu) + Number(currentVal)) + " min")
+    }
+
+    let price
+
+    const handlePrice = () => {
+
+        let getPrice = []
+        let replaceMin2 = []
+
+        selected.forEach(item => getPrice.push(item.price))
+
+        getPrice.forEach((item) => {
+            let replacing = item.replace("OMR ", "")
+            replaceMin2.push(replacing)
+        })
+
+
+        replaceMin2.length > 1 && (price = replaceMin2.reduce((accu, currentVal) => Number(accu) + Number(currentVal)))
+    }
+
+    let getcurrenySymbol = () => {
+        let getPrice = selected[0].price
+        return getPrice.includes("OMR") ? "OMR" : getPrice.includes("PKR") ? "PKR" : getPrice.includes("AED") ? "AED" : ""
+    }
+
+    let currenySymbol = useMemo(() => {
+        return getcurrenySymbol()
+    }, [])
+
+    handlePrice()
+
+    handleDuration()
 
     return (
         <>
@@ -131,12 +184,13 @@ const BookingServices = () => {
                         <div className='w-full'>
                             <>
                                 {item[1].map((service, i) => (
-                                    <div key={i} className="mt-5 flex justify-between items-center" >
+                                    <div key={i} className="mt-5 flex justify-between items-center " >
                                         <div
                                         >
                                             <div>
-                                                <div className="text-base font-medium">{service.name}</div>
+                                                <div className="text-base font-medium serviceNameDiv">{service.name}</div>
                                             </div>
+
                                             <div>
                                                 <h3>{service.duration}</h3>
                                             </div>
@@ -147,9 +201,7 @@ const BookingServices = () => {
                                         </div>
 
                                         <div onClick={() => [handleSelect(service.name, service.duration, service.price)]} className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
-                                            {/* {console.log(selected[i], "s")} */}
-                                            {/* {selected[i]?.name?.includes(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"} */}
-                                            {checkTick(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"}
+                                            {handleTick(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"}
                                         </div>
 
                                     </div>
@@ -161,26 +213,30 @@ const BookingServices = () => {
             </div>
 
 
-
-            {/* {cartService &&
+            {/* selected[0] is first selected service from previous page */}
+            {selected.length != 0 &&
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
 
                     <div className=''>
                         <div>
-                            <h3 className='text-left font-semibold'>
-                                {cartService.price}
+                            <h3 className='text-left font-semibold text-black'>
+                                {/* this `${}` add space between currenySymbol and price */}
+                                {price ? (`${currenySymbol } ${ price}`)  : selected[0].price}
                             </h3>
                         </div>
 
-                        <div>
-                            <span>1 Service</span>
-                            <span>{cartService.duration}</span>
+                        <div className='flex gap-2 text-sm'>
+                            <div> {selected.length} service{selected.length > 1 && "s"} </div>
+
+                            <div>
+                                {serviceDuration ? serviceDuration : selected[0].duration}
+                            </div>
                         </div>
                     </div>
-                    <div>
+                    <div className='bg-black text-white rounded-lg items-center flex px-8'>
                         <p>Continue</p>
                     </div>
-                </div>} */}
+                </div>}
 
 
             <div className='flex flex-col gap-4'>
