@@ -12,38 +12,93 @@ const BookingServices = () => {
 
     const [activeHeading, setActiveHeading] = useState()
     const [selected, setSelected] = useState([serviceInCart])
+    const [topY, setTopY] = useState([])
 
+    let currencySymbol = useMemo(() => {
+        return getcurrencySymbol()
+    }, [])
+
+    // let selectedMemo = useMemo(() => {
+    //     let bbb = selected
+    //     return bbb
+    // })
+
+    // console.log(selectedMemo.length == selected.length, "len")
+
+    useEffect(() => {
+
+        const triggerScroll = () => {
+
+            let scrollToService
+            let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+
+            let selectedServicesDivs = []
+
+            for (let items of serviceNameDiv) {
+                for (let item of items) {
+                    for (let services of selected) {
+                        item.textContent == services.name && selectedServicesDivs.push(item)
+                    }
+                }
+
+            }
+
+            console.log(selectedServicesDivs[0], "selectedServicesDivs")
+
+            selectedServicesDivs.forEach((item) => {
+                let getY = item.getBoundingClientRect().top
+                setTopY([...topY, getY])
+            })
+        
+
+        }
+
+        window.addEventListener('scroll', () => {
+            triggerScroll()
+        })
+
+        triggerScroll()
+
+    }, [selected])
+
+    // console.log(topY, "topY")
+    // console.log(bbb.length, "getY")
+    // console.log(selected.length, "selected")
+
+
+
+
+
+
+
+    // will scroll to the first selected service ( from previous page )
+    useEffect(() => {
+
+        let scrollToService
+        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+
+        for (let items of serviceNameDiv) {
+            for (let item of items) {
+                selected[0]?.name == item.textContent && (scrollToService = item)
+            }
+        }
+
+        let y = scrollToService?.offsetTop - 100
+        window.scroll({ top: y, behavior: 'smooth' })
+
+    }, [])
+
+    // actives heading 
     useEffect(() => {
         const getAllElements = [...document.querySelectorAll(".headingClass")]
         const getAllElementsHeadings = document.querySelectorAll(".headingClass")
 
         window.addEventListener('scroll', () => {
-            (handleScroll(getAllElements, getAllElementsHeadings))
+            (handleHeadingScroll(getAllElements, getAllElementsHeadings))
         });
     }, [])
 
-
-
-
-    // will scroll to selected service by user from previous page
-    useEffect(() => {
-
-        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
-        let scrollToService
-
-        for (let items of serviceNameDiv) {
-            for (let item of items) {
-                selected[0].name == item.textContent && (scrollToService = item)
-            }
-        }
-
-        let y = scrollToService.offsetTop - 100
-        window.scroll({ top: y, behavior: 'smooth' })
-
-    }, [])
-
-
-    function handleScroll(ele, headings) {
+    function handleHeadingScroll(ele, headings) {
         const getEleValues = ele.map(el => el.getBoundingClientRect())
 
         let valueAndHeadingEle = []
@@ -70,7 +125,8 @@ const BookingServices = () => {
         })
     }
 
-    function scrollToDiv(e) {
+    // click on heading leads to its services
+    function scrollToService(e) {
         const div = document.getElementById(e.target.textContent)
 
         const yOffset = -90;
@@ -79,18 +135,24 @@ const BookingServices = () => {
         window.scrollTo({ top: y, behavior: 'smooth' });
     }
 
+    // x axis scroll in headings
     if (activeHeading) {
         const div = document.getElementsByClassName(activeHeading)[0]
         div.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' })
     }
 
-    const handleSelect = (name, duration, price) => {
-        let noDup
+    const addService = (name, duration, price) => {
 
-        let findDup = selected?.filter(item => item.name == name)
-        findDup.length == 0 && (noDup = true)
+        let removeDups = () => {
+            let noDup
 
-        if (noDup) {
+            let findDup = selected?.filter(item => item.name == name)
+            findDup.length == 0 && (noDup = true)
+
+            return noDup
+        }
+
+        if (removeDups()) {
             setSelected(oldState => ([...oldState, { name: name, price: price, duration: duration }]))
         }
         else {
@@ -99,8 +161,7 @@ const BookingServices = () => {
         }
     }
 
-    let handleTick = (serviceName) => {
-
+    let tickMark = (serviceName) => {
         let checkItem = []
 
         for (let item of selected) {
@@ -112,60 +173,60 @@ const BookingServices = () => {
         }
     }
 
-    let serviceDuration
+    function getcurrencySymbol() {
+        let getPrice = selected[0]?.price
+        let getCurrency = getPrice?.includes("OMR") ? "OMR" : getPrice?.includes("PKR") ? "PKR" : getPrice?.includes("AED") ? "AED" : ""
 
-    const handleDuration = () => {
-
-        let getDuration = []
-        let replaceMin = []
-
-        selected.forEach(item => getDuration.push(item.duration))
-
-        getDuration.forEach((item) => {
-            let replacing = item.replace("min", "")
-            replaceMin.push(replacing)
-        })
-
-        replaceMin.length > 1 && (serviceDuration = replaceMin.reduce((accu, currentVal) => Number(accu) + Number(currentVal)) + " min")
+        return getCurrency
     }
 
-    let price
+    const handlePriceAndDuration = () => {
 
-    const handlePrice = () => {
+        const replacements = (serviceVal, replacingVal) => {
 
-        let getPrice = []
-        let replaceMin2 = []
+            let valReplaced = []
+            serviceVal.forEach((item) => {
+                let replacing = item.replace(`${replacingVal}`, "")
+                valReplaced.push(replacing)
+            })
+            valReplaced.length > 1 && (valReplaced = valReplaced.reduce((accu, currentVal) => Number(accu) + Number(currentVal)))
 
-        selected.forEach(item => getPrice.push(item.price))
+            let minsText = replacingVal == "min" ? " mins" : ""
+            let valWithText = valReplaced + minsText
 
-        getPrice.forEach((item) => {
-            let replacing = item.replace("OMR ", "")
-            replaceMin2.push(replacing)
-        })
+            return valWithText
+        }
 
+        const passingArgsToReplacements = () => {
 
-        replaceMin2.length > 1 && (price = replaceMin2.reduce((accu, currentVal) => Number(accu) + Number(currentVal)))
+            let min = "min"
+            let getPrice = selected.map(item => item.price)
+            let getDuration = selected.map(item => item.duration)
+
+            let price = replacements(getPrice, currencySymbol)
+            let serviceDuration = replacements(getDuration, min)
+
+            let result = {
+                price: price,
+                duration: serviceDuration,
+            }
+
+            return result
+        }
+
+        return passingArgsToReplacements()
+
     }
 
-    let getcurrenySymbol = () => {
-        let getPrice = selected[0].price
-        return getPrice.includes("OMR") ? "OMR" : getPrice.includes("PKR") ? "PKR" : getPrice.includes("AED") ? "AED" : ""
-    }
+    let priceAndDuration = handlePriceAndDuration()
 
-    let currenySymbol = useMemo(() => {
-        return getcurrenySymbol()
-    }, [])
-
-    handlePrice()
-
-    handleDuration()
 
     return (
         <>
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
-                        <a key={index} href={`#${item[0]}`} onClick={(e) => { scrollToDiv(e); e.preventDefault(); }}>
+                        <a key={index} href={`#${item[0]}`} onClick={(e) => { scrollToService(e); e.preventDefault(); }}>
                             <div className={`${item[0]} ${item[0] == activeHeading && "text-red-500"} headingDivs`} key={index}>
                                 {item[0]}
                             </div>
@@ -174,6 +235,13 @@ const BookingServices = () => {
                 </div>
             </div>
 
+            <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+                top services
+            </div>
+
+            {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
+                bottom services
+            </div> */}
 
             <div className='my-20 mb-40'>
                 {Object.entries(services).map((item, index) => (
@@ -200,8 +268,8 @@ const BookingServices = () => {
                                             </div>
                                         </div>
 
-                                        <div onClick={() => [handleSelect(service.name, service.duration, service.price)]} className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
-                                            {handleTick(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"}
+                                        <div onClick={() => [addService(service.name, service.duration, service.price)]} className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name) ? "bg-[#6950f3]" : "bg-white"}  rounded-lg px-3 py-1 pb-2`}>
+                                            {tickMark(service.name) ? <CheckOutlined className='text-white bg-purple-300' /> : "+"}
                                         </div>
 
                                     </div>
@@ -214,14 +282,14 @@ const BookingServices = () => {
 
 
             {/* selected[0] is first selected service from previous page */}
-            {selected.length != 0 &&
+            {selected[0] != undefined &&
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
 
                     <div className=''>
                         <div>
                             <h3 className='text-left font-semibold text-black'>
-                                {/* this `${}` add space between currenySymbol and price */}
-                                {price ? (`${currenySymbol } ${ price}`)  : selected[0].price}
+                                {/* writing code in `${}` will add space between currencySymbol and price */}
+                                {priceAndDuration?.price ? (`${currencySymbol} ${priceAndDuration?.price}`) : selected[0]?.price}
                             </h3>
                         </div>
 
@@ -229,26 +297,20 @@ const BookingServices = () => {
                             <div> {selected.length} service{selected.length > 1 && "s"} </div>
 
                             <div>
-                                {serviceDuration ? serviceDuration : selected[0].duration}
+                                {priceAndDuration?.duration ? priceAndDuration?.duration : selected[0]?.duration}
                             </div>
                         </div>
                     </div>
                     <div className='bg-black text-white rounded-lg items-center flex px-8'>
                         <p>Continue</p>
                     </div>
-                </div>}
+                </div>
+            }
 
-
-            <div className='flex flex-col gap-4'>
-
-                {/* {dummyNums.map((item, i) => (
-                    <div onClick={()=> handleSelect(i)} key={i} className={`${selected.includes(i) && "text-red-500"}`}>
-                        {item}
-                    </div>
-                ))} */}
-
+            {/* <div className='my-40' onClick={() => setTopY([...topY, aa])}>
+                asadsasd
             </div>
-
+            {console.log(topY, "yy")} */}
         </>
     )
 }
