@@ -44,7 +44,7 @@ const BookingServices = () => {
                 if (selectedServicesDivs[i].textContent == selectedServicesDivs[++i].textContent) {
                     bb.push(selectedServicesDivs[0])
                 }
-            }
+            } 
             
             console.log(selectedServicesDivs, "selectedServicesDivs")
             console.log(bb, "bb")
