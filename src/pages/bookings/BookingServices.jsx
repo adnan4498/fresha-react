@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Tabs } from "antd";
 import { useLocation, useMatches } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
+import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
 const BookingServices = () => {
 
@@ -12,24 +13,17 @@ const BookingServices = () => {
 
     const [activeHeading, setActiveHeading] = useState()
     const [selected, setSelected] = useState([serviceInCart])
+
     const [topY, setTopY] = useState([])
+    const [botY, setBotY] = useState([])
 
     let currencySymbol = useMemo(() => {
         return getcurrencySymbol()
     }, [])
 
-    // let selectedMemo = useMemo(() => {
-    //     let bbb = selected
-    //     return bbb
-    // })
-
-    // console.log(selectedMemo.length == selected.length, "len")
-
     useEffect(() => {
-
         const triggerScroll = () => {
 
-            let scrollToService
             let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
 
             let selectedServicesDivs = []
@@ -37,20 +31,35 @@ const BookingServices = () => {
             for (let items of serviceNameDiv) {
                 for (let item of items) {
                     for (let services of selected) {
-                        item.textContent == services.name && selectedServicesDivs.push(item)
+                        if (item.textContent == services.name) {
+                            selectedServicesDivs.push(item)
+                        }
                     }
                 }
-
             }
 
-            console.log(selectedServicesDivs[0], "selectedServicesDivs")
+            
+            let bb = []
+            for (let i = 0; i < selectedServicesDivs.length; i++) {
+                if (selectedServicesDivs[i].textContent == selectedServicesDivs[++i].textContent) {
+                    bb.push(selectedServicesDivs[0])
+                }
+            }
+            
+            console.log(selectedServicesDivs, "selectedServicesDivs")
+            console.log(bb, "bb")
 
+            let pushTopYDivs = []
+            let pushBotYDivs = []
             selectedServicesDivs.forEach((item) => {
-                let getY = item.getBoundingClientRect().top
-                setTopY([...topY, getY])
-            })
-        
+                let getTopY = item.getBoundingClientRect().top
+                let getBotY = item.getBoundingClientRect().bottom
 
+                pushTopYDivs.push(getTopY)
+                pushBotYDivs.push(getBotY)
+            })
+            setTopY(pushTopYDivs)
+            setBotY(pushBotYDivs)
         }
 
         window.addEventListener('scroll', () => {
@@ -62,6 +71,7 @@ const BookingServices = () => {
     }, [selected])
 
     // console.log(topY, "topY")
+    // console.log(botY, "botY")
     // console.log(bbb.length, "getY")
     // console.log(selected.length, "selected")
 
@@ -235,9 +245,12 @@ const BookingServices = () => {
                 </div>
             </div>
 
-            <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+            {/* {topY.length > 0 && topY[0] < 20 ?(<div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
                 top services
-            </div>
+            </div>) : <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
+                bottom services
+            </div>} */}
+
 
             {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
                 bottom services
@@ -256,7 +269,7 @@ const BookingServices = () => {
                                         <div
                                         >
                                             <div>
-                                                <div className="text-base font-medium serviceNameDiv">{service.name}</div>
+                                                <div id={i} className="text-base font-medium serviceNameDiv">{service.name}</div>
                                             </div>
 
                                             <div>
