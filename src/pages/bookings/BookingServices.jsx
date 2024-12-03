@@ -21,11 +21,10 @@ const BookingServices = () => {
         return getcurrencySymbol()
     }, [])
 
-    let clientHeight
-
     let selectedServicesDivs = []
+
+
     useEffect(() => {
-        clientHeight = document.documentElement.clientHeight
         const triggerScroll = () => {
 
             let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
@@ -43,7 +42,7 @@ const BookingServices = () => {
 
             // console.log(selectedServicesDivs, "before")
 
-            selectedServicesDivs = selectedServicesDivs.reverse()
+            // selectedServicesDivs = selectedServicesDivs.reverse()
 
             const removeNodeDuplicates = () => {
                 selectedServicesDivs = selectedServicesDivs.reduce((unique, node) => {
@@ -59,7 +58,7 @@ const BookingServices = () => {
 
             removeNodeDuplicates()
 
-            console.log(selectedServicesDivs, "selectedServicesDivs")
+            console.log(selectedServicesDivs, "after")
 
             let pushTopYDivs = []
             let pushBotYDivs = []
@@ -83,15 +82,66 @@ const BookingServices = () => {
     }, [selected])
 
 
-    // will scroll to the first selected service ( from previous page )
+    // let hi  = 2
+    // function backToService(e) {
+    //     console.log("hi")
+    //     ++hi
+    //     console.log(hi, "hhhh")
+    // }
+
+    const [hi, setHi] = useState(2)
+
+
+
     useEffect(() => {
+        // function backToService (e) {
+        //     console.log(e, "e")
+        // }
+
+        // backToService()
+
+        console.log(selectedServicesDivs , "WWWWW")
+    }, [hi])
+    
+
+    
+
+    let isTop
+    let isBot
+
+    const topItemsLength = []
+    const bottomItemsLength = []
+
+    const topAndBotBadge = () => {
+
+        isTop = topY.some(item => item < 20)
+        isBot = botY.some(item => item > 350)
+
+        topY.forEach(item => item < 20 && topItemsLength.push(item))
+        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
+
+    }
+
+    topAndBotBadge()
+
+    // will scroll to the selected service ( from previous page )
+    useEffect(() => {
+
+        window.scrollTo(0, 0)
+
+
+        console.log(selectedServicesDivs[0].textContent, "selectedServicesDivs")
 
         let scrollToService
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                selectedServicesDivs?.name == item.textContent && (scrollToService = item)
+                // selection causes 2 selected services, this will only scroll to first one
+                if (selectedServicesDivs[0]?.textContent == item.textContent) {
+                    scrollToService = item
+                    break;
+                }
             }
         }
 
@@ -230,31 +280,8 @@ const BookingServices = () => {
 
     }
 
-    let priceAndDuration = handlePriceAndDuration()
+    const priceAndDuration = handlePriceAndDuration()
 
-    let isTop
-    let isBot
-
-    let topItemsLength = []
-    let bottomItemsLength = []
-
-    let topAndBotBadge = () => {
-
-        isTop = topY.some(item => item < 20)
-        isBot = botY.some(item => item > 350)
-        // isBot = botY.some(item => item > clientHeight - 50)
-
-
-        // console.log(clientHeight, "clientHeight")
-
-        topY.forEach(item => item < 20 && topItemsLength.push(item))
-        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
-
-        // console.log(isTop, "isTop")
-        // console.log(isBot, "isBot")
-    }
-
-    topAndBotBadge()
 
     return (
         <>
@@ -273,7 +300,8 @@ const BookingServices = () => {
             {topY &&
                 topY.map(() => (
                     <>
-                        {isTop ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+                        {/* {isTop ? <div onClick={() => backToService("hi")} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'> */}
+                        {isTop ? <div onClick={() => setHi(2)} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
                             {topItemsLength.length}  top services
                         </div> : ""}
                     </>
@@ -290,36 +318,6 @@ const BookingServices = () => {
                     </>
                 ))
             }
-
-
-
-
-
-            {/* {topY.length > 0 &&
-                topY < 20 ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
-                top services
-            </div> : ""} */}
-
-
-            {/* {topY.length > 0 &&
-                topY > (
-                    window.innerHeight ||
-                    document.documentElement.clientHeight) -100 ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
-                top services
-            </div> : ""} */}
-
-            {/* topY > 400 ? <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
-                bottom services
-            </div> : */}
-
-            {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
-                 bottom services
-             </div> */}
-
-
-            {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
-                bottom services
-            </div> */}
 
             <div className='my-20 mb-40'>
                 {Object.entries(services).map((item, index) => (
