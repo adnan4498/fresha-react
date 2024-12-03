@@ -21,12 +21,15 @@ const BookingServices = () => {
         return getcurrencySymbol()
     }, [])
 
+    let clientHeight
+
+    let selectedServicesDivs = []
     useEffect(() => {
+        clientHeight = document.documentElement.clientHeight
         const triggerScroll = () => {
 
             let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
 
-            let selectedServicesDivs = []
 
             for (let items of serviceNameDiv) {
                 for (let item of items) {
@@ -38,16 +41,25 @@ const BookingServices = () => {
                 }
             }
 
-            
-            let bb = []
-            for (let i = 0; i < selectedServicesDivs.length; i++) {
-                if (selectedServicesDivs[i].textContent == selectedServicesDivs[++i].textContent) {
-                    bb.push(selectedServicesDivs[0])
-                }
-            } 
-            
+            // console.log(selectedServicesDivs, "before")
+
+            selectedServicesDivs = selectedServicesDivs.reverse()
+
+            const removeNodeDuplicates = () => {
+                selectedServicesDivs = selectedServicesDivs.reduce((unique, node) => {
+                    // if item == item then it wont be pushed as it will become false by !
+                    // and unique array will be returned the same
+                    if (!unique.some(item => item.textContent == node.textContent)) {
+                        unique.push(node)
+                    }
+                    return unique
+                }, [])
+
+            }
+
+            removeNodeDuplicates()
+
             console.log(selectedServicesDivs, "selectedServicesDivs")
-            console.log(bb, "bb")
 
             let pushTopYDivs = []
             let pushBotYDivs = []
@@ -70,16 +82,6 @@ const BookingServices = () => {
 
     }, [selected])
 
-    // console.log(topY, "topY")
-    // console.log(botY, "botY")
-    // console.log(bbb.length, "getY")
-    // console.log(selected.length, "selected")
-
-
-
-
-
-
 
     // will scroll to the first selected service ( from previous page )
     useEffect(() => {
@@ -89,7 +91,7 @@ const BookingServices = () => {
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                selected[0]?.name == item.textContent && (scrollToService = item)
+                selectedServicesDivs?.name == item.textContent && (scrollToService = item)
             }
         }
 
@@ -230,6 +232,29 @@ const BookingServices = () => {
 
     let priceAndDuration = handlePriceAndDuration()
 
+    let isTop
+    let isBot
+
+    let topItemsLength = []
+    let bottomItemsLength = []
+
+    let topAndBotBadge = () => {
+
+        isTop = topY.some(item => item < 20)
+        isBot = botY.some(item => item > 350)
+        // isBot = botY.some(item => item > clientHeight - 50)
+
+
+        // console.log(clientHeight, "clientHeight")
+
+        topY.forEach(item => item < 20 && topItemsLength.push(item))
+        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
+
+        // console.log(isTop, "isTop")
+        // console.log(isBot, "isBot")
+    }
+
+    topAndBotBadge()
 
     return (
         <>
@@ -245,11 +270,51 @@ const BookingServices = () => {
                 </div>
             </div>
 
-            {/* {topY.length > 0 && topY[0] < 20 ?(<div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+            {topY &&
+                topY.map(() => (
+                    <>
+                        {isTop ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+                            {topItemsLength.length}  top services
+                        </div> : ""}
+                    </>
+                ))
+            }
+
+
+            {botY &&
+                botY.map(() => (
+                    <>
+                        {isBot ? <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
+                            {bottomItemsLength.length}   bot service
+                        </div> : ""}
+                    </>
+                ))
+            }
+
+
+
+
+
+            {/* {topY.length > 0 &&
+                topY < 20 ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
                 top services
-            </div>) : <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
+            </div> : ""} */}
+
+
+            {/* {topY.length > 0 &&
+                topY > (
+                    window.innerHeight ||
+                    document.documentElement.clientHeight) -100 ? <div className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+                top services
+            </div> : ""} */}
+
+            {/* topY > 400 ? <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
                 bottom services
-            </div>} */}
+            </div> : */}
+
+            {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
+                 bottom services
+             </div> */}
 
 
             {/* <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 bottom-selected-services z-50'>
