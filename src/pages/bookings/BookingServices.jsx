@@ -1,5 +1,5 @@
-import React, { act, useEffect, useMemo, useRef, useState } from 'react'
-import { useLocation, useMatches } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
 
 const BookingServices = () => {
@@ -11,7 +11,6 @@ const BookingServices = () => {
 
     const [activeHeading, setActiveHeading] = useState()
     const [selected, setSelected] = useState([serviceInCart])
-    const [dummy, setDummy] = useState(false)
 
     const [topY, setTopY] = useState([])
     const [botY, setBotY] = useState([])
@@ -28,7 +27,6 @@ const BookingServices = () => {
         const triggerScroll = () => {
 
             let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
-
 
             for (let items of serviceNameDiv) {
                 for (let item of items) {
@@ -58,8 +56,6 @@ const BookingServices = () => {
 
             setGetSelectedServices(selectedServicesDivs)
 
-            // console.log(selectedServicesDivs, "after")
-
             let pushTopYDivs = []
             let pushBotYDivs = []
             selectedServicesDivs.forEach((item) => {
@@ -74,48 +70,76 @@ const BookingServices = () => {
         }
 
         window.addEventListener('scroll', () => {
+
+            // setTimeout(() => {
+            // }, 1000);
             triggerScroll()
+
+
         })
 
         triggerScroll()
 
     }, [selected])
 
-    // will scroll to the selected service ( from previous page )
     useEffect(() => {
 
+        const aaa = () => {
+            console.log("yuhu")
+        }
+        setTimeout(() => {
+
+            window.addEventListener('scroll', () => {
+                // setTimeout(() => {
+                // }, 1000);
+                aaa()
+            })
+        }, 2000);
+
+    }, [])
+
+
+    useEffect(() => {
         window.scrollTo(0, 0)
+        let scrollToServiceDiv
 
-        let scrollToService
-        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+        // will scroll to the selected service ( from previous page )
+        const pageRenderScrollToService = () => {
 
-        for (let items of serviceNameDiv) {
-            for (let item of items) {
-                // selection causes 2 selected services, this will only scroll to first one
-                if (selectedServicesDivs[0]?.textContent == item.textContent) {
-                    scrollToService = item
-                    break;
+            let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+
+            for (let items of serviceNameDiv) {
+                for (let item of items) {
+                    // selection causes 2 selected services, this will only scroll to first one
+                    if (selectedServicesDivs[0]?.textContent == item.textContent) {
+                        scrollToServiceDiv = item
+                        break;
+                    }
                 }
             }
         }
 
-        let y = scrollToService?.offsetTop - 100
-        window.scroll({ top: y, behavior: 'smooth' })
+        pageRenderScrollToService()
 
-    }, [])
+        // activates heading 
+        const activateHeading = () => {
 
-    // actives heading 
-    useEffect(() => {
-        const getAllElements = [...document.querySelectorAll(".headingClass")]
-        const getAllElementsHeadings = document.querySelectorAll(".headingClass")
+            let y = scrollToServiceDiv?.offsetTop - 100
+            window.scroll({ top: y, behavior: 'smooth' })
 
-        window.addEventListener('scroll', () => {
-            (handleHeadingScroll(getAllElements, getAllElementsHeadings))
-        });
+            const getAllElements = [...document.querySelectorAll(".headingClass")]
+            const getAllElementsHeadings = document.querySelectorAll(".headingClass")
+
+            window.addEventListener('scroll', () => {
+                (handleHeadingScroll(getAllElements, getAllElementsHeadings))
+            });
+        }
+        activateHeading()
+
     }, [])
 
     const scrollToTopService = () => {
-        getSelectedServices.forEach((item, i) => {
+        getSelectedServices.forEach((item) => {
             let getItemTop = item.getBoundingClientRect().top
 
             if (getItemTop < 100) {
@@ -125,7 +149,7 @@ const BookingServices = () => {
         })
     }
 
-    const scrollToBotService = () => {
+    function scrollToBotService() {
         getSelectedServices.forEach((item, i, arr) => {
             let getItemBot = item.getBoundingClientRect().top + window.scrollY
             let actualWindowYScroll = Math.round(window.scrollY) + 100
@@ -144,6 +168,9 @@ const BookingServices = () => {
             window.scroll({ top: y, behavior: 'smooth' })
         })
     }
+
+
+
 
     let isTop
     let isBot
@@ -285,7 +312,7 @@ const BookingServices = () => {
 
     const priceAndDuration = handlePriceAndDuration()
 
-    console.log("hi")
+    // console.log("hi")
 
     return (
         <>
@@ -315,7 +342,7 @@ const BookingServices = () => {
             {botY &&
                 botY.map(() => (
                     <>
-                        {isBot ? <div onClick={() => { scrollToBotService() }} className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
+                        {isBot ? <div onClick={() => { scrollToBotService()() }} className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
                             {bottomItemsLength.length}   bot service
                         </div> : ""}
                     </>
