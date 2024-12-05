@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Tabs } from "antd";
+import React, { act, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useMatches } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
-import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 
 const BookingServices = () => {
 
@@ -13,16 +11,18 @@ const BookingServices = () => {
 
     const [activeHeading, setActiveHeading] = useState()
     const [selected, setSelected] = useState([serviceInCart])
+    const [dummy, setDummy] = useState(false)
 
     const [topY, setTopY] = useState([])
     const [botY, setBotY] = useState([])
+
+    const [getSelectedServices, setGetSelectedServices] = useState([])
 
     let currencySymbol = useMemo(() => {
         return getcurrencySymbol()
     }, [])
 
     let selectedServicesDivs = []
-
 
     useEffect(() => {
         const triggerScroll = () => {
@@ -40,8 +40,6 @@ const BookingServices = () => {
                 }
             }
 
-            // console.log(selectedServicesDivs, "before")
-
             // selectedServicesDivs = selectedServicesDivs.reverse()
 
             const removeNodeDuplicates = () => {
@@ -58,7 +56,9 @@ const BookingServices = () => {
 
             removeNodeDuplicates()
 
-            console.log(selectedServicesDivs, "after")
+            setGetSelectedServices(selectedServicesDivs)
+
+            // console.log(selectedServicesDivs, "after")
 
             let pushTopYDivs = []
             let pushBotYDivs = []
@@ -81,56 +81,10 @@ const BookingServices = () => {
 
     }, [selected])
 
-
-    // let hi  = 2
-    // function backToService(e) {
-    //     console.log("hi")
-    //     ++hi
-    //     console.log(hi, "hhhh")
-    // }
-
-    const [hi, setHi] = useState(2)
-
-
-
-    useEffect(() => {
-        // function backToService (e) {
-        //     console.log(e, "e")
-        // }
-
-        // backToService()
-
-        console.log(selectedServicesDivs , "WWWWW")
-    }, [hi])
-    
-
-    
-
-    let isTop
-    let isBot
-
-    const topItemsLength = []
-    const bottomItemsLength = []
-
-    const topAndBotBadge = () => {
-
-        isTop = topY.some(item => item < 20)
-        isBot = botY.some(item => item > 350)
-
-        topY.forEach(item => item < 20 && topItemsLength.push(item))
-        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
-
-    }
-
-    topAndBotBadge()
-
     // will scroll to the selected service ( from previous page )
     useEffect(() => {
 
         window.scrollTo(0, 0)
-
-
-        console.log(selectedServicesDivs[0].textContent, "selectedServicesDivs")
 
         let scrollToService
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
@@ -159,6 +113,55 @@ const BookingServices = () => {
             (handleHeadingScroll(getAllElements, getAllElementsHeadings))
         });
     }, [])
+
+    const scrollToTopService = () => {
+        getSelectedServices.forEach((item, i) => {
+            let getItemTop = item.getBoundingClientRect().top
+
+            if (getItemTop < 100) {
+                let y = item.offsetTop - 100
+                window.scroll({ top: y, behavior: 'smooth' })
+            }
+        })
+    }
+
+    const scrollToBotService = () => {
+        getSelectedServices.forEach((item, i, arr) => {
+            let getItemBot = item.getBoundingClientRect().top + window.scrollY
+            let actualWindowYScroll = Math.round(window.scrollY) + 100
+
+            if (arr.length > 1) {
+                for (let i = 0; i < arr.length; i++) {
+                    let getVal = arr[i].getBoundingClientRect().top + window.scrollY
+
+                    if (actualWindowYScroll < getVal) {
+                        getItemBot = arr[i].getBoundingClientRect().top + window.scrollY
+                        break
+                    }
+                }
+            }
+            let y = getItemBot - 100
+            window.scroll({ top: y, behavior: 'smooth' })
+        })
+    }
+
+    let isTop
+    let isBot
+
+    const topItemsLength = []
+    const bottomItemsLength = []
+
+    const topAndBotBadge = () => {
+
+        isTop = topY.some(item => item < 20)
+        isBot = botY.some(item => item > 350)
+
+        topY.forEach(item => item < 20 && topItemsLength.push(item))
+        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
+
+    }
+
+    topAndBotBadge()
 
     function handleHeadingScroll(ele, headings) {
         const getEleValues = ele.map(el => el.getBoundingClientRect())
@@ -282,6 +285,7 @@ const BookingServices = () => {
 
     const priceAndDuration = handlePriceAndDuration()
 
+    console.log("hi")
 
     return (
         <>
@@ -300,8 +304,7 @@ const BookingServices = () => {
             {topY &&
                 topY.map(() => (
                     <>
-                        {/* {isTop ? <div onClick={() => backToService("hi")} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'> */}
-                        {isTop ? <div onClick={() => setHi(2)} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
+                        {isTop ? <div onClick={() => scrollToTopService()} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
                             {topItemsLength.length}  top services
                         </div> : ""}
                     </>
@@ -312,7 +315,7 @@ const BookingServices = () => {
             {botY &&
                 botY.map(() => (
                     <>
-                        {isBot ? <div className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
+                        {isBot ? <div onClick={() => { scrollToBotService() }} className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
                             {bottomItemsLength.length}   bot service
                         </div> : ""}
                     </>
@@ -382,11 +385,6 @@ const BookingServices = () => {
                     </div>
                 </div>
             }
-
-            {/* <div className='my-40' onClick={() => setTopY([...topY, aa])}>
-                asadsasd
-            </div>
-            {console.log(topY, "yy")} */}
         </>
     )
 }
