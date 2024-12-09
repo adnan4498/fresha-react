@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
-import _ from "lodash";
+import _, { isArray } from "lodash";
 import { useCallback } from 'react';
 
 const BookingServices = () => {
@@ -16,6 +16,11 @@ const BookingServices = () => {
 
     const [topY, setTopY] = useState([])
     const [botY, setBotY] = useState([])
+
+    const [topAndBotY, setTopAndBotY] = useState({
+        topY: [],
+        botY: [],
+    })
 
     const [getSelectedServices, setGetSelectedServices] = useState([])
 
@@ -59,6 +64,7 @@ const BookingServices = () => {
 
         let pushTopYDivs = []
         let pushBotYDivs = []
+
         selectedServicesDivs.forEach((item) => {
             let getTopY = item.getBoundingClientRect().top
             let getBotY = item.getBoundingClientRect().bottom
@@ -66,11 +72,20 @@ const BookingServices = () => {
             pushTopYDivs.push(getTopY)
             pushBotYDivs.push(getBotY)
         })
-        setTopY(pushTopYDivs)
-        setBotY(pushBotYDivs)
-        console.log('hi', selectedServicesDivs)
+
+        // console.log(pushTopYDivs, "pushTopYDivs")
+        // console.log(pushBotYDivs, "pushBotYDivs")
+
+        // // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY = [], topAndBotY.botY = [])
+        // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY = pushTopYDivs, topAndBotY.botY = pushBotYDivs)
+        // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY.push(pushTopYDivs), topAndBotY.botY.push(pushBotYDivs))
+
+
+        setTopAndBotY((prevState) => ({ ...prevState, topY: pushTopYDivs, botY: pushBotYDivs }))
+
     }
 
+    console.log(topAndBotY, "000")
 
     // will prevent re-creation of references and triggering useEffect on each scroll 
     // [selected] in dependency will re-creeate new reference that will contain new selected service in cart
@@ -87,14 +102,6 @@ const BookingServices = () => {
         };
 
     }, [selected, throttledOnScroll])
-
-
-
-    // useEffect(() => {
-    //     triggerScroll()
-    // }, [])
-
-
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -177,11 +184,17 @@ const BookingServices = () => {
 
     const topAndBotBadge = () => {
 
-        isTop = topY.some(item => item < 20)
-        isBot = botY.some(item => item > 350)
+        // isTop = topAndBotY.topY[0]?.some(item => item < 20)
+        // isBot = topAndBotY.botY[0]?.some(item => item > 350)
 
-        topY.forEach(item => item < 20 && topItemsLength.push(item))
-        botY.forEach(item => item > 350 && bottomItemsLength.push(item))
+        // topAndBotY.topY[0]?.forEach(item => item < 20 && topItemsLength.push(item))
+        // topAndBotY.botY[0]?.forEach(item => item > 350 && bottomItemsLength.push(item))
+
+        isTop = topAndBotY.topY?.some(item => item < 20)
+        isBot = topAndBotY.botY?.some(item => item > 350)
+
+        topAndBotY.topY?.forEach(item => item < 20 && topItemsLength.push(item))
+        topAndBotY.botY?.forEach(item => item > 350 && bottomItemsLength.push(item))
 
     }
 
@@ -323,8 +336,11 @@ const BookingServices = () => {
                 </div>
             </div>
 
-            {topY &&
-                topY.map(() => (
+            {/* {topAndBotY.topY[0] &&
+                topAndBotY.topY[0].map(() => ( */}
+
+            {topAndBotY.topY &&
+                topAndBotY.topY.map(() => (
                     <>
                         {isTop ? <div onClick={() => scrollToTopService()} className='fixed top-14 left-5 w-full h-10 text-xl bg-red-300 top-selected-services'>
                             {topItemsLength.length}  top services
@@ -334,10 +350,13 @@ const BookingServices = () => {
             }
 
 
-            {botY &&
-                botY.map(() => (
+            {/* {topAndBotY.botY[0] &&
+                topAndBotY.botY[0].map(() => ( */}
+
+            {topAndBotY.botY &&
+                topAndBotY.botY.map(() => (
                     <>
-                        {isBot ? <div onClick={() => { scrollToBotService()() }} className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
+                        {isBot ? <div onClick={() => { scrollToBotService() }} className='fixed bottom-24 left-5 w-full h-10 text-xl bg-blue-300 top-selected-services'>
                             {bottomItemsLength.length}   bot service
                         </div> : ""}
                     </>
