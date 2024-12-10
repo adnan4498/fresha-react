@@ -1,96 +1,46 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
-import _, { isArray } from "lodash";
+import _, { } from "lodash";
 import { useCallback } from 'react';
 
 const BookingServices = () => {
+
+    let navigate = useNavigate()
+
+    let match = useMatches();
+
+    let categoryName = match[0].params.category
+    let cityName = match[0].params.city
+    let salonName = match[0].params.name
+
+    console.log(categoryName + cityName + salonName)
 
     const location = useLocation();
 
     let services = location.state.servicesWithoutUnderscore
     let serviceInCart = location.state.serviceInCart
 
+    let selectedServicesDivs = []
+
     const [activeHeading, setActiveHeading] = useState()
     const [selected, setSelected] = useState([serviceInCart])
-
-    const [topY, setTopY] = useState([])
-    const [botY, setBotY] = useState([])
 
     const [topAndBotY, setTopAndBotY] = useState({
         topY: [],
         botY: [],
     })
 
-    const [getSelectedServices, setGetSelectedServices] = useState([])
+    const [getSelectedServices, setSelectedServices] = useState([])
 
     let currencySymbol = useMemo(() => {
         return getcurrencySymbol()
     }, [])
 
-    let selectedServicesDivs = []
-
-    const triggerScroll = () => {
-
-        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
-
-        for (let items of serviceNameDiv) {
-            for (let item of items) {
-                for (let services of selected) {
-                    if (item.textContent == services.name) {
-                        selectedServicesDivs.push(item)
-                    }
-                }
-            }
-        }
-
-        // selectedServicesDivs = selectedServicesDivs.reverse()
-
-        const removeNodeDuplicates = () => {
-            selectedServicesDivs = selectedServicesDivs.reduce((unique, node) => {
-                // if item == item then it wont be pushed as it will become false by !
-                // and unique array will be returned the same
-                if (!unique.some(item => item.textContent == node.textContent)) {
-                    unique.push(node)
-                }
-                return unique
-            }, [])
-
-        }
-
-        removeNodeDuplicates()
-
-        setGetSelectedServices(selectedServicesDivs)
-
-        let pushTopYDivs = []
-        let pushBotYDivs = []
-
-        selectedServicesDivs.forEach((item) => {
-            let getTopY = item.getBoundingClientRect().top
-            let getBotY = item.getBoundingClientRect().bottom
-
-            pushTopYDivs.push(getTopY)
-            pushBotYDivs.push(getBotY)
-        })
-
-        // console.log(pushTopYDivs, "pushTopYDivs")
-        // console.log(pushBotYDivs, "pushBotYDivs")
-
-        // // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY = [], topAndBotY.botY = [])
-        // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY = pushTopYDivs, topAndBotY.botY = pushBotYDivs)
-        // setTopAndBotY({ ...topAndBotY }, topAndBotY.topY.push(pushTopYDivs), topAndBotY.botY.push(pushBotYDivs))
-
-
-        setTopAndBotY((prevState) => ({ ...prevState, topY: pushTopYDivs, botY: pushBotYDivs }))
-
-    }
-
-    console.log(topAndBotY, "000")
 
     // will prevent re-creation of references and triggering useEffect on each scroll 
     // [selected] in dependency will re-creeate new reference that will contain new selected service in cart
     // even just 10 mili-seconds puts great impact on re-rendering
-
     const throttledOnScroll = useCallback(_.throttle(triggerScroll, 100, { trailing: false }), [selected]);
 
     useEffect(() => {
@@ -142,6 +92,50 @@ const BookingServices = () => {
 
     }, [])
 
+    function triggerScroll() {
+
+        let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")]
+
+        for (let items of serviceNameDiv) {
+            for (let item of items) {
+                for (let services of selected) {
+                    if (item.textContent == services.name) {
+                        selectedServicesDivs.push(item)
+                    }
+                }
+            }
+        }
+
+        const removeNodeDuplicates = () => {
+            selectedServicesDivs = selectedServicesDivs.reduce((unique, node) => {
+                // if item == item then it wont be pushed as it will become false by !
+                // and unique array will be returned the same
+                if (!unique.some(item => item.textContent == node.textContent)) {
+                    unique.push(node)
+                }
+                return unique
+            }, [])
+
+        }
+
+        removeNodeDuplicates()
+
+        setSelectedServices(selectedServicesDivs)
+
+        let pushTopYDivs = []
+        let pushBotYDivs = []
+
+        selectedServicesDivs.forEach((item) => {
+            let getTopY = item.getBoundingClientRect().top
+            let getBotY = item.getBoundingClientRect().bottom
+
+            pushTopYDivs.push(getTopY)
+            pushBotYDivs.push(getBotY)
+        })
+
+        setTopAndBotY((prevState) => ({ ...prevState, topY: pushTopYDivs, botY: pushBotYDivs }))
+    }
+
     const scrollToTopService = () => {
         getSelectedServices.forEach((item) => {
             let getItemTop = item.getBoundingClientRect().top
@@ -156,9 +150,10 @@ const BookingServices = () => {
     function scrollToBotService() {
         getSelectedServices.forEach((item, i, arr) => {
             let getItemBot = item.getBoundingClientRect().top + window.scrollY
-            let actualWindowYScroll = Math.round(window.scrollY) + 100
+            let actualWindowYScroll = Math.round(window.scrollY) + 120
 
             if (arr.length > 1) {
+
                 for (let i = 0; i < arr.length; i++) {
                     let getVal = arr[i].getBoundingClientRect().top + window.scrollY
 
@@ -168,13 +163,12 @@ const BookingServices = () => {
                     }
                 }
             }
+
             let y = getItemBot - 100
+
             window.scroll({ top: y, behavior: 'smooth' })
         })
     }
-
-
-
 
     let isTop
     let isBot
@@ -183,12 +177,6 @@ const BookingServices = () => {
     const bottomItemsLength = []
 
     const topAndBotBadge = () => {
-
-        // isTop = topAndBotY.topY[0]?.some(item => item < 20)
-        // isBot = topAndBotY.botY[0]?.some(item => item > 350)
-
-        // topAndBotY.topY[0]?.forEach(item => item < 20 && topItemsLength.push(item))
-        // topAndBotY.botY[0]?.forEach(item => item > 350 && bottomItemsLength.push(item))
 
         isTop = topAndBotY.topY?.some(item => item < 20)
         isBot = topAndBotY.botY?.some(item => item > 350)
@@ -322,6 +310,8 @@ const BookingServices = () => {
 
     const priceAndDuration = handlePriceAndDuration()
 
+    console.log(selected, "selected")
+
     return (
         <>
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
@@ -336,9 +326,6 @@ const BookingServices = () => {
                 </div>
             </div>
 
-            {/* {topAndBotY.topY[0] &&
-                topAndBotY.topY[0].map(() => ( */}
-
             {topAndBotY.topY &&
                 topAndBotY.topY.map(() => (
                     <>
@@ -348,10 +335,6 @@ const BookingServices = () => {
                     </>
                 ))
             }
-
-
-            {/* {topAndBotY.botY[0] &&
-                topAndBotY.botY[0].map(() => ( */}
 
             {topAndBotY.botY &&
                 topAndBotY.botY.map(() => (
@@ -421,7 +404,11 @@ const BookingServices = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='bg-black text-white rounded-lg items-center flex px-8'>
+                    <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                        state: {
+                            selected
+                        }
+                    })} className='bg-black text-white rounded-lg items-center flex px-8'>
                         <p>Continue</p>
                     </div>
                 </div>
@@ -431,18 +418,3 @@ const BookingServices = () => {
 }
 
 export default BookingServices
-
-
-
-// const onScroll = () => {
-//     console.log("fire up on scroll with throttle");
-// };
-
-// const throttledOnScroll = useCallback(_.throttle(onScroll, 3000, { trailing: false }), []);
-
-// useEffect(() => {
-//     document.addEventListener("scroll", throttledOnScroll);
-//     return () => {
-//       document.removeEventListener("scroll", throttledOnScroll);
-//     };
-//   }, [throttledOnScroll]);

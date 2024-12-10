@@ -1,12 +1,9 @@
 import React from "react";
 import { useMatches } from "react-router-dom";
-import globalSalons from "../../data/salondata/global/globalSalonData";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
-import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
-import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
-import allOmanSalons from "../../data/salondata/oman/omanData";
+import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const CitySalons = () => {
   let match = useMatches();
@@ -49,39 +46,28 @@ const CitySalons = () => {
 
   seperateSubCategoryAndCity();
 
+  let globalSalons = getGlobalSalons()
+
   let getCity = city || getCityFromSubCategory;
   let citySalons = globalSalons.filter((item) => item.city == getCity);
 
   let countrySalons = () => {
-    allDubaiSalons
-    allPakistanSalons
-    allOmanSalons
-
-    let allCountrySalons = [allDubaiSalons, allOmanSalons, allPakistanSalons]
+    let allCountrySalons = getGlobalSalons()
 
     let CountrySalons = []
 
-    for (let country of allCountrySalons) {
-      for (let salons of country) {
-        if (salons.city == getCity) {
-          CountrySalons.push(country)
-          break;
-        }
-      }
+    for (let salons of allCountrySalons) {
+      salons.city == getCity && CountrySalons.push(salons)
     }
 
-    let removeZeroInCountrySalonsArr = []
-
-    CountrySalons[0].forEach(item => removeZeroInCountrySalonsArr.push(item))
-
-    return removeZeroInCountrySalonsArr
+    return CountrySalons
   }
 
   let getCountrySalons = countrySalons()
 
 
   // this will add allServices obj in all salons across country
-  const makingOfAllServicesArray = () => {
+  const getAllServices = () => {
 
     let countrySalonsServices = [];
     let countryServicesWithoutTitles = [];
@@ -125,23 +111,13 @@ const CitySalons = () => {
     }
 
     // pick salon in order, pushes serviceWithNameAndPrice obj into it
-    // each salon gets accurate obj
-    // for (let i = 0; i < getCountrySalons.length; i++) {
-    //   // for (let j = 0; j < countryServicesWithNamesAndPrice.length; j++) {
-    //     Object.assign(getCountrySalons[i], {
-    //       serviceNameAndPrice: countryServicesWithNamesAndPrice[i],
-    //     });
-    //   // }
-
-
-    // }
-
-    // pick salon in order, pushes serviceWithNameAndPrice obj into it
     getCountrySalons.forEach((item, i) => Object.assign(item, { serviceNameAndPrice: countryServicesWithNamesAndPrice[i] }))
-    
+
   }
 
-  makingOfAllServicesArray()
+  getAllServices()
+
+  console.log(getCountrySalons, "getCountrySalons");
 
 
   let seperateCityAndCountrySalons = () => {
@@ -228,7 +204,6 @@ const CitySalons = () => {
 
   let isSeperatedCategory = true
   let showTopReviewsSalons = true
-
 
   return (
     <div>

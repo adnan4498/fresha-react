@@ -1,24 +1,79 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import hairSalonBanner from "../../../public/images/salons/hairSalon/hair-salon-banner.jpg";
 import barberShopBanner from "../../../public/images/salons/barberSalon/barber-shop-banner.jpeg";
 import eyeBrowBanner from "../../../public/images/salons/eyesBrowAndLashes/eye-brows-and-lashes-banner.webp";
-import { Button, Card } from "antd";
+import { Button } from "antd";
 import Carousel from "react-multi-carousel";
 import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
 import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
-import { generateRandomSalons } from "../../ownModules/randomSalons/generateRandomSalons";
-import CarouselComp from "../../components/carousel/CarouselComp";
-import { StarFilled } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
-import globalSalons from "../../data/salondata/global/globalSalonData";
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
+import { generateRandomSalons } from "../../ownModules/randomSalons/generateRandomSalons";
+import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const DynamicCategory = () => {
   let urlParam = useParams();
 
-  // console.log(urlParam, "use");
+  
+  let globalSalons = getGlobalSalons()
+
+
+  const getAllServices = () => {
+
+    let countrySalonsServices = [];
+    let countryServicesWithoutTitles = [];
+    let getAllCountryServices = [];
+    let countryServicesWithNamesAndPrice = [];
+
+    globalSalons.forEach((item) => countrySalonsServices.push(item.services));
+
+    countrySalonsServices.forEach((item) =>
+      countryServicesWithoutTitles.push(Object.values(item))
+    );
+
+    countryServicesWithoutTitles.forEach(
+      (item) => (getAllCountryServices = getAllCountryServices.concat([item]))
+    );
+
+    // got all services without titles as arrays and pushed back in citySalons array
+    getAllCountryServices.forEach((item, i) =>
+      Object.assign(globalSalons[i], { allServices: item })
+    );
+
+    // each empty array will get services
+    for (let item of getAllCountryServices) {
+      countryServicesWithNamesAndPrice.push([]);
+    }
+
+
+    // extracting services of salons in order
+    // and pushing into servicesWithNamesAndPrice
+    for (let i = 0; i < getAllCountryServices.length; i++) {
+      for (let services of getAllCountryServices[i]) {
+        for (let service of services) {
+          // prevents duplicates
+          // first item gets pushed by default (servicesWithNamesAndPrice is empty at first)
+          let duplicateFound = countryServicesWithNamesAndPrice[i]?.some((item) =>
+            service.name.includes(item.name)
+          );
+          duplicateFound ? "" : countryServicesWithNamesAndPrice[i]?.push(service);
+        }
+      }
+    }
+
+    // pick salon in order, pushes serviceWithNameAndPrice obj into it
+    globalSalons.forEach((item, i) => Object.assign(item, { serviceNameAndPrice: countryServicesWithNamesAndPrice[i] }))
+
+  }
+
+  getAllServices()
+  
+  
+  // console.log(globalSalons, "globalSalons");
+
+
 
   let allDubai = allDubaiSalons;
   let allPakistan = allPakistanSalons;
@@ -72,6 +127,8 @@ const DynamicCategory = () => {
 
   let isSeperatedCategory = false
   let showTopReviewsSalons = false
+
+
 
   return (
     <div>
@@ -133,14 +190,9 @@ const DynamicCategory = () => {
         </div>
 
         <div>
-          {/* <Carousel infinite={true} responsive={responsive} partialVisible={true} arrows={false} >
-                        {shuffled.map((item, index) => (
-                            <div className='border border-gray-300 rounded-full px-2 py-1 w-52 text-center'>
-                                <h3>{categoryName} in {item.name} </h3>
-                            </div>
-                        ))}
-                    </Carousel> */}
-          <CarouselWithServices salons={allGlobalSalons} isSeperatedCategory={isSeperatedCategory} showTopReviewsSalons={showTopReviewsSalons} />
+          <CarouselWithServices salons={allGlobalSalons}
+           getCountrySalons={globalSalons} 
+           isSeperatedCategory={isSeperatedCategory} showTopReviewsSalons={showTopReviewsSalons} />
         </div>
       </div>
     </div>

@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation, useMatches, useNavigate, useParams } from "react-router-dom";
-import globalSalons from "../../data/salondata/global/globalSalonData";
+import React, {useState } from "react";
+import { useMatches, useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
-import { StarFilled, StarOutlined } from "@ant-design/icons";
+import { StarFilled } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import { Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import SubCategories from "../../components/subCategories/SubCategories";
-import { Button, Drawer } from 'antd';
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
-import BookingServices from "../bookings/BookingServices";
-import { abuDhabiSalons } from "../../data/salondata/dubai/dubaiData";
+import BookNow from "../../components/bookNow/BookNow";
+import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const ActualSalon = () => {
-  let location = useLocation();
+
+  let globalSalons = getGlobalSalons()
 
   let navigate = useNavigate()
-
-  const [open, setOpen] = useState(false);
-  const [drawerObj, setDrawerObj] = useState({})
+  let match = useMatches();
 
   let partialVisibilityGutter = 70
   const responsive = carouselResponsiveCode(partialVisibilityGutter)
 
-  let match = useMatches();
-
   let categoryName = match[0].params.category
   let cityName = match[0].params.city
   let salonName = match[0].params.name
-  let hi = "hi"
-
-
 
   // get same city salons but not the actual salon (its already being displayed)
   let getNearbySalons = globalSalons.filter(item => item.city == match[1].params.city).filter(item => item.name != match[1].params.name)
@@ -50,7 +42,9 @@ const ActualSalon = () => {
   allSalonImgs.unshift(img1);
 
   let getServices = theSalon[0].services;
-
+  
+  let getTeamMembers = theSalon.map((item) => item.teamMembers);
+  let customers = theSalon.map((item) => item.customerReviews);
 
   // service heading first letter capitalized
   const serviceCapitalized = () => {
@@ -108,8 +102,6 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              {/* <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { state: ({ ...servicesWithoutUnderscore }) })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] "> */}
-              {/* <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${hi}`, { */}
               <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                 state: {
                   servicesWithoutUnderscore,
@@ -128,9 +120,6 @@ const ActualSalon = () => {
       ),
     });
   });
-
-  let getTeamMembers = theSalon.map((item) => item.teamMembers);
-  let customers = theSalon.map((item) => item.customerReviews);
 
   const getSalonStars = () => {
     let salonStars = [];
@@ -153,12 +142,9 @@ const ActualSalon = () => {
     return countingStars;
   };
 
-  const onClose = () => {
-    setOpen(false);
-  };
-
   let getTimings = theSalon[0].openingTimes;
 
+  console.log(theSalon, "theSalon")
 
 
   return (
@@ -225,15 +211,6 @@ const ActualSalon = () => {
             </div>
           </div>
         </div>
-
-        <Drawer title="Basic Drawer" onClose={onClose} open={open} placement={"left"}
-          className="my-drawer2"
-        >
-          {drawerObj.name}
-          {drawerObj.duration}
-          {drawerObj.price}
-        </Drawer>
-
 
         <div className="">
           <div>
@@ -403,6 +380,10 @@ const ActualSalon = () => {
 
         <div className=" overflow-x-scroll">
           <SubCategories salon={getNearbySalons} />
+        </div>
+
+        <div>
+          <BookNow />
         </div>
 
       </div>

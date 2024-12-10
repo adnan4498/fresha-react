@@ -15,6 +15,7 @@ import Header from "./shared/Header";
 import CitySalons from "./pages/categories/CitySalons";
 import ActualSalon from "./pages/categories/ActualSalon";
 import BookingServices from "./pages/bookings/BookingServices";
+import SelectProfessional from "./pages/professional/SelectProfessional";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,11 @@ const router = createBrowserRouter([
   {
     path: "/dynamic-category/:category/:city/:name/bookingService",
     element: <BookingServices />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dynamic-category/:category/:city/:name/bookingService/selectProfessional",
+    element: <SelectProfessional />,
     errorElement: <ErrorPage />,
   },
 
