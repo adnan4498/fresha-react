@@ -1,8 +1,13 @@
+// last week code
+
 import React from "react";
 import { useMatches } from "react-router-dom";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
+import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
+import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
+import allOmanSalons from "../../data/salondata/oman/omanData";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const CitySalons = () => {
@@ -52,22 +57,37 @@ const CitySalons = () => {
   let citySalons = globalSalons.filter((item) => item.city == getCity);
 
   let countrySalons = () => {
-    let allCountrySalons = getGlobalSalons()
+    allDubaiSalons
+    allPakistanSalons
+    allOmanSalons
+
+    let allCountrySalons = [allDubaiSalons, allOmanSalons, allPakistanSalons]
 
     let CountrySalons = []
 
-    for (let salons of allCountrySalons) {
-      salons.city == getCity && CountrySalons.push(salons)
+    // if salon.city found, return full array of country
+    for (let country of allCountrySalons) {
+      for (let salons of country) {
+        if (salons.city == getCity) {
+          CountrySalons.push(country)
+          break;
+        }
+      }
     }
 
-    return CountrySalons
+    let removeZeroInCountrySalonsArr = []
+
+    // [0] contains full country array
+    CountrySalons[0]?.forEach(item => removeZeroInCountrySalonsArr.push(item))
+
+    return removeZeroInCountrySalonsArr
   }
 
   let getCountrySalons = countrySalons()
 
 
   // this will add allServices obj in all salons across country
-  const getAllServices = () => {
+  const makingOfAllServicesArray = () => {
 
     let countrySalonsServices = [];
     let countryServicesWithoutTitles = [];
@@ -112,12 +132,10 @@ const CitySalons = () => {
 
     // pick salon in order, pushes serviceWithNameAndPrice obj into it
     getCountrySalons.forEach((item, i) => Object.assign(item, { serviceNameAndPrice: countryServicesWithNamesAndPrice[i] }))
-
+    
   }
 
-  getAllServices()
-
-  console.log(getCountrySalons, "getCountrySalons");
+  makingOfAllServicesArray()
 
 
   let seperateCityAndCountrySalons = () => {
@@ -204,6 +222,10 @@ const CitySalons = () => {
 
   let isSeperatedCategory = true
   let showTopReviewsSalons = true
+
+  // console.log(categoryNameToRender, "categoryNameToRender from city")
+  // console.log(getSubCategory, "getSubCategory from city")
+
 
   return (
     <div>

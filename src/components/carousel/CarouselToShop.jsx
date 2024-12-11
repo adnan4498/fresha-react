@@ -10,8 +10,6 @@ const CarouselToShop = ({countrySalons}) => {
   let partialVisibilityGutter = 70
   const responsive = carouselResponsiveCode(partialVisibilityGutter)
 
-  // console.log(props.countrySalons, "country salons")
-
   return (
     <div className=''>
       <Carousel partialVisible={true} responsive={responsive}>

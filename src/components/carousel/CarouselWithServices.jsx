@@ -18,9 +18,6 @@ const CarouselWithServices = ({
   getCountrySalons,
 }) => {
 
-  console.log(getCountrySalons, "CarouselWithServices")
-  console.log(salons, "salons")
-
   let navigate = useNavigate();
 
   let firstNameBg = true;
@@ -35,7 +32,7 @@ const CarouselWithServices = ({
 
   function triggerUseEffect() { }
 
-  // salon is single salon item from salons
+  // salon in argument is single salon item from salons
   const sliceNameAndPrice = (salon, firstNameBg) => {
     let getServices = [];
     let otherSimilarServices = [];
@@ -135,24 +132,40 @@ const CarouselWithServices = ({
   let otherSalonName = showOtherSalonHeading();
 
   let sameServiceInOtherCities = []
+  let category_or_sub_category_name = sameServiceInOtherCities.length != 0 ? subCategoryName : categoryName
+  
+  let settingCategory = () => {
+    let sameCityServices = () => {
 
-
-  let sameCityServices = () => {
-    for (let salons of getCountrySalons) {
-      for (let services of salons.serviceNameAndPrice) {
-        console.log(subCategoryName)
-        services.name == subCategoryName && sameServiceInOtherCities.push(salons)
+      // get salons on category or sub-category
+      if (subCategoryName != undefined) {
+        for (let salons of getCountrySalons) {
+          for (let services of salons.serviceNameAndPrice) {
+            services.name == category_or_sub_category_name && sameServiceInOtherCities.push(salons)
+          }
+        }
+      }
+      else {
+        for (let salons of getCountrySalons) {
+          salons.category == category_or_sub_category_name && sameServiceInOtherCities.push(salons)
+        }
       }
     }
 
+    sameCityServices()
+
   }
 
-  sameCityServices()
+  settingCategory()
+
+
+
+
 
 
   return (
     <>
-      {getCountrySalons.map((item, index) => (
+      {salons.map((item, index) => (
         <>
           {item.name == otherSalonName && (
             <>
@@ -223,7 +236,7 @@ const CarouselWithServices = ({
             <h2 className="text-2xl">
               Top Reviews of {categoryName} near you in {cityName}
             </h2>
-            <TopReviewsSalons salons={getCountrySalons} />
+            <TopReviewsSalons salons={salons} />
           </div>
 
           <div>
@@ -239,7 +252,7 @@ const CarouselWithServices = ({
 
             <div className="mt-5">
               <span>
-                And we make booking in a breeze. Discover over {getCountrySalons.length} hair salons in your area that are ready and waiting to make you feel like your best self. Businesses in Muscat are renowned for their top-notch quality, too. Over {getCountrySalons.length} of them have above 4.5-star reviews. So you can book with confidence. But if you need a little more persuading, there are over 2 million authentic customer reviews on Fresha. With everything in one place, we think you'll find your new favourite spot in no time at all.
+                And we make booking in a breeze. Discover over {salons.length} hair salons in your area that are ready and waiting to make you feel like your best self. Businesses in Muscat are renowned for their top-notch quality, too. Over {salons.length} of them have above 4.5-star reviews. So you can book with confidence. But if you need a little more persuading, there are over 2 million authentic customer reviews on Fresha. With everything in one place, we think you'll find your new favourite spot in no time at all.
               </span>
             </div>
 
@@ -261,9 +274,9 @@ const CarouselWithServices = ({
             </h2>
 
             <div className="mt-8">
-              {sameServiceInOtherCities && (
+              {sameServiceInOtherCities.length != 0 && (
                 sameServiceInOtherCities.map((item, i) => (
-                  <div key={i} onClick={() => generateSubCategoryLink(item, subCategoryName, navigate)} className="mt-3 text-[15px] font-medium">
+                  <div key={i} onClick={() => generateSubCategoryLink(item, category_or_sub_category_name, navigate)} className="mt-3 text-[15px] font-medium">
                     <div className="flex">
                       {categoryName} in {item.city}
                     </div>

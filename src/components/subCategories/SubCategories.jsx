@@ -38,25 +38,9 @@ const SubCategories = ({ salon }) => {
 
   let allCitySalonsServiceNames = getServiceNamesFromSalon();
 
-  // const generateSubCategoryLink = (subCategory) => {
-  //   // let getCategory = settingSubCategoryName(subCategory);
-
-  //   console.log(subCategory, "gg")
-    
-  //   let city = salon[0].city
-
-  //   let subCategoryAndCity = [subCategory, city];
-
-  //   subCategoryAndCity = subCategoryAndCity.join(" ");
-
-  //   let subCategoryUrl = `/dynamic-category/${subCategory}/subCategoryRouteKey/${subCategoryAndCity}`;
-
-  //   // navigate(subCategoryUrl);
-  // };
-
   return (
     <div className="grid grid-flow-col grid-rows-6 gap-3 w-[1700px]">
-      {allCitySalonsServiceNames.map((item, index) => (
+      {allCitySalonsServiceNames.map((item) => (
         <>
         <div onClick={() => generateSubCategoryLink(salon, item, navigate)}>
           <div>{item}</div>

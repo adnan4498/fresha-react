@@ -71,18 +71,14 @@ const DynamicCategory = () => {
   getAllServices()
   
   
-  // console.log(globalSalons, "globalSalons");
+  console.log(globalSalons, "globalSalons");
 
 
 
   let allDubai = allDubaiSalons;
   let allPakistan = allPakistanSalons;
 
-  let merged = allDubai.concat(allPakistan);
-
-  let shuffled = generateRandomSalons(merged);
-
-  let allGlobalSalons = globalSalons.filter(
+  let citySalons = globalSalons.filter(
     (item) => item.category == urlParam.category
   );
 
@@ -95,11 +91,31 @@ const DynamicCategory = () => {
     categoryImg = hairSalonBanner;
     bgBanner = "hair-salon-bg-banner";
   } else if (urlParam.category.includes("nail-salon")) {
-    categoryName = "Eye Salons";
+    categoryName = "Nail Salons";
     categoryImg = eyeBrowBanner;
     bgBanner = "eye-brows-and-lashes-bg-banner";
   } else if (urlParam.category.includes("barber-shop")) {
     categoryName = "Barber Shop";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("spa")) {
+    categoryName = "Spa";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("facial")) {
+    categoryName = "Facial";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("beauty-salon")) {
+    categoryName = "Beauty Salon";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("massage")) {
+    categoryName = "Massage Salon";
     categoryImg = barberShopBanner;
     bgBanner = "barber-shop-bg-banner";
   }
@@ -128,7 +144,7 @@ const DynamicCategory = () => {
   let isSeperatedCategory = false
   let showTopReviewsSalons = false
 
-
+  console.log(globalSalons, "globalSalons from dynamic")
 
   return (
     <div>
@@ -166,7 +182,7 @@ const DynamicCategory = () => {
           partialVisible={true}
           arrows={false}
         >
-          {categoryInCountries.map((item, index) => (
+          {categoryInCountries.map((item) => (
             <div className="border border-gray-300 rounded-full px-2 py-1 w-52 text-center">
               <h3>
                 {categoryName} in {item.name}{" "}
@@ -190,7 +206,7 @@ const DynamicCategory = () => {
         </div>
 
         <div>
-          <CarouselWithServices salons={allGlobalSalons}
+          <CarouselWithServices salons={citySalons}
            getCountrySalons={globalSalons} 
            isSeperatedCategory={isSeperatedCategory} showTopReviewsSalons={showTopReviewsSalons} />
         </div>

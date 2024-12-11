@@ -13,11 +13,13 @@ const settingSubCategoryName = (subCategoryName) => {
     "Haircut",
     "Premium Beard Grooming",
     "Hair Styling",
+    "Men's Haircut",
   ];
 
   let nailServices = [
     "Manicure", 
-    "Pedicure"
+    "Pedicure",
+    "Get Nails",
   ];
 
   let massageServices = [
@@ -31,6 +33,7 @@ const settingSubCategoryName = (subCategoryName) => {
     "Swedish Massage",
     "Foot Massage",
     "Ultimate Glam Package",
+    "Detox Body Wrap",
   ];
 
   let waxServices = [
@@ -54,6 +57,7 @@ const settingSubCategoryName = (subCategoryName) => {
     "Hydrating Facial",
     "Bridal Makeup Package",
     "Party Makeup",
+    "Luxary Facial",
   ];
 
   if (hairServices.includes(subCategoryName)) {
@@ -63,16 +67,19 @@ const settingSubCategoryName = (subCategoryName) => {
     return (setCategory = "nail-salon");
   }
   else if (massageServices.includes(subCategoryName)) {
-    return (setCategory = "massage-salon");
+    return (setCategory = "massage");
   }
   else if (waxServices.includes(subCategoryName)) {
     return (setCategory = "wax-salon");
   }
   else if (spaServices.includes(subCategoryName)) {
-    return (setCategory = "spa-salon");
+    return (setCategory = "spa");
   }
   else if (facialServices.includes(subCategoryName)) {
     return (setCategory = "facial-salon");
+  }
+  else if(subCategoryName == "hair-salon"){
+    return (setCategory = "Hair Salons")
   }
 
 };

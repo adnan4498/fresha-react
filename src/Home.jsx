@@ -17,7 +17,6 @@ function Home() {
   // let gg = countrySalonsServices()
 
   // console.log(aa, "aa")
-  console.log(bb, "bb")
 
   return (
     <>

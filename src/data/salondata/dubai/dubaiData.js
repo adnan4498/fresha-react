@@ -773,7 +773,7 @@ export const abuDhabiSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Relaxation and Rejuvenation",
-    category: "spa-salon",
+    category: "massage",
     gender: "Women and Men",
     salonSlug: "tranquil-escape-spa",
     services: {

@@ -6,6 +6,8 @@ import { carouselResponsiveCode } from '../../ownModules/responsive/responsive';
 
 const TopReviewsSalons = ({ salons }) => {
 
+  // console.log(salons, "sss in top")
+
   let partialVisibilityGutter = 20
   const responsive = carouselResponsiveCode(partialVisibilityGutter)
 

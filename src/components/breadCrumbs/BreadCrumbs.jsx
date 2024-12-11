@@ -6,6 +6,8 @@ const BreadCrumbs = () => {
 
   const { category, city, subCategory, name } = matches[0].params;
 
+  // console.log(matches , "mat")
+
   let bread = [category, city, subCategory, name];
 
   return (
