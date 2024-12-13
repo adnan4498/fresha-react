@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import * as ReactDOM from "react-dom/client";
 import Container from "./container/Container";
 import {
@@ -16,6 +16,7 @@ import CitySalons from "./pages/categories/CitySalons";
 import ActualSalon from "./pages/categories/ActualSalon";
 import BookingServices from "./pages/bookings/BookingServices";
 import SelectProfessional from "./pages/professional/SelectProfessional";
+
 
 const router = createBrowserRouter([
   {
@@ -35,8 +36,8 @@ const router = createBrowserRouter([
       },
       {
         // currently, city route only comes from clicking city on breadcrumb
-        path: "/dynamic-category/:category/cityRouteKey/:city",
-        element: <CitySalons key={"cityRouteKey"} />,
+        path: "/dynamic-category/:category/categoryRouteKey/:city",
+        element: <CitySalons key={"categoryRouteKey"} />,
         errorElement: <ErrorPage />,
       },
       {
@@ -46,7 +47,8 @@ const router = createBrowserRouter([
       },
       {
         path: "/dynamic-category/:category/:city/:name",
-        element: <ActualSalon />,
+        element:
+        <ActualSalon /> ,
         errorElement: <ErrorPage />,
       },
     ],
@@ -61,18 +63,6 @@ const router = createBrowserRouter([
     element: <SelectProfessional />,
     errorElement: <ErrorPage />,
   },
-
-  // {
-  //     path: "/dynamic-category/:category/:salonSlug",
-  //     element: <Salon />,
-  //     errorElement: <ErrorPage />,
-  // }
-
-  //   {
-  //     path : "/message",
-  //     element : <Message />,
-  //     crumb : () =><div className="bg-red-500"> <Link to="/">To Home</Link> </div>
-  //   }
 ]);
 
 // now Link={"/"} on navbar logo will work

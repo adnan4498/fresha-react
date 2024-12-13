@@ -105,7 +105,7 @@ export const karachiSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Glamorous Beauty",
-    category: "beauty-salon",
+    category: "hair-salon",
     gender: "Women and Men",
     salonSlug: "the-glam-studio",
     services: {
@@ -285,7 +285,7 @@ export const karachiSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Beauty Salon",
-    category: "beauty-salon",
+    category: "wax-salon",
     gender: "Women and Men",
     salonSlug: "urban-chic-salon",
     services: {
@@ -375,7 +375,7 @@ export const lahoreSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Makeup Specialists",
-    category: "beauty-salon",
+    category: "massage-salon",
     gender: "Women only",
     salonSlug: "glamour-salon",
     services: {
@@ -470,7 +470,7 @@ export const lahoreSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Hair Specialists",
-    category: "beauty-salon",
+    category: "nail-salon",
     gender: "Women only",
     salonSlug: "bella-vita-salon",
     services: {
@@ -495,6 +495,12 @@ export const lahoreSalons = [
       massage: [
         { name: "Hot Stone Massage", duration: "60 min", price: "PKR 3,500" },
         { name: "Couples Massage", duration: "90 min", price: "PKR 6,500" },
+      ],
+      nails: [
+        { name: "Manicure", duration: "45 min", price: "OMR 10" },
+        { name: "Pedicure", duration: "60 min", price: "OMR 12" },
+        { name: "Gel Manicure", duration: "50 min", price: "OMR 15" },
+        { name: "Nail Art", duration: "30 min", price: "OMR 8" },
       ],
       spa: [
         { name: "Hydrating Facial", duration: "60 min", price: "PKR 2,800" },
@@ -939,7 +945,7 @@ export const islamabadSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Hair Specialists",
-    category: "beauty-salon",
+    category: "barber-shop",
     gender: "Women only",
     salonSlug: "artistry-salon",
     services: {
@@ -1376,7 +1382,7 @@ export const multanSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Fashion & Style",
-    category: "beauty-salon",
+    category: "wellness-center",
     gender: "Women only",
     salonSlug: "chic-boutique",
     services: {

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import settingSubCategoryName from "../../ownModules/categoryData/categoryAndSubCategory";
 import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
 import generateSubCategoryLink from "../../ownModules/categoryData/generateSubCategoryLink";
 

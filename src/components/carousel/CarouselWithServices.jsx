@@ -133,7 +133,10 @@ const CarouselWithServices = ({
 
   let sameServiceInOtherCities = []
   let category_or_sub_category_name = sameServiceInOtherCities.length != 0 ? subCategoryName : categoryName
-  
+
+  // console.log(subCategoryName, "subCategoryName")
+  // console.log(categoryName, "categoryName")
+
   let settingCategory = () => {
     let sameCityServices = () => {
 
@@ -141,13 +144,20 @@ const CarouselWithServices = ({
       if (subCategoryName != undefined) {
         for (let salons of getCountrySalons) {
           for (let services of salons.serviceNameAndPrice) {
-            services.name == category_or_sub_category_name && sameServiceInOtherCities.push(salons)
+            if (services.name == category_or_sub_category_name) {
+              sameServiceInOtherCities.push(salons)
+              return
+            }
           }
         }
       }
       else {
         for (let salons of getCountrySalons) {
-          salons.category == category_or_sub_category_name && sameServiceInOtherCities.push(salons)
+          if (salons.category == category_or_sub_category_name) {
+            sameServiceInOtherCities.push(salons)
+            return
+          }
+
         }
       }
     }
@@ -158,10 +168,7 @@ const CarouselWithServices = ({
 
   settingCategory()
 
-
-
-
-
+  console.log(salons, "ssss")
 
   return (
     <>
@@ -272,6 +279,8 @@ const CarouselWithServices = ({
             <h2 className="text-2xl">
               Browse Cities
             </h2>
+
+            {/* {console.log(sameServiceInOtherCities, "sameServiceInOtherCities")} */}
 
             <div className="mt-8">
               {sameServiceInOtherCities.length != 0 && (

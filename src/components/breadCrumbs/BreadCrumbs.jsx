@@ -26,7 +26,7 @@ const BreadCrumbs = () => {
                       item == category
                         ? `/dynamic-category/${category}`
                         : item == city
-                        ? `/dynamic-category/${category}/cityRouteKey/${city}`
+                        ? `/dynamic-category/${category}/categoryRouteKey/${city}`
                          : item == subCategory
                         ? `/dynamic-category/${category}/subCategoryRouteKey/${subCategory}`
                         : ""

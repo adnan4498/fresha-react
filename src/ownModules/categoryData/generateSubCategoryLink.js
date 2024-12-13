@@ -1,20 +1,24 @@
-import settingSubCategoryName from "./categoryAndSubCategory";
+import getCategoryOrSubCategoryName from "./categoryAndSubCategory";
 
-const generateSubCategoryLink = function(salon, subCategoryName, navigate)  {
-    let getCategory = settingSubCategoryName(subCategoryName);
+const generateSubCategoryLink = function (salon, category_or_sub_category_name, navigate) {
 
-    console.log(getCategory, "getCategorygetCategory")
+  let getName = getCategoryOrSubCategoryName(category_or_sub_category_name);
 
-    let city = salon.length > 1 ? salon[0].city : salon.city
-    
-    let subCategoryAndCity = [subCategoryName, city];
-    
+  let city = salon.length > 1 ? salon[0].city : salon.city;
+
+  // - will be found only in category not subCategory. eg: spa-salon 
+  let isCategory = category_or_sub_category_name.includes("-");
+  
+  if (isCategory) {
+    console.log(getName, "city")
+    let categoryUrl = `/dynamic-category/${getName}/categoryRouteKey/${city}`;
+    navigate(categoryUrl);
+  } else {
+    let subCategoryAndCity = [category_or_sub_category_name, city];
     subCategoryAndCity = subCategoryAndCity.join(" ");
-    
-    // let subCategoryUrl = `/dynamic-category/${getCategory}/subCategoryRouteKey/${subCategoryAndCity}`;
-    let subCategoryUrl = `/dynamic-category/${getCategory}/cityRouteKey/${city}`;
-
+    let subCategoryUrl = `/dynamic-category/${getName}/subCategoryRouteKey/${subCategoryAndCity}`;
     navigate(subCategoryUrl);
-  };
- 
-export default generateSubCategoryLink
+  }
+};
+
+export default generateSubCategoryLink;

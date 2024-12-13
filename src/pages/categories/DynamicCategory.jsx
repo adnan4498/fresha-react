@@ -5,12 +5,9 @@ import barberShopBanner from "../../../public/images/salons/barberSalon/barber-s
 import eyeBrowBanner from "../../../public/images/salons/eyesBrowAndLashes/eye-brows-and-lashes-banner.webp";
 import { Button } from "antd";
 import Carousel from "react-multi-carousel";
-import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
-import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
-import { generateRandomSalons } from "../../ownModules/randomSalons/generateRandomSalons";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const DynamicCategory = () => {
@@ -69,14 +66,6 @@ const DynamicCategory = () => {
   }
 
   getAllServices()
-  
-  
-  console.log(globalSalons, "globalSalons");
-
-
-
-  let allDubai = allDubaiSalons;
-  let allPakistan = allPakistanSalons;
 
   let citySalons = globalSalons.filter(
     (item) => item.category == urlParam.category
@@ -110,12 +99,22 @@ const DynamicCategory = () => {
     bgBanner = "barber-shop-bg-banner";
   }
   else if (urlParam.category.includes("beauty-salon")) {
-    categoryName = "Beauty Salon";
+    categoryName = "Beauty Salons";
     categoryImg = barberShopBanner;
     bgBanner = "barber-shop-bg-banner";
   }
-  else if (urlParam.category.includes("massage")) {
-    categoryName = "Massage Salon";
+  else if (urlParam.category.includes("massage-center")) {
+    categoryName = "Massage Salons";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("wellness-center")) {
+    categoryName = "Wellness Centers";
+    categoryImg = barberShopBanner;
+    bgBanner = "barber-shop-bg-banner";
+  }
+  else if (urlParam.category.includes("wax-salon")) {
+    categoryName = "Wax Salons";
     categoryImg = barberShopBanner;
     bgBanner = "barber-shop-bg-banner";
   }
@@ -143,8 +142,6 @@ const DynamicCategory = () => {
 
   let isSeperatedCategory = false
   let showTopReviewsSalons = false
-
-  console.log(globalSalons, "globalSalons from dynamic")
 
   return (
     <div>

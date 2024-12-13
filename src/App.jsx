@@ -11,7 +11,6 @@ function App() {
      </div> */}
 
      <Home />
-
         {/* <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dynamicCategory" element={<DynamicCategory />} />

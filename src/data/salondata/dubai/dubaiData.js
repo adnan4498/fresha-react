@@ -417,7 +417,7 @@ export const sharjahSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Wellness Spa",
-    category: "spa",
+    category: "spa-salon",
     gender: "Unisex",
     salonSlug: "dubai-zen-retreat",
     services: {
@@ -773,7 +773,7 @@ export const abuDhabiSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Relaxation and Rejuvenation",
-    category: "massage",
+    category: "massage-center",
     gender: "Women and Men",
     salonSlug: "tranquil-escape-spa",
     services: {
@@ -958,7 +958,7 @@ export const AjmanSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Hair and Makeup",
-    category: "beauty-salon",
+    category: "facial-salon",
     gender: "Women only",
     salonSlug: "glamour-studio",
     services: {
@@ -1059,7 +1059,7 @@ export const AjmanSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Beauty Treatments",
-    category: "beauty-salon",
+    category: "wax-salon",
     gender: "Women only",
     salonSlug: "rare-beauty-salon",
     services: {
@@ -1208,7 +1208,7 @@ export const FujairahSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Luxury Hair and Spa Services",
-    category: "hair-salon",
+    category: "barber-shop",
     gender: "Women and Men",
     salonSlug: "fujairah-luxe",
     services: {
@@ -1397,7 +1397,7 @@ export const FujairahSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Premium Beauty Services",
-    category: "beauty-salon",
+    category: "nail-salon",
     gender: "Women only",
     salonSlug: "royal-touch",
     services: {
@@ -1419,6 +1419,12 @@ export const FujairahSalons = [
         { name: "Updo Hairstyle", duration: "60 min", price: "AED 150" },
         { name: "Color Touch-up", duration: "45 min", price: "AED 120" },
         { name: "Hair Straightening", duration: "90 min", price: "AED 180" },
+      ],
+      nails: [
+        { name: "Manicure", duration: "45 min", price: "OMR 10" },
+        { name: "Pedicure", duration: "60 min", price: "OMR 12" },
+        { name: "Gel Manicure", duration: "50 min", price: "OMR 15" },
+        { name: "Nail Art", duration: "30 min", price: "OMR 8" },
       ],
       massage: [
         {
@@ -1494,7 +1500,7 @@ export const FujairahSalons = [
       "../../../../public/images/salons/hairSalon/hair-salon-inner-2.jpg",
     ],
     speciality: "Holistic Beauty and Wellness",
-    category: "wellness-salon",
+    category: "wellness-center",
     gender: "Women and Men",
     salonSlug: "elegant-bliss",
     services: {

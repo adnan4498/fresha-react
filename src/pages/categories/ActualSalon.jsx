@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, {useContext, useState } from "react";
 import { useMatches, useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import { StarFilled } from "@ant-design/icons";
@@ -9,6 +9,7 @@ import SubCategories from "../../components/subCategories/SubCategories";
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
 import BookNow from "../../components/bookNow/BookNow";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
+import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
 
 const ActualSalon = () => {
 
@@ -37,6 +38,9 @@ const ActualSalon = () => {
   } = getCitySalons[0];
 
   let theSalon = getCitySalons;
+
+  // adds allServicesArr 
+  theSalon = makingOfAllServicesArray(theSalon)
 
   let allSalonImgs = [...innerImgs];
   allSalonImgs.unshift(img1);
@@ -144,8 +148,7 @@ const ActualSalon = () => {
 
   let getTimings = theSalon[0].openingTimes;
 
-  console.log(theSalon, "theSalon")
-
+  console.log(theSalon, "t")
 
   return (
     <>

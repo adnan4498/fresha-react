@@ -9,6 +9,7 @@ import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
 import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
 import allOmanSalons from "../../data/salondata/oman/omanData";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
+import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
 
 const CitySalons = () => {
   let match = useMatches();
@@ -85,58 +86,8 @@ const CitySalons = () => {
 
   let getCountrySalons = countrySalons()
 
-
-  // this will add allServices obj in all salons across country
-  const makingOfAllServicesArray = () => {
-
-    let countrySalonsServices = [];
-    let countryServicesWithoutTitles = [];
-    let getAllCountryServices = [];
-    let countryServicesWithNamesAndPrice = [];
-
-    getCountrySalons.forEach((item) => countrySalonsServices.push(item.services));
-
-    countrySalonsServices.forEach((item) =>
-      countryServicesWithoutTitles.push(Object.values(item))
-    );
-
-    countryServicesWithoutTitles.forEach(
-      (item) => (getAllCountryServices = getAllCountryServices.concat([item]))
-    );
-
-    // got all services without titles as arrays and pushed back in citySalons array
-    getAllCountryServices.forEach((item, i) =>
-      Object.assign(getCountrySalons[i], { allServices: item })
-    );
-
-    // each empty array will get services
-    for (let item of getAllCountryServices) {
-      countryServicesWithNamesAndPrice.push([]);
-    }
-
-
-    // extracting services of salons in order
-    // and pushing into servicesWithNamesAndPrice
-    for (let i = 0; i < getAllCountryServices.length; i++) {
-      for (let services of getAllCountryServices[i]) {
-        for (let service of services) {
-          // prevents duplicates
-          // first item gets pushed by default (servicesWithNamesAndPrice is empty at first)
-          let duplicateFound = countryServicesWithNamesAndPrice[i]?.some((item) =>
-            service.name.includes(item.name)
-          );
-          duplicateFound ? "" : countryServicesWithNamesAndPrice[i]?.push(service);
-        }
-      }
-    }
-
-    // pick salon in order, pushes serviceWithNameAndPrice obj into it
-    getCountrySalons.forEach((item, i) => Object.assign(item, { serviceNameAndPrice: countryServicesWithNamesAndPrice[i] }))
-    
-  }
-
-  makingOfAllServicesArray()
-
+  // adds allServicesArr 
+  getCountrySalons = makingOfAllServicesArray(getCountrySalons)
 
   let seperateCityAndCountrySalons = () => {
 

@@ -17,7 +17,7 @@ export const muscatSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Luxury Spa",
-    category: "luxury-spa",
+    category: "spa-salon",
     gender: "Unisex",
     salonSlug: "muscat-royal-1",
     services: {
@@ -180,7 +180,7 @@ export const muscatSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Boutique Spa",
-    category: "luxury-spa",
+    category: "spa-salon",
     gender: "Female Only",
     salonSlug: "muscat-essence-1",
     services: {
@@ -465,7 +465,7 @@ export const salalahSalons = [
       "../../../../public/images/salons/bellaLounge/bella-inner-3.jpg",
     ],
     speciality: "Beauty & Wellness",
-    category: "beauty-lounge",
+    category: "wax-salon",
     gender: "Women only",
     salonSlug: "salalah-bella-1",
     services: {
@@ -612,7 +612,7 @@ export const salalahSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Spa and Wellness",
-    category: "spa",
+    category: "spa-salon",
     gender: "Mixed",
     salonSlug: "salalah-oasis-3",
     services: {
@@ -692,7 +692,7 @@ export const salalahSalons = [
       "../../../../public/images/salons/bellaLounge/bella-inner-3.jpg",
     ],
     speciality: "Holistic Health & Spa",
-    category: "wellness-center",
+    category: "facial-salon",
     gender: "Mixed",
     salonSlug: "salalah-harmony-2",
     services: {
@@ -1108,7 +1108,7 @@ export const soharSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Men's Haircuts and Grooming",
-    category: "barber-shop",
+    category: "massage-center",
     gender: "Men only",
     salonSlug: "sohar-majestic-2",
     services: {
@@ -1302,7 +1302,7 @@ export const nizwaSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Spa & Wellness",
-    category: "spa",
+    category: "spa-salon",
     gender: "Unisex",
     salonSlug: "nizwa-spa-station",
     services: {
@@ -1399,7 +1399,7 @@ export const nizwaSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Hair & Nail Care",
-    category: "salon",
+    category: "hair-salon",
     gender: "Female Only",
     salonSlug: "nizwa-al-rawda",
     services: {
@@ -1504,7 +1504,7 @@ export const nizwaSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Massage & Spa",
-    category: "wellness",
+    category: "wellness-center",
     gender: "Unisex",
     salonSlug: "nizwa-serenity",
     services: {
@@ -1593,7 +1593,7 @@ export const nizwaSalons = [
       "../../../../public/images/salons/royalSpa/royal-spa-inner-3.jpg",
     ],
     speciality: "Nail Art & Manicures",
-    category: "nail-studio",
+    category: "nail-salon",
     gender: "Female Only",
     salonSlug: "nizwa-elegance",
     services: {
