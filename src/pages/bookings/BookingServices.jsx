@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom';
 import { CheckOutlined } from '@ant-design/icons';
-import _, { } from "lodash";
+import _, { get, isArray } from "lodash";
 import { useCallback } from 'react';
 
 const BookingServices = () => {
+
 
     let navigate = useNavigate()
 
@@ -14,17 +15,20 @@ const BookingServices = () => {
     let cityName = match[0].params.city
     let salonName = match[0].params.name
 
-    console.log(categoryName + cityName + salonName)
-
     const location = useLocation();
 
     let services = location.state.servicesWithoutUnderscore
     let serviceInCart = location.state.serviceInCart
+    let currencySymbol = location.state.currencySymbol
 
+    if(!isArray(serviceInCart)){
+        serviceInCart = [serviceInCart]
+    }
+    
     let selectedServicesDivs = []
-
+ 
     const [activeHeading, setActiveHeading] = useState()
-    const [selected, setSelected] = useState([serviceInCart])
+    const [selected, setSelected] = useState(serviceInCart)
 
     const [topAndBotY, setTopAndBotY] = useState({
         topY: [],
@@ -33,10 +37,11 @@ const BookingServices = () => {
 
     const [getSelectedServices, setSelectedServices] = useState([])
 
-    let currencySymbol = useMemo(() => {
-        return getcurrencySymbol()
-    }, [])
+    let selectedMemo = useMemo(() => (
+        selected
+    ), [serviceInCart])
 
+    console.log(selectedMemo, "sel")
 
     // will prevent re-creation of references and triggering useEffect on each scroll 
     // [selected] in dependency will re-creeate new reference that will contain new selected service in cart
@@ -65,7 +70,7 @@ const BookingServices = () => {
             for (let items of serviceNameDiv) {
                 for (let item of items) {
                     // selection causes 2 selected services, this will only scroll to first one
-                    if (selectedServicesDivs[0]?.textContent == item.textContent) {
+                    if (selectedServicesDivs[0]?.textContent == item?.textContent) {
                         scrollToServiceDiv = item
                         break;
                     }
@@ -99,7 +104,7 @@ const BookingServices = () => {
         for (let items of serviceNameDiv) {
             for (let item of items) {
                 for (let services of selected) {
-                    if (item.textContent == services.name) {
+                    if (item?.textContent == services?.name) {
                         selectedServicesDivs.push(item)
                     }
                 }
@@ -236,7 +241,7 @@ const BookingServices = () => {
         let removeDups = () => {
             let noDup
 
-            let findDup = selected?.filter(item => item.name == name)
+            let findDup = selected?.filter(item => item?.name == name)
             findDup.length == 0 && (noDup = true)
 
             return noDup
@@ -246,7 +251,7 @@ const BookingServices = () => {
             setSelected(oldState => ([...oldState, { name: name, price: price, duration: duration }]))
         }
         else {
-            let getItem = selected.filter(item => item.name != name)
+            let getItem = selected.filter(item => item?.name != name)
             setSelected(getItem)
         }
     }
@@ -255,7 +260,7 @@ const BookingServices = () => {
         let checkItem = []
 
         for (let item of selected) {
-            item.name == serviceName && checkItem.push(item)
+            item?.name == serviceName && checkItem.push(item)
         }
 
         if (checkItem.length > 0) {
@@ -263,22 +268,19 @@ const BookingServices = () => {
         }
     }
 
-    function getcurrencySymbol() {
-        let getPrice = selected[0]?.price
-        let getCurrency = getPrice?.includes("OMR") ? "OMR" : getPrice?.includes("PKR") ? "PKR" : getPrice?.includes("AED") ? "AED" : ""
-
-        return getCurrency
-    }
-
     const handlePriceAndDuration = () => {
 
         const replacements = (serviceVal, replacingVal) => {
 
+
             let valReplaced = []
             serviceVal.forEach((item) => {
-                let replacing = item.replace(`${replacingVal}`, "")
-                valReplaced.push(replacing)
+                let replacingSymbol = item?.replace(`${replacingVal}`, "")
+                let replacingComa
+                replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""))
+                valReplaced.push(replacingComa)
             })
+
             valReplaced.length > 1 && (valReplaced = valReplaced.reduce((accu, currentVal) => Number(accu) + Number(currentVal)))
 
             let minsText = replacingVal == "min" ? " mins" : ""
@@ -290,8 +292,8 @@ const BookingServices = () => {
         const passingArgsToReplacements = () => {
 
             let min = "min"
-            let getPrice = selected.map(item => item.price)
-            let getDuration = selected.map(item => item.duration)
+            let getPrice = selected.map(item => item?.price)
+            let getDuration = selected.map(item => item?.duration)
 
             let price = replacements(getPrice, currencySymbol)
             let serviceDuration = replacements(getDuration, min)

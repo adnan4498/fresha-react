@@ -1,4 +1,4 @@
-import React, {useContext, useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { useMatches, useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
 import { StarFilled } from "@ant-design/icons";
@@ -40,13 +40,14 @@ const ActualSalon = () => {
   let theSalon = getCitySalons;
 
   // adds allServicesArr 
-  theSalon = makingOfAllServicesArray(theSalon)
+  let getDups = true
+  theSalon = makingOfAllServicesArray(theSalon, getDups);
 
   let allSalonImgs = [...innerImgs];
   allSalonImgs.unshift(img1);
 
   let getServices = theSalon[0].services;
-  
+
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
 
@@ -65,6 +66,16 @@ const ActualSalon = () => {
   }
 
   let getServicesCapital = serviceCapitalized()
+
+  function getcurrencySymbol() {
+    // just to get currencySymbol
+    let getPrice = theSalon[0].serviceNameAndPrice[0].price
+    let getCurrency = getPrice?.includes("OMR") ? "OMR" : getPrice?.includes("PKR") ? "PKR" : getPrice?.includes("AED") ? "AED" : ""
+
+    return getCurrency
+  }
+
+  let currencySymbol =  getcurrencySymbol()
 
   let removeUnderscore = () => {
     let underScoreRemoved = {}
@@ -89,10 +100,11 @@ const ActualSalon = () => {
       children: (
         <>
           {item[1].map((service, index) => (
-            <div key={index} onClick={() => setOpen(false)} className="mt-5 flex justify-between items-center" >
+            <div key={index}  className="mt-5 flex justify-between items-center" >
               <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                 state: {
-                  servicesWithoutUnderscore
+                  servicesWithoutUnderscore,
+                  currencySymbol,
                 }
               })}>
                 <div>
@@ -113,7 +125,8 @@ const ActualSalon = () => {
                     name: service.name,
                     duration: service.duration,
                     price: service.price,
-                  }
+                  },
+                  currencySymbol,
                 }
               })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
                 Book
@@ -148,7 +161,7 @@ const ActualSalon = () => {
 
   let getTimings = theSalon[0].openingTimes;
 
-  console.log(theSalon, "t")
+  let salonServicesLength = theSalon[0].serviceNameAndPrice.length
 
   return (
     <>
@@ -386,7 +399,7 @@ const ActualSalon = () => {
         </div>
 
         <div>
-          <BookNow />
+          <BookNow salonServicesLength={salonServicesLength} category={categoryName} cityName={cityName} salonName={salonName} servicesWithoutUnderscore={servicesWithoutUnderscore} currencySymbol={currencySymbol} />
         </div>
 
       </div>

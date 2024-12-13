@@ -1,4 +1,4 @@
-const makingOfAllServicesArray = function (salons) {
+const makingOfAllServicesArray = function (salons, getDups = false) {
   let countrySalonsServices = [];
   let countryServicesWithoutTitles = [];
   let getAllCountryServices = [];
@@ -19,29 +19,25 @@ const makingOfAllServicesArray = function (salons) {
     Object.assign(salons[i], { allServices: item })
   );
 
-  //   while (getAllCountryServices.length) {
-  //     countryServicesWithNamesAndPrice.push([]);
-  //   }
-
   // each empty array will get services
   for (let item of getAllCountryServices) {
     countryServicesWithNamesAndPrice.push([]);
-    console.log(countryServicesWithNamesAndPrice, "l");
   }
 
-  // extracting services of salons in order
-  // and pushing into servicesWithNamesAndPrice
+  // extracting services of salons in order and pushing into servicesWithNamesAndPrice
   for (let i = 0; i < getAllCountryServices.length; i++) {
     for (let services of getAllCountryServices[i]) {
       for (let service of services) {
-        // prevents duplicates
-        // first item gets pushed by default (servicesWithNamesAndPrice is empty at first)
         let duplicateFound = countryServicesWithNamesAndPrice[i]?.some((item) =>
           service.name.includes(item.name)
         );
-        duplicateFound
-          ? ""
-          : countryServicesWithNamesAndPrice[i]?.push(service);
+        if (getDups) {
+          countryServicesWithNamesAndPrice[i]?.push(service);
+        } else {
+          duplicateFound
+            ? ""
+            : countryServicesWithNamesAndPrice[i]?.push(service);
+        }
       }
     }
   }
