@@ -1,33 +1,30 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import HeroSection from "./homeComponents/HeroSection";
 import GetAppQrBtn from "./components/getAppQrBtn/GetAppBtn";
 import SalonCarousels from "./homeComponents/SalonCarousels";
+// import  nameStore  from "./zustandPresistingStore";
 
 function Home() {
 
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState("");
+  // const { count, increase, decrease} = useStore((state) => state);
+  // const {myName, changeName} = nameStore((state) => state)
 
-  // Memoize the expensive calculation
-  const expensiveCalculation = useMemo(() => {
-    console.log("Performing expensive calculation...");
-    return count ** 2; // Example: squaring the count
-  }, [count]);
+  // console.log(myName, "localStorage")
 
-  console.log(expensiveCalculation, "exp")
+  // localStorage.clear()
 
   return (
     <>
-     <div>
-      <h1>Expensive Calculation</h1>
-      <p>Result: {expensiveCalculation}</p>
-      <button onClick={() => setCount((prev) => prev + 1)}>Increment Count</button>
-      <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Type something"
-      />
-    </div>
+      {/* <div className="my-40">
+        <h1>myName: {myName}</h1>
+         <h1>count: {count}</h1> 
+         <button onClick={increase}>Increase</button>
+        <button onClick={decrease}>Decrease</button>
+
+        <button onClick={changeName}>changeName</button>
+        <button onClick={ResetName}>ResetName</button>
+        <button onClick={() => myName == "adnan" ? changeName("po") : }>changeName</button>
+      </div> */}
       <HeroSection />
       <GetAppQrBtn />
       <SalonCarousels />
