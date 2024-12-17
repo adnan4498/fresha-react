@@ -4,6 +4,7 @@ import { CheckOutlined } from "@ant-design/icons";
 import _, { get, isArray } from "lodash";
 import { useCallback } from "react";
 import selectedServicesStore from "../../zustandPresistingStore";
+import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 
 const BookingServices = () => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
@@ -16,6 +17,19 @@ const BookingServices = () => {
     let categoryName = match[0].params.category;
     let cityName = match[0].params.city;
     let salonName = match[0].params.name;
+
+    let globalSalons = getGlobalSalons()
+
+    let getProfessionals = () =>{
+        let teamMembers = []
+
+        let getSalon = globalSalons.filter(item => item.name == salonName)
+        getSalon.forEach(item => teamMembers.push(item.teamMembers))
+
+        return teamMembers
+    }
+
+    let professionalsList = getProfessionals()
 
     const location = useLocation();
 
@@ -45,14 +59,12 @@ const BookingServices = () => {
 
     // let getLocal = JSON.parse(localStorage.getItem("count-storage"))
 
-    // console.log(getLocal, "gg")
-
     // will prevent re-creation of references and triggering useEffect on each scroll
     // [selected] in dependency will re-creeate new reference that will contain new selected service in cart
     // even just 10 mili-seconds puts great impact on re-rendering
     const throttledOnScroll = useCallback(
         _.throttle(triggerScroll, 100, { trailing: false }),
-        [selected]
+        [presistedSelectedServices]
     );
 
     useEffect(() => {
@@ -62,7 +74,7 @@ const BookingServices = () => {
         return () => {
             document.removeEventListener("scroll", throttledOnScroll);
         };
-    }, [selected, throttledOnScroll]);
+    }, [presistedSelectedServices, throttledOnScroll]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -105,7 +117,7 @@ const BookingServices = () => {
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                for (let services of selected) {
+                for (let services of presistedSelectedServices) {
                     if (item?.textContent == services?.name) {
                         selectedServicesDivs.push(item);
                     }
@@ -246,33 +258,61 @@ const BookingServices = () => {
     }
 
     const addService = (name, duration, price) => {
-        let removeDups = () => {
+        let noDupsFound = () => {
             let noDup;
 
-            let findDup = selected?.filter((item) => item?.name == name);
+            let findDup = presistedSelectedServices?.filter((item) => item?.name == name);
             findDup.length == 0 && (noDup = true);
 
             return noDup;
         };
 
-        if (removeDups()) {
-            setSelected((oldState) => [
-                ...oldState,
-                { name: name, price: price, duration: duration },
-            ]);
+        if (noDupsFound()) {
+            let theObj = { name: name, price: price, duration: duration }
+            setSelected((oldState) => [...oldState, theObj]);
+
+            let arr = [...presistedSelectedServices, theObj]
+            setPresistedSelectedServices(arr)
+
         } else {
-            let getItem = selected.filter((item) => item?.name != name);
-            setSelected(getItem);
+            let getSelectedItems = selected.filter((item) => item?.name != name);
+            let getPresistedItems = presistedSelectedServices.filter((item) => item?.name != name);
+
+            setSelected(getSelectedItems);
+            setPresistedSelectedServices(getPresistedItems)
         }
     };
 
-    let tickMark = (serviceName) => {
-        let checkItem = [];
 
-        // for (let item of presistedSelectedServices) {
-        for (let item of selected) {
-            item?.name == serviceName && checkItem.push(item);
-        }
+
+    // const addService = (name, duration, price) => {
+    //     let noDupsFound = () => {
+    //         let noDup;
+
+    //         let findDup = presistedSelectedServices?.filter((item) => item?.name == name);
+    //         findDup.length == 0 && (noDup = true);
+
+    //         return noDup;
+    //     };
+
+    //     if (noDupsFound()) {
+    //         let theObj = { name: name, price: price, duration: duration }
+    //         let arr1 = [...presistedSelectedServices, theObj]
+
+    //         setPresistedSelectedServices(arr1)
+
+    //     } else {
+    //         let getItem2 = presistedSelectedServices.filter((item) => item?.name != name);
+    //         setPresistedSelectedServices(getItem2)
+    //     }
+    // };
+
+
+
+    // localStorage.clear()
+
+    let tickMark = (serviceName) => {
+        let checkItem = presistedSelectedServices.filter(item => item?.name == serviceName)
 
         if (checkItem.length > 0) {
             return checkItem;
@@ -302,8 +342,8 @@ const BookingServices = () => {
 
         const passingArgsToReplacements = () => {
             let min = "min";
-            let getPrice = selected.map((item) => item?.price);
-            let getDuration = selected.map((item) => item?.duration);
+            let getPrice = presistedSelectedServices.map((item) => item?.price);
+            let getDuration = presistedSelectedServices.map((item) => item?.duration);
 
             let price = replacements(getPrice, currencySymbol);
             let serviceDuration = replacements(getDuration, min);
@@ -321,41 +361,35 @@ const BookingServices = () => {
 
     const priceAndDuration = handlePriceAndDuration();
 
-    // console.log(selected, "selected")
 
-    const handleServicePresisting = () => {
-        let arr1 = [];
-        selected.forEach((item) => arr1.push(item));
-        // selected.forEach((item) => setPresistedSelectedServices((e) => [...e, {item}]));
-        // selected.forEach((item) => setPresistedSelectedServices(item));
-        setPresistedSelectedServices(arr1)
-    };
-
-
-    const dummyFunc = () => {
+    const setPresistedAtStart = () => {
 
         if (serviceInCart.length != 0 && presistedSelectedServices.length == 0) {
-            console.log("hi")
             serviceInCart.forEach((item, i, arr) => {
-                arr.length != 0 && setPresistedSelectedServices(item);
+                if (arr.length != 0) {
+                    item = [item]
+                    setPresistedSelectedServices(item);
+                }
             });
         }
-        else {
-            presistedSelectedServices.forEach((item, i, arr) => {
-                arr.length != 0 && setPresistedSelectedServices(item);
-            });
+        else if (serviceInCart.length != 0 && presistedSelectedServices.length > 0) {
+            setPresistedSelectedServices(presistedSelectedServices)
+            setSelected(presistedSelectedServices)
         }
-
+        else if (serviceInCart.length != 0 && presistedSelectedServices.length > 0) {
+            setPresistedSelectedServices([])
+        }
         setIsBool(false);
     };
 
-    isBool && dummyFunc();
+    isBool && setPresistedAtStart();
 
-    console.log(presistedSelectedServices, "presistedSelectedServices");
 
-    localStorage.clear()
+    // useEffect(() => {
+    //     setPresistedSelectedServices(selected)
+    // }, [selected])
 
-    // console.log(services, "services")
+    // console.log(presistedSelectedServices, "presistedSelectedServices")
 
     return (
         <>
@@ -457,15 +491,14 @@ const BookingServices = () => {
                                                     service.name,
                                                     service.duration,
                                                     service.price
-                                                ),
-                                                    handleServicePresisting();
+                                                )
                                             }}
-                                            // className={`text-xl font-semibold border border-gray-300 ${(presistedSelectedServices.length != 0 ? presistedSelectedServices.some(items => items.name.includes(service.name)) : selected.name?.includes(service.name))
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
+                                                // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
                                         >
-                                            {/* {tickMark(service.name) ? ( */}
                                             {tickMark(service.name) ? (
+                                                // {tickMark(presistedSelected  Services[i]?.name) ? (
                                                 <CheckOutlined className="text-white bg-purple-300" />
                                             ) : (
                                                 "+"
@@ -479,8 +512,13 @@ const BookingServices = () => {
                 ))}
             </div>
 
+            {/* <div className="my-20 bg-red-500" onClick={() => navigate(-2)}>
+                        asdad
+                    </div> */}
+            {/* {localStorage.clear()} */}
+
             {/* selected[0] is first selected service from previous page */}
-            {selected[0] != undefined && (
+            {presistedSelectedServices[0] != undefined && (
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">
                         <div>
@@ -495,7 +533,7 @@ const BookingServices = () => {
                         <div className="flex gap-2 text-sm">
                             <div>
                                 {" "}
-                                {selected.length} service{selected.length > 1 && "s"}{" "}
+                                {presistedSelectedServices.length} service{presistedSelectedServices.length > 1 && "s"}{" "}
                             </div>
 
                             <div>
@@ -507,11 +545,11 @@ const BookingServices = () => {
                     </div>
                     <div
                         onClick={() =>
-                            navigate(
-                                `/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`,
+                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`,
                                 {
                                     state: {
-                                        selected,
+                                        presistedSelectedServices,
+                                        professionalsList,
                                     },
                                 }
                             )
@@ -520,6 +558,7 @@ const BookingServices = () => {
                     >
                         <p>Continue</p>
                     </div>
+
                 </div>
             )}
         </>

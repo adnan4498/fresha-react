@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
+import selectedServicesStore from '../../zustandPresistingStore';
 
 const GroupOrPersonalAppointment = () => {
-
+    
+    const { setPresistedSelectedServices } = selectedServicesStore((state) => state);
     let match = useMatches();
     let navigate = useNavigate()
     const location = useLocation();
@@ -10,6 +12,12 @@ const GroupOrPersonalAppointment = () => {
     let categoryName = match[0].params.category
     let cityName = match[0].params.city
     let salonName = match[0].params.name
+
+
+    useEffect(() => {
+        setPresistedSelectedServices([])
+    }, [])
+
 
     let currencySymbol = location.state.currencySymbol
     let servicesWithoutUnderscore = location.state.servicesWithoutUnderscore

@@ -10,10 +10,25 @@ import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
 import BookNow from "../../components/bookNow/BookNow";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
+import { useEffect } from "react";
+import selectedServicesStore from "../../zustandPresistingStore";
 
 const ActualSalon = () => {
 
   let globalSalons = getGlobalSalons()
+
+  const { setPresistedSelectedServices } = selectedServicesStore((state) => state);
+
+
+
+  useEffect(() => {
+
+    setPresistedSelectedServices([])
+
+  }, [])
+
+
+
 
   let navigate = useNavigate()
   let match = useMatches();
@@ -75,7 +90,7 @@ const ActualSalon = () => {
     return getCurrency
   }
 
-  let currencySymbol =  getcurrencySymbol()
+  let currencySymbol = getcurrencySymbol()
 
   let removeUnderscore = () => {
     let underScoreRemoved = {}
@@ -100,7 +115,7 @@ const ActualSalon = () => {
       children: (
         <>
           {item[1].map((service, index) => (
-            <div key={index}  className="mt-5 flex justify-between items-center" >
+            <div key={index} className="mt-5 flex justify-between items-center" >
               <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                 state: {
                   servicesWithoutUnderscore,
