@@ -545,7 +545,7 @@ const BookingServices = () => {
                     </div>
                     <div
                         onClick={() =>
-                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`,
+                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`,  
                                 {
                                     state: {
                                         presistedSelectedServices,
