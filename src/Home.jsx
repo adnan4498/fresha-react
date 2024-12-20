@@ -1,7 +1,8 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import HeroSection from "./homeComponents/HeroSection";
 import GetAppQrBtn from "./components/getAppQrBtn/GetAppBtn";
 import SalonCarousels from "./homeComponents/SalonCarousels";
+import { useState } from "react";
 // import  nameStore  from "./zustandPresistingStore";
 
 function Home() {
@@ -13,8 +14,22 @@ function Home() {
 
   // localStorage.clear()
 
+  // const [dummy, setDummy] = useState()
+
+  // let aa = []
+  // useEffect(() => {
+  //   aa = 5
+
+  //   setDummy(10)
+  // }, [])
+  
+
+
+  // console.log(dummy)
+
   return (
     <>
+    {/* adasd */}
       {/* <div className="my-40">
         <h1>myName: {myName}</h1>
          <h1>count: {count}</h1> 

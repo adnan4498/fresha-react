@@ -7,27 +7,28 @@ import { Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import SubCategories from "../../components/subCategories/SubCategories";
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
-import BookNow from "../../components/bookNow/BookNow";
+import BookNow from "../../components/bookNow/BookNowAndContinue";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
 import { useEffect } from "react";
-import selectedServicesStore from "../../zustandPresistingStore";
+// import selectedServicesStore from "../../zustandStore";
+import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
+import { selectedServicesStore } from "../../zustandStore";
+import { salonDataZustandStore } from "../../zustandStore";
 
 const ActualSalon = () => {
 
   let globalSalons = getGlobalSalons()
 
-  const { setPresistedSelectedServices } = selectedServicesStore((state) => state);
+  const { presistedSelectedServices, setPresistedSelectedServices } = selectedServicesStore((state) => state);
 
 
+  const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   useEffect(() => {
-
     setPresistedSelectedServices([])
-
+    setSalonDataZustand(getSalonDataForZustand)
   }, [])
-
-
 
 
   let navigate = useNavigate()
@@ -108,6 +109,16 @@ const ActualSalon = () => {
 
   let tabItems = [];
 
+  let setFirstServiceInLocalStorage = (name, price, duration) => {
+    let serviceInCart = [{
+      name: name,
+      duration: duration,
+      price: price,
+    }]
+
+    setPresistedSelectedServices(serviceInCart)
+  }
+
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
       key: item[0],
@@ -133,17 +144,19 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
-                state: {
-                  servicesWithoutUnderscore,
-                  serviceInCart: {
-                    name: service.name,
-                    duration: service.duration,
-                    price: service.price,
-                  },
-                  currencySymbol,
-                }
-              })} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
+              <div onClick={() => {
+                setFirstServiceInLocalStorage(service.name, service.price, service.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                  state: {
+                    servicesWithoutUnderscore,
+                    serviceInCart: {
+                      name: service.name,
+                      duration: service.duration,
+                      price: service.price,
+                    },
+                    currencySymbol,
+                  }
+                })
+              }} className="text-base font-semibold border border-gray-300 rounded-full px-4 py-[6px] ">
                 Book
               </div>
             </div>
@@ -177,6 +190,28 @@ const ActualSalon = () => {
   let getTimings = theSalon[0].openingTimes;
 
   let salonServicesLength = theSalon[0].serviceNameAndPrice.length
+
+  let showBookNowBtn = true
+
+  let getProfessionals = () => {
+
+    let teamMembers = theSalon.map(item => item.teamMembers)
+    return teamMembers
+  }
+
+  let professionalsList = getProfessionals()
+
+
+  let getSalonDataForZustand = [{
+    salonServicesLength: salonServicesLength,
+    categoryName: categoryName,
+    cityName: cityName,
+    salonName: salonName,
+    servicesWithoutUnderscore: servicesWithoutUnderscore,
+    currencySymbol: currencySymbol,
+    professionalsList : professionalsList,
+  }]
+
 
   return (
     <>
@@ -413,9 +448,10 @@ const ActualSalon = () => {
           <SubCategories salon={getNearbySalons} />
         </div>
 
-        <div>
-          <BookNow salonServicesLength={salonServicesLength} category={categoryName} cityName={cityName} salonName={salonName} servicesWithoutUnderscore={servicesWithoutUnderscore} currencySymbol={currencySymbol} />
-        </div>
+        {salonDataZustand.length != 0 && <div>
+          {/* <BookNowAndContinue salonServicesLength={salonServicesLength} category={categoryName} cityName={cityName} salonName={salonName} servicesWithoutUnderscore={servicesWithoutUnderscore} currencySymbol={currencySymbol} presistedSelectedServices={presistedSelectedServices} showBookNowBtn={showBookNowBtn} /> */}
+          <BookNowAndContinue showBookNowBtn={showBookNowBtn} />
+        </div>}
 
       </div>
     </>

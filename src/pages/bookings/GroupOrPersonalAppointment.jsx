@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
-import selectedServicesStore from '../../zustandPresistingStore';
+import { selectedServicesStore } from '../../zustandStore';
+// import selectedServicesStore from '../../zustandStore';
 
 const GroupOrPersonalAppointment = () => {
     

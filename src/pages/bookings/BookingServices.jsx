@@ -3,12 +3,19 @@ import { useLocation, useMatches, useNavigate } from "react-router-dom";
 import { CheckOutlined } from "@ant-design/icons";
 import _, { get, isArray } from "lodash";
 import { useCallback } from "react";
-import selectedServicesStore from "../../zustandPresistingStore";
+// import selectedServicesStore from "../../zustandStore";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
+import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
+import { selectedServicesStore } from "../../zustandStore";
+import { salonDataZustandStore } from "../../zustandStore";
 
 const BookingServices = () => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
+
+    const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
+
+    console.log(salonDataZustand, "salonDataZustand in bookingService")
 
     let navigate = useNavigate();
 
@@ -20,22 +27,27 @@ const BookingServices = () => {
 
     let globalSalons = getGlobalSalons()
 
-    let getProfessionals = () =>{
-        let teamMembers = []
-
-        let getSalon = globalSalons.filter(item => item.name == salonName)
-        getSalon.forEach(item => teamMembers.push(item.teamMembers))
-
-        return teamMembers
-    }
-
-    let professionalsList = getProfessionals()
-
     const location = useLocation();
 
     let services = location.state.servicesWithoutUnderscore;
-    let serviceInCart = location.state.serviceInCart;
+    let serviceFromNavigationState = location.state.serviceInCart;
     let currencySymbol = location.state.currencySymbol;
+
+    let serviceInCart = []
+
+    // console.log(serviceFromNavigationState, "nnn")
+
+    // if no selected services, page referesh will show no selected services
+    const pageRefereshOnNoServices = () => {
+        if (presistedSelectedServices.length == 0) {
+            serviceInCart = []
+        }
+        else {
+            serviceInCart = serviceFromNavigationState
+        }
+    }
+
+    pageRefereshOnNoServices()
 
     if (!isArray(serviceInCart)) {
         serviceInCart = [serviceInCart];
@@ -322,8 +334,12 @@ const BookingServices = () => {
     const handlePriceAndDuration = () => {
         const replacements = (serviceVal, replacingVal) => {
             let valReplaced = [];
+
+            // console.log(serviceVal, "m")
+
             serviceVal.forEach((item) => {
                 let replacingSymbol = item?.replace(`${replacingVal}`, "");
+                // console.log(replacingSymbol, "ss")
                 let replacingComa;
                 replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""));
                 valReplaced.push(replacingComa);
@@ -335,6 +351,7 @@ const BookingServices = () => {
                 ));
 
             let minsText = replacingVal == "min" ? " mins" : "";
+            // let valWithText = valReplaced + minsText;
             let valWithText = valReplaced + minsText;
 
             return valWithText;
@@ -352,6 +369,8 @@ const BookingServices = () => {
                 price: price,
                 duration: serviceDuration,
             };
+
+            // console.log(presistedSelectedServices, "rewwwsult")
 
             return result;
         };
@@ -390,6 +409,9 @@ const BookingServices = () => {
     // }, [selected])
 
     // console.log(presistedSelectedServices, "presistedSelectedServices")
+    // console.log(selected, "ss")
+
+    let showBookNowBtn = false
 
     return (
         <>
@@ -518,49 +540,8 @@ const BookingServices = () => {
             {/* {localStorage.clear()} */}
 
             {/* selected[0] is first selected service from previous page */}
-            {presistedSelectedServices[0] != undefined && (
-                <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
-                    <div className="">
-                        <div>
-                            <h3 className="text-left font-semibold text-black">
-                                {/* writing code in `${}` will add space between currencySymbol and price */}
-                                {priceAndDuration?.price
-                                    ? `${currencySymbol} ${priceAndDuration?.price}`
-                                    : selected[0]?.price}
-                            </h3>
-                        </div>
+            <BookNowAndContinue priceAndDuration={priceAndDuration} presistedSelectedServices={presistedSelectedServices} showBookNowBtn={showBookNowBtn} />
 
-                        <div className="flex gap-2 text-sm">
-                            <div>
-                                {" "}
-                                {presistedSelectedServices.length} service{presistedSelectedServices.length > 1 && "s"}{" "}
-                            </div>
-
-                            <div>
-                                {priceAndDuration?.duration
-                                    ? priceAndDuration?.duration
-                                    : selected[0]?.duration}
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        onClick={() =>
-                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`,  
-                                {
-                                    state: {
-                                        presistedSelectedServices,
-                                        professionalsList,
-                                    },
-                                }
-                            )
-                        }
-                        className="bg-black text-white rounded-lg items-center flex px-8"
-                    >
-                        <p>Continue</p>
-                    </div>
-
-                </div>
-            )}
         </>
     );
 };

@@ -1,14 +1,8 @@
 import { UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import React from 'react'
-import { useLocation } from 'react-router-dom';
+import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 
 const SelectProfessional = () => {
-
-  const location = useLocation();
-
-  let ggg = location.state.professionalsList
-
-  console.log(ggg, "ggg")
 
   return (
     <div>
@@ -33,6 +27,8 @@ const SelectProfessional = () => {
           <span className='text-base text-center leading-[20px]'>Select professional <br></br>per service </span>
         </div>
       </div>
+
+      <BookNowAndContinue/>
     </div>
   )
 }
