@@ -4,6 +4,9 @@ import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 
 const SelectProfessional = () => {
 
+  let showBookNowBtn = false
+
+
   return (
     <div>
       <div>
@@ -28,7 +31,7 @@ const SelectProfessional = () => {
         </div>
       </div>
 
-      <BookNowAndContinue/>
+      <BookNowAndContinue showBookNowBtn={showBookNowBtn}/>
     </div>
   )
 }

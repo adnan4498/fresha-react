@@ -5,21 +5,6 @@ export const selectedServicesStore = create(
   persist(
     (set) => ({
       presistedSelectedServices: [],
-      // setPresistedSelectedServices: (newService) =>
-      //   set((oldState) => ({
-      //     presistedSelectedServices: [
-      //       ...oldState.presistedSelectedServices,
-      //       newService,
-      //     ],
-      //   })),
-
-      // setPresistedSelectedServices: (newService) =>
-      //   set((oldState) => ({
-      //     presistedSelectedServices: [
-      //       newService,
-      //     ],
-      //   })),
-
       setPresistedSelectedServices: (newService) =>
         set({ presistedSelectedServices: newService }),
     }),
@@ -30,9 +15,15 @@ export const selectedServicesStore = create(
   )
 );
 
-export const salonDataZustandStore = create((set) => ({
-  salonDataZustand: [],
-  setSalonDataZustand: (newData) => set({ salonDataZustand: newData }),
-}));
-
-// export default {selectedServicesStore , salonDataZustandStore};
+export const salonDataZustandStore = create(
+  persist(
+    (set) => ({
+      salonDataZustand: [],
+      setSalonDataZustand: (newData) => set({ salonDataZustand: newData }),
+    }),
+    {
+      name: "salon-data-storage",
+      getStorage: () => localStorage,
+    }
+  )
+);

@@ -1,35 +1,36 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { salonDataZustandStore } from '../../zustandStore'
+import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore'
 
 const BookNowAndContinue = (props) => {
 
-    // const { presistedSelectedServices, setPresistedSelectedServices } =
-    //     selectedServicesStore((state) => state);
+    const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
 
-    const salonDataZustand = salonDataZustandStore((state) => state)
+    const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
-    // const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore } = salonDataZustand[0]
-
+    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
 
 
-    console.log(salonDataZustand, "salonDataZustand")
+
+    // console.log(salonDataZustand, "salonDataZustand")
+    // console.log(presistedSelectedServices, "presistedSelectedServices")
+    // console.log(currencySymbol, "currencySymbol")
 
     let navigate = useNavigate()
     let serviceInCart = []
 
-    let salonServicesLength = props.salonServicesLength
-    let categoryName = props.categoryName
-    let cityName = props.cityName
-    let salonName = props.salonName
-    let servicesWithoutUnderscore = props.servicesWithoutUnderscore
-    let currencySymbol = props.currencySymbol
-    let professionalsList = props.professionalsList
+    // let salonServicesLength = props.salonServicesLength
+    // let categoryName = props.categoryName
+    // let cityName = props.cityName
+    // let salonName = props.salonName
+    // let servicesWithoutUnderscore = props.servicesWithoutUnderscore
+    // let currencySymbol = props.currencySymbol
+    // let professionalsList = props.professionalsList
 
     let showBookNowBtn = props.showBookNowBtn
 
-    let priceAndDuration = props.priceAndDuration
-    let presistedSelectedServices = props.presistedSelectedServices
+    // let priceAndDuration = props.priceAndDuration
+    // let presistedSelectedServices = props.presistedSelectedServices
 
     return (
         <>

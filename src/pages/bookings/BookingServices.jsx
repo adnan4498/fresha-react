@@ -13,9 +13,9 @@ const BookingServices = () => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
 
-    const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
+    const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-    console.log(salonDataZustand, "salonDataZustand in bookingService")
+    // console.log(salonDataZustand, "salonDataZustand in bookingService")
 
     let navigate = useNavigate();
 
@@ -122,7 +122,13 @@ const BookingServices = () => {
             });
         };
         activateHeading();
+
+        // pushing priceAndDuration into presisted state
+        salonDataZustand[0].priceAndDuration = priceAndDuration
+        setSalonDataZustand(salonDataZustand)
     }, []);
+
+    console.log(salonDataZustand, "salonDataZustand")
 
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
@@ -335,11 +341,8 @@ const BookingServices = () => {
         const replacements = (serviceVal, replacingVal) => {
             let valReplaced = [];
 
-            // console.log(serviceVal, "m")
-
             serviceVal.forEach((item) => {
                 let replacingSymbol = item?.replace(`${replacingVal}`, "");
-                // console.log(replacingSymbol, "ss")
                 let replacingComa;
                 replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""));
                 valReplaced.push(replacingComa);
@@ -370,8 +373,6 @@ const BookingServices = () => {
                 duration: serviceDuration,
             };
 
-            // console.log(presistedSelectedServices, "rewwwsult")
-
             return result;
         };
 
@@ -379,7 +380,6 @@ const BookingServices = () => {
     };
 
     const priceAndDuration = handlePriceAndDuration();
-
 
     const setPresistedAtStart = () => {
 
@@ -403,13 +403,6 @@ const BookingServices = () => {
 
     isBool && setPresistedAtStart();
 
-
-    // useEffect(() => {
-    //     setPresistedSelectedServices(selected)
-    // }, [selected])
-
-    // console.log(presistedSelectedServices, "presistedSelectedServices")
-    // console.log(selected, "ss")
 
     let showBookNowBtn = false
 
@@ -540,7 +533,7 @@ const BookingServices = () => {
             {/* {localStorage.clear()} */}
 
             {/* selected[0] is first selected service from previous page */}
-            <BookNowAndContinue priceAndDuration={priceAndDuration} presistedSelectedServices={presistedSelectedServices} showBookNowBtn={showBookNowBtn} />
+            <BookNowAndContinue priceAndDuration={priceAndDuration} showBookNowBtn={showBookNowBtn} />
 
         </>
     );
@@ -548,18 +541,3 @@ const BookingServices = () => {
 
 export default BookingServices;
 
-// const BookingServices = () => {
-
-//     const [isBool, setIsBool] = useState(false)
-
-//     !setIsBool && setIsBool(true)
-
-//     console.log(isBool)
-
-//     return(
-//         <>
-//             hi
-//         </>
-//     )
-// }
-// export default BookingServices
