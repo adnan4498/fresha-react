@@ -193,15 +193,6 @@ const ActualSalon = () => {
 
   let showBookNowBtn = true
 
-  let getProfessionals = () => {
-
-    let teamMembers = theSalon.map(item => item.teamMembers)
-    return teamMembers
-  }
-
-  let professionalsList = getProfessionals()
-
-
   let getSalonDataForZustand = [{
     salonServicesLength: salonServicesLength,
     categoryName: categoryName,
@@ -209,9 +200,10 @@ const ActualSalon = () => {
     salonName: salonName,
     servicesWithoutUnderscore: servicesWithoutUnderscore,
     currencySymbol: currencySymbol,
-    professionalsList : professionalsList,
+    professionalsList : getTeamMembers,
   }]
 
+  // localStorage.clear()
 
   return (
     <>

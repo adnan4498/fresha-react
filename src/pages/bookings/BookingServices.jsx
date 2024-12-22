@@ -15,8 +15,6 @@ const BookingServices = () => {
 
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-    // console.log(salonDataZustand, "salonDataZustand in bookingService")
-
     let navigate = useNavigate();
 
     let match = useMatches();
@@ -34,8 +32,6 @@ const BookingServices = () => {
     let currencySymbol = location.state.currencySymbol;
 
     let serviceInCart = []
-
-    // console.log(serviceFromNavigationState, "nnn")
 
     // if no selected services, page referesh will show no selected services
     const pageRefereshOnNoServices = () => {
@@ -124,9 +120,16 @@ const BookingServices = () => {
         activateHeading();
 
         // pushing priceAndDuration into presisted state
+        // salonDataZustand[0].priceAndDuration = priceAndDuration
+        // console.log(priceAndDuration, "priceAndDuration in effect")
+        // setSalonDataZustand(salonDataZustand)
+    }, []);
+
+    useEffect(() => {
         salonDataZustand[0].priceAndDuration = priceAndDuration
         setSalonDataZustand(salonDataZustand)
-    }, []);
+    }, [selected])
+    
 
     console.log(salonDataZustand, "salonDataZustand")
 
@@ -533,7 +536,7 @@ const BookingServices = () => {
             {/* {localStorage.clear()} */}
 
             {/* selected[0] is first selected service from previous page */}
-            <BookNowAndContinue priceAndDuration={priceAndDuration} showBookNowBtn={showBookNowBtn} />
+            <BookNowAndContinue showBookNowBtn={showBookNowBtn} />
 
         </>
     );

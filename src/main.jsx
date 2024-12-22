@@ -17,6 +17,7 @@ import ActualSalon from "./pages/categories/ActualSalon";
 import BookingServices from "./pages/bookings/BookingServices";
 import SelectProfessional from "./pages/bookings/SelectProfessional";
 import GroupOrPersonalAppointment from "./pages/bookings/GroupOrPersonalAppointment";
+import ProfessionalPerService from "./pages/bookings/ProfessionalPerService";
 
 
 const router = createBrowserRouter([
@@ -67,6 +68,11 @@ const router = createBrowserRouter([
   {
     path: "/dynamic-category/:category/:city/:name/bookingService/selectProfessional",
     element: <SelectProfessional />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dynamic-category/:category/:city/:name/bookingService/selectProfessional/professionalPerService",
+    element: <ProfessionalPerService />,
     errorElement: <ErrorPage />,
   },
 ]);
