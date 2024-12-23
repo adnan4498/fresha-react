@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore'
 
-const BookNowAndContinue = (props) => {
+const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
 
     const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
 
@@ -27,7 +27,7 @@ const BookNowAndContinue = (props) => {
     // let currencySymbol = props.currencySymbol
     // let professionalsList = props.professionalsList
 
-    let showBookNowBtn = props.showBookNowBtn
+    // let showBookNowBtn = props.showBookNowBtn
 
     // let priceAndDuration = props.priceAndDuration
     // let presistedSelectedServices = props.presistedSelectedServices

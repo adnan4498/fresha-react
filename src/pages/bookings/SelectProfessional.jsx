@@ -9,8 +9,6 @@ const SelectProfessional = () => {
 
   const navigate = useNavigate()
 
-  let showBookNowBtn = false
-
   const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
   const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
@@ -86,7 +84,7 @@ const SelectProfessional = () => {
           </>
         ))}
       </div>
-      <BookNowAndContinue showBookNowBtn={showBookNowBtn} />
+      <BookNowAndContinue/>
 
     </div>
   )

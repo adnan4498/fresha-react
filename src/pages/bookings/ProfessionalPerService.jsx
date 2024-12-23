@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
 import { CloseOutlined, DownOutlined, RightOutlined, UserOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
+import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 
 const ProfessionalPerService = () => {
 
@@ -23,7 +24,7 @@ const ProfessionalPerService = () => {
     };
 
     return (
-        <div>
+        <div className='mb-28'>
             <div>
                 <h2> Select professional</h2>
             </div>
@@ -45,6 +46,7 @@ const ProfessionalPerService = () => {
                 onClose={onClose}
                 open={open}
                 key={placement}
+                className='professional-per-service-drawer'
             >
                 <div>
                     asd
@@ -64,11 +66,11 @@ const ProfessionalPerService = () => {
                                 </h3>
                             </div>
 
-                            <div  className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
+                            <div onClick={showDrawer}  className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
                                         <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
-                                        <div onClick={showDrawer} className='font-medium text-sm'>Any Professional</div>
+                                        <div  className='font-medium text-sm'>Any Professional</div>
                                     </div>
                                     <div className='text-xs pr-4'><DownOutlined /></div>
                                 </div>
@@ -81,6 +83,8 @@ const ProfessionalPerService = () => {
                     </>
                 ))}
             </div>
+
+            <BookNowAndContinue/>
         </div>
     )
 }

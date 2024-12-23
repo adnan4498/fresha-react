@@ -121,7 +121,13 @@ span.ant-input-affix-wrapper.css-dev-only-do-not-override-ccdg5a.ant-input-outli
 
 /* antd drawer */
 
-.ant-drawer-content-wrapper  { 
+.ant-drawer-content-wrapper .professional-per-service-drawer  { 
+  height: 100vh !important;
+  margin-top: 50px;
+}
+
+/* below is navbar hambuger drawer */
+.ant-drawer-content-wrapper { 
   height: 100vh !important;
 }
 

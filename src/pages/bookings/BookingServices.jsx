@@ -31,6 +31,7 @@ const BookingServices = () => {
     let serviceFromNavigationState = location.state.serviceInCart;
     let currencySymbol = location.state.currencySymbol;
 
+
     let serviceInCart = []
 
     // if no selected services, page referesh will show no selected services
@@ -407,7 +408,6 @@ const BookingServices = () => {
     isBool && setPresistedAtStart();
 
 
-    let showBookNowBtn = false
 
     return (
         <>
@@ -536,7 +536,7 @@ const BookingServices = () => {
             {/* {localStorage.clear()} */}
 
             {/* selected[0] is first selected service from previous page */}
-            <BookNowAndContinue showBookNowBtn={showBookNowBtn} />
+            <BookNowAndContinue />
 
         </>
     );

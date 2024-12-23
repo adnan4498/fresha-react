@@ -1403,36 +1403,36 @@ export const nizwaSalons = [
     gender: "Female Only",
     salonSlug: "nizwa-al-rawda",
     services: {
-        features: [
-            {
-              name: "Premium Beard Grooming",
-              duration: "60 min",
-              price: "OMR 10",
-              details: "Includes hot towel shave",
-            },
-            { name: "Classic Haircut", duration: "45 min", price: "OMR 6" },
-            { name: "Hair Coloring", duration: "60 min", price: "OMR 12" },
-            { name: "Head Massage", duration: "30 min", price: "OMR 5" },
-            {
-              name: "Full Body Massage",
-              duration: "90 min",
-              price: "OMR 25",
-            },
-          ],
-          hair_and_beard: [
-            { name: "Haircut", duration: "45 min", price: "OMR 6" },
-            { name: "Beard Grooming", duration: "60 min", price: "OMR 10" },
-            {
-              name: "Haircut & Beard Grooming",
-              duration: "75 min",
-              price: "OMR 14",
-            },
-            {
-              name: "Hair Coloring",
-              duration: "60 min",
-              price: "OMR 12",
-            },
-          ],
+      features: [
+        {
+          name: "Premium Beard Grooming",
+          duration: "60 min",
+          price: "OMR 10",
+          details: "Includes hot towel shave",
+        },
+        { name: "Classic Haircut", duration: "45 min", price: "OMR 6" },
+        { name: "Hair Coloring", duration: "60 min", price: "OMR 12" },
+        { name: "Head Massage", duration: "30 min", price: "OMR 5" },
+        {
+          name: "Full Body Massage",
+          duration: "90 min",
+          price: "OMR 25",
+        },
+      ],
+      hair_and_beard: [
+        { name: "Haircut", duration: "45 min", price: "OMR 6" },
+        { name: "Beard Grooming", duration: "60 min", price: "OMR 10" },
+        {
+          name: "Haircut & Beard Grooming",
+          duration: "75 min",
+          price: "OMR 14",
+        },
+        {
+          name: "Hair Coloring",
+          duration: "60 min",
+          price: "OMR 12",
+        },
+      ],
       hair: [
         { name: "Haircut & Styling", duration: "45 min", price: "OMR 15" },
         { name: "Keratin Treatment", duration: "120 min", price: "OMR 50" },

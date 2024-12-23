@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
+import servicesOfSpecialist from "../../ownModules/specialistServices/SpecialistServices";
 
 const ActualSalon = () => {
 
@@ -66,6 +67,8 @@ const ActualSalon = () => {
 
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
+
+  console.log(theSalon[0], "gs")
 
   // service heading first letter capitalized
   const serviceCapitalized = () => {
@@ -127,12 +130,14 @@ const ActualSalon = () => {
         <>
           {item[1].map((service, index) => (
             <div key={index} className="mt-5 flex justify-between items-center" >
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
-                state: {
-                  servicesWithoutUnderscore,
-                  currencySymbol,
-                }
-              })}>
+              <div 
+              // onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+              //   state: {
+              //     servicesWithoutUnderscore,
+              //     currencySymbol,
+              //   }
+              // })}
+              >
                 <div>
                   <p className="text-xl">{service.name}</p>
                 </div>
@@ -277,7 +282,7 @@ const ActualSalon = () => {
 
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
-              <div className="relative">
+              <div onClick={() => servicesOfSpecialist(item, servicesWithoutUnderscore)} className="relative">
                 <div className="w-24 h-24 ">
                   <img
                     src={item.memberImg}
