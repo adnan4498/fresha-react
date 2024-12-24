@@ -68,7 +68,7 @@ const ActualSalon = () => {
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
 
-  console.log(theSalon[0], "gs")
+  // console.log(theSalon[0], "gs")
 
   // service heading first letter capitalized
   const serviceCapitalized = () => {
@@ -282,7 +282,7 @@ const ActualSalon = () => {
 
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
-              <div onClick={() => servicesOfSpecialist(item, servicesWithoutUnderscore)} className="relative">
+              <div onClick={() => servicesOfSpecialist(item, servicesWithoutUnderscore, theSalon[0])} className="relative">
                 <div className="w-24 h-24 ">
                   <img
                     src={item.memberImg}

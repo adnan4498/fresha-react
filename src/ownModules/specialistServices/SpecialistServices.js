@@ -1,58 +1,103 @@
-const servicesOfSpecialist = function (specialist, services) {
-  // console.log(services, "services");
+const servicesOfSpecialist = function (specialist, services, theSalon) {
+  console.log(services, "services");
 
   let speciality = specialist.memberSpeciality.toLocaleLowerCase();
 
+  let regex = /\b(yoga|specialist|therapist|head)\b|&/gi;
 
-  let regex = /\b(yoga|specialist)\b|&/gi;
+  let removedWords = speciality.replace(regex, "").trim();
 
-  let removedWords = speciality.replace(regex, "").trim()
+  removedWords.includes("  ") && (removedWords = removedWords.replace(" ", ""));
 
-  removedWords.includes("  ") && (removedWords = removedWords.replace(" ", ""))
-  
-  removedWords = removedWords.split(" ")
-  
-  // console.log(removedWords, "rr")
+  removedWords = removedWords.split(" ");
 
-  // services = [services]
+  let getServices = {};
 
-  console.log(services)
+  console.log(removedWords, "removedWords")
 
-  let getServices = []
+  let spaServices = ["wax", "bath", "body"];
+  let barberServices = ["hair", "beard"];
+  let massageServices = ["body"];
 
-  for(let item in services){
-    for(let i = 0; i < services[item].length; i++){
-      let lowered = services[item][i].name.toLowerCase()
-      if(lowered.includes("massage")){
-        getServices.push({[item] : services[item][i]})
-      } 
+  let gettingServicesFunc = (item, i, services, serviceNameTolowerCase) => {
+    if (Object.keys(getServices).includes(item)) {
+      let checkDup = getServices[item].some((obj) => {
+        let lowerTheName = obj.name.toLowerCase();
+        return lowerTheName.includes(serviceNameTolowerCase);
+      });
+      !checkDup && getServices[item].push(services[item][i]);
+    } else {
+      getServices[item] = [services[item][i]];
+    }
+  };
+
+  for (let item in services) {
+    for (let i = 0; i < services[item].length; i++) {
+      let serviceNameTolowerCase = services[item][i].name.toLowerCase();
+      let itemToLowerCase = item.toLowerCase();
+
+      removedWords.forEach((word) => {
+        // if (
+        //   itemToLowerCase.includes(word) ||
+        //   serviceNameTolowerCase.includes(word)
+        // ) {
+        //   if (serviceNameTolowerCase.includes(word)) {
+        //     if (Object.keys(getServices).includes(item)) {
+        //       let checkDup = getServices[item].some((obj) => {
+        //         let lowerTheName = obj.name.toLowerCase();
+        //         return lowerTheName.includes(serviceNameTolowerCase);
+        //       });
+        //       !checkDup && getServices[item].push(services[item][i]);
+        //     } else {
+        //       getServices[item] = [services[item][i]];
+        //     }
+        //   }
+        // } 
+        // else 
+        if (itemToLowerCase.includes(word)) {
+          // console.log(itemToLowerCase.includes(word), "itemToLowerCase.includes(word)")
+
+          if (Object.keys(getServices).includes(item)) {
+            // console.log(getServices[item] ,"kkk")
+
+            services[item].forEach((ser, index, arr) => {
+            
+              getServices[item].push(ser);
+            });
+          } 
+          else {
+            getServices[item] = [services[item][i]];
+          }
+
+
+        } 
+        
+        // else if (word == "barber") {
+        //   if (
+        //     itemToLowerCase.includes(word) ||
+        //     serviceNameTolowerCase.includes(word) ||
+        //     barberServices.some((item) => serviceNameTolowerCase.includes(item))
+        //   ) {
+        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
+        //   }
+        // } else if (word == "spa") {
+        //   if (
+        //     itemToLowerCase.includes(word) ||
+        //     serviceNameTolowerCase.includes(word) ||
+        //     spaServices.some((item) => serviceNameTolowerCase.includes(item))
+        //   ) {
+        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
+        //   }
+        // }
+        // else if (word == "massage") {
+        //   if (itemToLowerCase.includes(word) || serviceNameTolowerCase.includes(word) || spaServices.some((item) => serviceNameTolowerCase.includes(item))) {
+        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
+        //   }
+        // }
+      });
     }
   }
-
-  console.log(getServices, "gs")
-
-
-
-  // let getServices = []
-
-  // if(speciality.includes("hair")){
-  //   Object.keys(services).forEach((item, i) => {
-  //     let serviceLowerCased = item.toLowerCase()
-  //     if(serviceLowerCased.includes("hair")){
-  //       getServices.push(item)  
-  //     } 
-  //   })
-  // }
-
-  // let getSpecialistServices = services[getServices]
-  
-  // let getFinalObj = {
-  //   [getServices] : getSpecialistServices
-  // }
-
-  // // console.log(getFinalObj, "gf")
-
-
+  console.log(getServices, "gs");
 };
 
 export default servicesOfSpecialist;
