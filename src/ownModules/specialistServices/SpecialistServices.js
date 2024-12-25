@@ -13,16 +13,29 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
 
   let getServices = {};
 
-  console.log(removedWords, "removedWords")
+  console.log(removedWords, "removedWords");
 
   let spaServices = ["wax", "bath", "body"];
   let barberServices = ["hair", "beard"];
   let massageServices = ["body"];
 
-  let gettingServicesFunc = (item, i, services, serviceNameTolowerCase) => {
+  let gettingServicesArray = (item, i, services) =>{
     if (Object.keys(getServices).includes(item)) {
-      let checkDup = getServices[item].some((obj) => {
-        let lowerTheName = obj.name.toLowerCase();
+      services[item].forEach((serviceItem) => {
+        let checkDup = getServices[item].some((getServicesItem) =>
+          getServicesItem.name.includes(serviceItem.name)
+        );
+        !checkDup && getServices[item].push(serviceItem);
+      });
+    } else {
+      getServices[item] = [services[item][i]];
+    }
+  }
+
+  let gettingOnlyService = (item, i, services, serviceNameTolowerCase) => {
+    if (Object.keys(getServices).includes(item)) {
+      let checkDup = getServices[item].some((getServicesItem) => {
+        let lowerTheName = getServicesItem.name.toLowerCase();
         return lowerTheName.includes(serviceNameTolowerCase);
       });
       !checkDup && getServices[item].push(services[item][i]);
@@ -52,26 +65,21 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
         //       getServices[item] = [services[item][i]];
         //     }
         //   }
-        // } 
-        // else 
-        if (itemToLowerCase.includes(word)) {
-          // console.log(itemToLowerCase.includes(word), "itemToLowerCase.includes(word)")
-
-          if (Object.keys(getServices).includes(item)) {
-            // console.log(getServices[item] ,"kkk")
-
-            services[item].forEach((ser, index, arr) => {
-            
-              getServices[item].push(ser);
-            });
-          } 
-          else {
-            getServices[item] = [services[item][i]];
+        // }
+        // else
+        if (itemToLowerCase.includes(word) || serviceNameTolowerCase.includes(word)) {
+          
+          // to push whole array of services
+          if (itemToLowerCase.includes(word)) {
+            gettingServicesArray(item, i, services)
           }
 
+          // to push a service
+          if (serviceNameTolowerCase.includes(word)) {
+            gettingOnlyService(item, i, services, serviceNameTolowerCase)
+          }
+        }
 
-        } 
-        
         // else if (word == "barber") {
         //   if (
         //     itemToLowerCase.includes(word) ||
@@ -97,7 +105,15 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
       });
     }
   }
+
   console.log(getServices, "gs");
+
+  // let ab = {
+  //   hello : "mm",
+  //   hi : "nn",
+  // }
+
+  // console.log(Object.keys(ab).includes("mm"))
 };
 
 export default servicesOfSpecialist;
