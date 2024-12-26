@@ -1,19 +1,14 @@
-const servicesOfSpecialist = function (specialist, services, theSalon) {
-  console.log(services, "services");
+const servicesOfSpecialist = function (specialist, services) {
+  // console.log(services, "services");
 
   let speciality = specialist.memberSpeciality.toLocaleLowerCase();
 
-  let regex = /\b(yoga|specialist|therapist|head)\b|&/gi;
-
+  let regex = /\b(yoga|specialist|therapist|head|technician)\b|&/gi;
   let removedWords = speciality.replace(regex, "").trim();
-
   removedWords.includes("  ") && (removedWords = removedWords.replace(" ", ""));
-
   removedWords = removedWords.split(" ");
 
-  let getServices = {};
-
-  console.log(removedWords, "removedWords");
+  let getSpecialistServices = {};
 
   let spaServices = ["spa", "bath", "body"];
   let barberServices = ["hair", "beard"];
@@ -23,15 +18,15 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
   let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"]
 
   let get_key_and_all_services = (item, i, services) => {
-    if (Object.keys(getServices).includes(item)) {
+    if (Object.keys(getSpecialistServices).includes(item)) {
       services[item].forEach((serviceItem) => {
-        let checkDup = getServices[item].some((getServicesItem) =>
+        let checkDup = getSpecialistServices[item].some((getServicesItem) =>
           getServicesItem.name.includes(serviceItem.name)
         );
-        !checkDup && getServices[item].push(serviceItem);
+        !checkDup && getSpecialistServices[item].push(serviceItem);
       });
     } else {
-      getServices[item] = [services[item][i]];
+      getSpecialistServices[item] = [services[item][i]];
     }
   };
 
@@ -41,14 +36,14 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
     services,
     serviceNameTolowerCase
   ) => {
-    if (Object.keys(getServices).includes(item)) {
-      let checkDup = getServices[item].some((getServicesItem) => {
+    if (Object.keys(getSpecialistServices).includes(item)) {
+      let checkDup = getSpecialistServices[item].some((getServicesItem) => {
         let lowerTheName = getServicesItem.name.toLowerCase();
         return lowerTheName.includes(serviceNameTolowerCase);
       });
-      !checkDup && getServices[item].push(services[item][i]);
+      !checkDup && getSpecialistServices[item].push(services[item][i]);
     } else {
-      getServices[item] = [services[item][i]];
+      getSpecialistServices[item] = [services[item][i]];
     }
   };
 
@@ -132,7 +127,7 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
     }
   }
 
-  console.log(getServices, "gs");
+  return getSpecialistServices
 };
 
 export default servicesOfSpecialist;

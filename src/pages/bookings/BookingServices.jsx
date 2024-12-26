@@ -9,7 +9,7 @@ import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 
-const BookingServices = () => {
+const BookingServices = ({specialistServices}) => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
 
@@ -27,10 +27,14 @@ const BookingServices = () => {
 
     const location = useLocation();
 
-    let services = location.state.servicesWithoutUnderscore;
+    let services = location.state.servicesWithoutUnderscore || specialistServices
     let serviceFromNavigationState = location.state.serviceInCart;
     let currencySymbol = location.state.currencySymbol;
 
+    // console.log(services, "sswsws")
+    // Object.entries(services).forEach((item) => {
+    //     console.log(item, "item")
+    // })
 
     let serviceInCart = []
 
@@ -132,7 +136,7 @@ const BookingServices = () => {
     }, [selected])
     
 
-    console.log(salonDataZustand, "salonDataZustand")
+    // console.log(salonDataZustand, "salonDataZustand")
 
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
@@ -245,7 +249,8 @@ const BookingServices = () => {
                 item[0].top >= 0 &&
                 item[0].left >= 0 &&
                 item[0].bottom <=
-                (window.innerHeight || document.documentElement.clientHeight) &&
+                (document.documentElement.clientHeight*0.50 ) &&
+                // (window.innerHeight || document.documentElement.clientWidth - 200) &&
                 item[0].right <=
                 (window.innerWidth || document.documentElement.clientWidth)
             ) {
@@ -479,7 +484,7 @@ const BookingServices = () => {
                         </div>
                         <div className="w-full">
                             <>
-                                {item[1].map((service, i) => (
+                                {item[1]?.map((service, i) => (
                                     <div
                                         key={i}
                                         className="mt-5 flex justify-between items-center "

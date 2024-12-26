@@ -4,6 +4,7 @@ import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
 import gg from "../../../public/images/salons/hairSalon/male-barber-img.avif"
 import { useNavigate } from 'react-router-dom';
+import { showSpecialistOverAService } from '../../ownModules/specialistServices/showSpecialistOverAService';
 
 const SelectProfessional = () => {
 
@@ -23,6 +24,11 @@ const SelectProfessional = () => {
     return pathSliced
   })
 
+  // let getSpecialistOverService = 
+
+  // console.log(getSpecialistOverService, "GSOS")
+
+  showSpecialistOverAService(professionalsList[0], presistedSelectedServices)
 
   return (
     <div>

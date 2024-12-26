@@ -130,7 +130,7 @@ const ActualSalon = () => {
         <>
           {item[1].map((service, index) => (
             <div key={index} className="mt-5 flex justify-between items-center" >
-              <div 
+              <div
               // onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
               //   state: {
               //     servicesWithoutUnderscore,
@@ -205,10 +205,8 @@ const ActualSalon = () => {
     salonName: salonName,
     servicesWithoutUnderscore: servicesWithoutUnderscore,
     currencySymbol: currencySymbol,
-    professionalsList : getTeamMembers,
+    professionalsList: getTeamMembers,
   }]
-
-  // localStorage.clear()
 
   return (
     <>
@@ -282,7 +280,12 @@ const ActualSalon = () => {
 
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
-              <div onClick={() => servicesOfSpecialist(item, servicesWithoutUnderscore, theSalon[0])} className="relative">
+              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
+                state: {
+                  getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
+                  teamMember : item,
+                }
+              })} className="relative">
                 <div className="w-24 h-24 ">
                   <img
                     src={item.memberImg}
