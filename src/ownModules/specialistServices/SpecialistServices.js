@@ -15,11 +15,14 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
 
   console.log(removedWords, "removedWords");
 
-  let spaServices = ["wax", "bath", "body"];
+  let spaServices = ["spa", "bath", "body"];
   let barberServices = ["hair", "beard"];
-  let massageServices = ["body"];
+  let massageServices = ["massage", "body"];
+  let waxServices = ["wax", "body", "bath"];
+  let skincareServices = ["skincare", "facial"]
+  let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"]
 
-  let gettingServicesArray = (item, i, services) =>{
+  let get_key_and_all_services = (item, i, services) => {
     if (Object.keys(getServices).includes(item)) {
       services[item].forEach((serviceItem) => {
         let checkDup = getServices[item].some((getServicesItem) =>
@@ -30,9 +33,14 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
     } else {
       getServices[item] = [services[item][i]];
     }
-  }
+  };
 
-  let gettingOnlyService = (item, i, services, serviceNameTolowerCase) => {
+  let get_key_and_specific_services = (
+    item,
+    i,
+    services,
+    serviceNameTolowerCase
+  ) => {
     if (Object.keys(getServices).includes(item)) {
       let checkDup = getServices[item].some((getServicesItem) => {
         let lowerTheName = getServicesItem.name.toLowerCase();
@@ -50,70 +58,81 @@ const servicesOfSpecialist = function (specialist, services, theSalon) {
       let itemToLowerCase = item.toLowerCase();
 
       removedWords.forEach((word) => {
-        // if (
-        //   itemToLowerCase.includes(word) ||
-        //   serviceNameTolowerCase.includes(word)
-        // ) {
-        //   if (serviceNameTolowerCase.includes(word)) {
-        //     if (Object.keys(getServices).includes(item)) {
-        //       let checkDup = getServices[item].some((obj) => {
-        //         let lowerTheName = obj.name.toLowerCase();
-        //         return lowerTheName.includes(serviceNameTolowerCase);
-        //       });
-        //       !checkDup && getServices[item].push(services[item][i]);
-        //     } else {
-        //       getServices[item] = [services[item][i]];
-        //     }
-        //   }
-        // }
-        // else
-        if (itemToLowerCase.includes(word) || serviceNameTolowerCase.includes(word)) {
-          
-          // to push whole array of services
-          if (itemToLowerCase.includes(word)) {
-            gettingServicesArray(item, i, services)
+        if (
+          word == "barber" ||
+          word == "spa" ||
+          word == "massage" ||
+          word == "wax" ||
+          word == "skincare" ||
+          word == "beauty" 
+        ) {
+          let servicesOnWord;
+
+          switch (word) {
+            case "barber":
+              servicesOnWord = barberServices;
+              break;
+
+            case "spa":
+              servicesOnWord = spaServices;
+              break;
+
+            case "massage":
+              servicesOnWord = massageServices;
+              break;
+
+            case "wax":
+              servicesOnWord = waxServices;
+              break;
+
+            case "skincare":
+              servicesOnWord = skincareServices;
+              break;
+
+            case "beauty":
+              servicesOnWord = beautyServices;
+              break;
+
+            default:
+              break;
           }
 
-          // to push a service
-          if (serviceNameTolowerCase.includes(word)) {
-            gettingOnlyService(item, i, services, serviceNameTolowerCase)
+          if (
+            servicesOnWord.some((item) => serviceNameTolowerCase.includes(item))
+          ) {
+            get_key_and_specific_services(
+              item,
+              i,
+              services,
+              serviceNameTolowerCase
+            );
+          }
+        } else {
+          if (
+            itemToLowerCase.includes(word) ||
+            serviceNameTolowerCase.includes(word)
+          ) {
+            // to push whole obj, e.g: {key : [full array]}
+            if (itemToLowerCase.includes(word)) {
+              get_key_and_all_services(item, i, services);
+            }
+
+            // to push a some services, e.g: {key : [some services]}
+            if (serviceNameTolowerCase.includes(word)) {
+              get_key_and_specific_services(
+                item,
+                i,
+                services,
+                serviceNameTolowerCase
+              );
+            }
           }
         }
-
-        // else if (word == "barber") {
-        //   if (
-        //     itemToLowerCase.includes(word) ||
-        //     serviceNameTolowerCase.includes(word) ||
-        //     barberServices.some((item) => serviceNameTolowerCase.includes(item))
-        //   ) {
-        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
-        //   }
-        // } else if (word == "spa") {
-        //   if (
-        //     itemToLowerCase.includes(word) ||
-        //     serviceNameTolowerCase.includes(word) ||
-        //     spaServices.some((item) => serviceNameTolowerCase.includes(item))
-        //   ) {
-        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
-        //   }
-        // }
-        // else if (word == "massage") {
-        //   if (itemToLowerCase.includes(word) || serviceNameTolowerCase.includes(word) || spaServices.some((item) => serviceNameTolowerCase.includes(item))) {
-        //     gettingServicesFunc(item, i, services, serviceNameTolowerCase);
-        //   }
-        // }
       });
     }
   }
 
   console.log(getServices, "gs");
-
-  // let ab = {
-  //   hello : "mm",
-  //   hi : "nn",
-  // }
-
-  // console.log(Object.keys(ab).includes("mm"))
 };
 
 export default servicesOfSpecialist;
