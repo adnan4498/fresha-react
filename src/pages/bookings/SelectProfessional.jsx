@@ -26,9 +26,9 @@ const SelectProfessional = () => {
 
   // let getSpecialistOverService = 
 
-  // console.log(getSpecialistOverService, "GSOS")
+  // console.log(servicesWithoutUnderscore, "GSOS")
 
-  showSpecialistOverAService(professionalsList[0], presistedSelectedServices)
+  showSpecialistOverAService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
 
   return (
     <div>

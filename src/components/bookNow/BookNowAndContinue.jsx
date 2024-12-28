@@ -45,7 +45,6 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
                             servicesWithoutUnderscore,
                             currencySymbol,
                             serviceInCart,
-                            servicesWithoutUnderscore,
                         }
                     })} className='bg-black text-white rounded-lg items-center flex px-8 py-2'>
                         <p>Book now</p>
@@ -82,14 +81,7 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
                     </div>
                     <div
                         onClick={() =>
-                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`,
-                                {
-                                    state: {
-                                        presistedSelectedServices,
-                                        professionalsList,
-                                    },
-                                }
-                            )
+                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`)
                         }
                         className="bg-black text-white rounded-lg items-center flex px-8"
                     >
