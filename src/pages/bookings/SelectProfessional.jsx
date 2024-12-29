@@ -28,7 +28,13 @@ const SelectProfessional = () => {
 
   // console.log(servicesWithoutUnderscore, "GSOS")
 
-  showSpecialistOverAService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+  let professionalOfServices =  showSpecialistOverAService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+
+  console.log(presistedSelectedServices, "presistedSelectedServices")
+  
+  professionalOfServices =  professionalOfServices.filter(item => item.memberServices.name.includes(presistedSelectedServices))
+  
+  console.log(professionalOfServices, "professionalOfServices")
 
   return (
     <div>
@@ -53,7 +59,7 @@ const SelectProfessional = () => {
           <span className='text-base text-center leading-[20px]'>Select professional <br></br>per service </span>
         </div>}
 
-        {professionalsList[0].map((item, i) => (
+        {professionalOfServices.map((item, i) => (
           <>
             <div
               className='border-[1px] border-gray-500 rounded-lg py-4 h-48  flex flex-col justify-center items-center gap-4'>

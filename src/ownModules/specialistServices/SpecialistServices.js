@@ -12,7 +12,7 @@ const servicesOfSpecialist = function (specialist, services) {
 
   let spaServices = ["spa", "bath", "body"];
   let barberServices = ["hair", "beard"];
-  let massageServices = ["massage", "body"];
+  let massageServices = ["massage"];
   let waxServices = ["wax", "body", "bath"];
   let skincareServices = ["skincare", "facial"]
   let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"]
