@@ -31,7 +31,7 @@ const BookingServices = ({specialistServices}) => {
     let serviceFromNavigationState = location.state.serviceInCart;
     let currencySymbol = location.state.currencySymbol;
 
-    // console.log(services, "sswsws")
+
     // Object.entries(services).forEach((item) => {
     //     console.log(item, "item")
     // })
@@ -535,14 +535,7 @@ const BookingServices = ({specialistServices}) => {
                 ))}
             </div>
 
-            {/* <div className="my-20 bg-red-500" onClick={() => navigate(-2)}>
-                        asdad
-                    </div> */}
-            {/* {localStorage.clear()} */}
-
-            {/* selected[0] is first selected service from previous page */}
             <BookNowAndContinue />
-
         </>
     );
 };

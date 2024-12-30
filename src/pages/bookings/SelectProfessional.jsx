@@ -51,6 +51,8 @@ const SelectProfessional = () => {
 
   let professionalsOfServices = getProfessionals()
 
+  console.log(professionalsOfServices, "professionalsOfServices")
+
   return (
     <div>
       <div>

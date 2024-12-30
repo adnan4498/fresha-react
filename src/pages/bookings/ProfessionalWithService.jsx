@@ -12,6 +12,7 @@ const ProfessionalWithService = () => {
 
     let imgPathSliced = specialist.memberImg.slice(18)
 
+    console.log(specialistServices, "gggg")
 
     return (
         <div>

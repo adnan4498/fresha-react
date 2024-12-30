@@ -10,27 +10,11 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
 
     const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
 
-
-
-    // console.log(salonDataZustand, "salonDataZustand")
-    // console.log(presistedSelectedServices, "presistedSelectedServices")
-    // console.log(currencySymbol, "currencySymbol")
-
     let navigate = useNavigate()
     let serviceInCart = []
 
-    // let salonServicesLength = props.salonServicesLength
-    // let categoryName = props.categoryName
-    // let cityName = props.cityName
-    // let salonName = props.salonName
-    // let servicesWithoutUnderscore = props.servicesWithoutUnderscore
-    // let currencySymbol = props.currencySymbol
-    // let professionalsList = props.professionalsList
-
-    // let showBookNowBtn = props.showBookNowBtn
-
-    // let priceAndDuration = props.priceAndDuration
-    // let presistedSelectedServices = props.presistedSelectedServices
+    console.log(presistedSelectedServices, "presistedSelectedServices")
+    console.log(priceAndDuration, "priceAndDuration")
 
     return (
         <>
@@ -61,8 +45,11 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
                             <h3 className="text-left font-semibold text-black">
                                 {/* writing code in `${}` will add space between currencySymbol and price */}
                                 {priceAndDuration?.price
-                                    ? `${currencySymbol} ${priceAndDuration?.price}`
-                                    : presistedSelectedServices?.price}
+                                    && `${currencySymbol} ${priceAndDuration?.price}`
+                                    // : presistedSelectedServices?.price
+                                }
+
+
                             </h3>
                         </div>
 

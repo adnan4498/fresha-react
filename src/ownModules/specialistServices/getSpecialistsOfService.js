@@ -100,7 +100,7 @@ export const getSpecialistsOfService = function (
     }
   });
 
-  console.log(memberWithService, "mws");
+  // console.log(memberWithService, "mws");
 
   return memberWithService;
 };

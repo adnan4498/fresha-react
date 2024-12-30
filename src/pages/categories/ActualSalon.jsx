@@ -284,7 +284,15 @@ const ActualSalon = () => {
                 state: {
                   getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
                   teamMember : item,
+                  currencySymbol,
                 }
+
+                // serviceInCart: {
+                //   name: service.name,
+                //   duration: service.duration,
+                //   price: service.price,
+                // },
+
               })} className="relative">
                 <div className="w-24 h-24 ">
                   <img
