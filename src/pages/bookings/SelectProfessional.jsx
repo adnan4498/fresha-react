@@ -2,9 +2,8 @@ import { StarFilled, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/i
 import React from 'react'
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
-import gg from "../../../public/images/salons/hairSalon/male-barber-img.avif"
 import { useNavigate } from 'react-router-dom';
-import { showSpecialistOverAService } from '../../ownModules/specialistServices/showSpecialistOverAService';
+import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
 
 const SelectProfessional = () => {
 
@@ -13,28 +12,44 @@ const SelectProfessional = () => {
   const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
   const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
-  const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
+  const { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList } = salonDataZustand[0]
 
-  let imgPaths = []
+  const getImgPaths = () => {
+    let fullImgUrls = []
+    professionalsList[0].forEach(item => fullImgUrls.push(item.memberImg))
 
-  professionalsList[0].forEach(item => imgPaths.push(item.memberImg))
+    let removepaths = fullImgUrls.map((item) => {
+      let pathSliced = item.slice(18)
+      return pathSliced
+    })
 
-  let removepaths = imgPaths.map((item, i) => {
-    let pathSliced = item.slice(18)
-    return pathSliced
-  })
+    return removepaths
+  }
 
-  // let getSpecialistOverService = 
+  let imgPaths = getImgPaths()
 
-  // console.log(servicesWithoutUnderscore, "GSOS")
+  const getProfessionals = () => {
+    let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
 
-  let professionalOfServices =  showSpecialistOverAService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+    let professionalsAgainstServices = []
 
-  console.log(presistedSelectedServices, "presistedSelectedServices")
-  
-  professionalOfServices =  professionalOfServices.filter(item => item.memberServices.name.includes(presistedSelectedServices))
-  
-  console.log(professionalOfServices, "professionalOfServices")
+    for (let professionals of get_professionals_with_services_obj) {
+      for (let services of presistedSelectedServices) {
+        professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
+      }
+    }
+
+    let removeDupProfessionals = []
+
+    professionalsAgainstServices.forEach((item) => {
+      let isDup = removeDupProfessionals?.some(items => items?.memberName.includes(item.memberName))
+      !isDup && removeDupProfessionals.push(item)
+    })
+
+    return removeDupProfessionals
+  }
+
+  let professionalsOfServices = getProfessionals()
 
   return (
     <div>
@@ -59,14 +74,14 @@ const SelectProfessional = () => {
           <span className='text-base text-center leading-[20px]'>Select professional <br></br>per service </span>
         </div>}
 
-        {professionalOfServices.map((item, i) => (
+        {professionalsOfServices.map((item, i) => (
           <>
             <div
               className='border-[1px] border-gray-500 rounded-lg py-4 h-48  flex flex-col justify-center items-center gap-4'>
               <div className="relative">
                 <div className="w-24 h-24 ">
                   <img
-                    src={removepaths[i]}
+                    src={imgPaths[i]}
                     className="rounded-full w-full h-full object-cover"
                   />
                 </div>
@@ -96,7 +111,7 @@ const SelectProfessional = () => {
           </>
         ))}
       </div>
-      <BookNowAndContinue/>
+      <BookNowAndContinue />
 
     </div>
   )

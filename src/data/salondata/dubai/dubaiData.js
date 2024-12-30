@@ -108,9 +108,23 @@ export const sharjahSalons = [
           "../../../../public/images/salons/hairSalon/female-barber-img.webp",
       },
       {
+        memberName: "Maria",
+        memberRating: 5.0,
+        memberSpeciality: "Massage Specialist",
+        memberImg:
+          "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+      },
+      {
         memberName: "Jhon",
         memberRating: 4.9,
         memberSpeciality: "Head Barber",
+        memberImg:
+          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+      },
+      {
+        memberName: "dummy",
+        memberRating: 4.9,
+        memberSpeciality: "",
         memberImg:
           "../../../../public/images/salons/hairSalon/male-barber-img.avif",
       },

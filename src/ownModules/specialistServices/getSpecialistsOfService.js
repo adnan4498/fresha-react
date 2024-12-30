@@ -1,12 +1,8 @@
-export const showSpecialistOverAService = function (
+export const getSpecialistsOfService = function (
   professionalsList,
   selectedServices,
   allServices
 ) {
-  // console.log(professionalsList, "professionals");
-  // console.log(selectedServices, "selectedServices");
-  // console.log(allServices, "allServices");
-
   const splittingServiceWords = (item) => {
     let speciality = item.memberSpeciality.toLowerCase();
 
@@ -19,9 +15,10 @@ export const showSpecialistOverAService = function (
 
   let spaServices = ["spa", "bath", "body"];
   let barberServices = ["hair", "beard"];
-  let massageServices = ["massage", "body"];
+  let massageServices = ["massage"];
   let waxServices = ["wax", "body", "bath"];
   let skincareServices = ["skincare", "facial"];
+  let nailServices = ["nail", "pedicure", "manicure"];
   let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"];
 
   let memberWithService = [];
@@ -51,7 +48,40 @@ export const showSpecialistOverAService = function (
   memberWithService.forEach((item) => {
     let wordsSplittedAgain = splittingServiceWords(item);
 
-    wordsSplittedAgain.includes("spa") && (wordsSplittedAgain = spaServices);
+    // wordsSplittedAgain.includes("spa") && (wordsSplittedAgain = spaServices);
+
+    switch (wordsSplittedAgain) {
+      case "barber":
+        wordsSplittedAgain = barberServices;
+        break;
+
+      case "spa":
+        wordsSplittedAgain = spaServices;
+        break;
+
+      case "massage":
+        wordsSplittedAgain = massageServices;
+        break;
+
+      case "wax":
+        wordsSplittedAgain = waxServices;
+        break;
+
+      case "skincare":
+        wordsSplittedAgain = skincareServices;
+        break;
+
+      case "beauty":
+        wordsSplittedAgain = beautyServices;
+        break;
+
+      case "nail":
+        wordsSplittedAgain = nailServices;
+        break;
+
+      default:
+        break;
+    }
 
     for (let serviceItem in allServices) {
       for (let inServiceItems of allServices[serviceItem]) {
@@ -70,8 +100,7 @@ export const showSpecialistOverAService = function (
     }
   });
 
-  // console.log(memberWithService, "mws");
+  console.log(memberWithService, "mws");
 
-
-  return memberWithService
+  return memberWithService;
 };

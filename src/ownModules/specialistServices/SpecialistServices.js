@@ -14,8 +14,9 @@ const servicesOfSpecialist = function (specialist, services) {
   let barberServices = ["hair", "beard"];
   let massageServices = ["massage"];
   let waxServices = ["wax", "body", "bath"];
-  let skincareServices = ["skincare", "facial"]
-  let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"]
+  let skincareServices = ["skincare", "facial"];
+  let nailServices = ["nail", "pedicure", "manicure"];
+  let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"];
 
   let get_key_and_all_services = (item, i, services) => {
     if (Object.keys(getSpecialistServices).includes(item)) {
@@ -59,7 +60,8 @@ const servicesOfSpecialist = function (specialist, services) {
           word == "massage" ||
           word == "wax" ||
           word == "skincare" ||
-          word == "beauty" 
+          word == "beauty" ||
+          word == "nail" 
         ) {
           let servicesOnWord;
 
@@ -86,6 +88,10 @@ const servicesOfSpecialist = function (specialist, services) {
 
             case "beauty":
               servicesOnWord = beautyServices;
+              break;
+
+            case "nail":
+              servicesOnWord = nailServices;
               break;
 
             default:
@@ -127,7 +133,9 @@ const servicesOfSpecialist = function (specialist, services) {
     }
   }
 
-  return getSpecialistServices
+  console.log(getSpecialistServices, "ss")
+
+  return getSpecialistServices;
 };
 
 export default servicesOfSpecialist;
