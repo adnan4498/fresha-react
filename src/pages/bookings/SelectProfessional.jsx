@@ -1,16 +1,22 @@
 import { StarFilled, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
 
 const SelectProfessional = () => {
 
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const [clickedSpecialist, setClickedSpecialist] = useState()
+
+  // let specialist = location.state.teamMember
+  // let specialistServices = location.state.getSpecialistServices
 
   const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
-  const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
+  const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   const { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList } = salonDataZustand[0]
 
@@ -27,6 +33,46 @@ const SelectProfessional = () => {
   }
 
   let imgPaths = getImgPaths()
+
+  // useEffect(() => {
+
+  //   const gettingSelectedSpecialist = () => {
+
+  //     const get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+  //     const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
+
+  //     return filterSpecialists
+  //   }
+
+  //   let getSpecialist = gettingSelectedSpecialist()
+
+  //   const gettingSuggestedSpecialists = () => {
+  //     let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+
+  //     let professionalsAgainstServices = []
+
+  //     for (let professionals of get_professionals_with_services_obj) {
+  //       for (let services of presistedSelectedServices) {
+  //         professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
+  //       }
+  //     }
+
+  //     let removeDupProfessionals = []
+
+  //     professionalsAgainstServices.forEach((item) => {
+  //       let isDup = removeDupProfessionals?.some(items => items?.memberName.includes(item.memberName))
+  //       !isDup && removeDupProfessionals.push(item)
+  //     })
+
+  //     return removeDupProfessionals
+  //   }
+
+  //   let getSuggestedSpecialists = gettingSuggestedSpecialists()
+
+  //   let addSpecialistsToStorage = [{ ...salonDataZustand[0], selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }]
+  //   setSalonDataZustand(addSpecialistsToStorage)
+
+  // }, [])
 
   const getProfessionals = () => {
     let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
@@ -52,6 +98,16 @@ const SelectProfessional = () => {
   let professionalsOfServices = getProfessionals()
 
   console.log(professionalsOfServices, "professionalsOfServices")
+
+  const handleClickedSpecialist = (item, i) => {
+    setClickedSpecialist(i)
+
+    // setSalonDataZustand((oldState) => ([{...oldState[0], selectedSpecialists: getSpecialist}]))
+    setSalonDataZustand([{...salonDataZustand[0], selectedSpecialists: item}])
+    // console.log(item, "ee")
+  }
+
+  console.log(salonDataZustand, "tzz")
 
   return (
     <div>
@@ -79,7 +135,7 @@ const SelectProfessional = () => {
         {professionalsOfServices.map((item, i) => (
           <>
             <div
-              className='border-[1px] border-gray-500 rounded-lg py-4 h-48  flex flex-col justify-center items-center gap-4'>
+             onClick={() => handleClickedSpecialist(item, i)} className={`border-[1px] ${clickedSpecialist == i ? "border-blue-500" : "border-gray-500"}  rounded-lg py-4 h-48  flex flex-col justify-center items-center gap-4`}>
               <div className="relative">
                 <div className="w-24 h-24 ">
                   <img
@@ -115,7 +171,7 @@ const SelectProfessional = () => {
       </div>
       <BookNowAndContinue />
 
-    </div>
+    </div >
   )
 }
 

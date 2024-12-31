@@ -9,13 +9,15 @@ import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 
-const BookingServices = ({specialistServices}) => {
+const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect}) => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
 
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
     let navigate = useNavigate();
+
+    console.log(salonDataZustand, "salonDataZustand")
 
     let match = useMatches();
 
@@ -509,13 +511,7 @@ const BookingServices = ({specialistServices}) => {
                                         </div>
 
                                         <div
-                                            onClick={() => {
-                                                addService(
-                                                    service.name,
-                                                    service.duration,
-                                                    service.price
-                                                )
-                                            }}
+                                            onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect)}}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
@@ -535,7 +531,7 @@ const BookingServices = ({specialistServices}) => {
                 ))}
             </div>
 
-            <BookNowAndContinue />
+            <BookNowAndContinue toAppointmentPage={toAppointmentPage}/>
         </>
     );
 };

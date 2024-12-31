@@ -23,7 +23,6 @@ const ActualSalon = () => {
 
   const { presistedSelectedServices, setPresistedSelectedServices } = selectedServicesStore((state) => state);
 
-
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   useEffect(() => {
@@ -31,6 +30,7 @@ const ActualSalon = () => {
     setSalonDataZustand(getSalonDataForZustand)
   }, [])
 
+  console.log(salonDataZustand, "salonDataZustand")
 
   let navigate = useNavigate()
   let match = useMatches();

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import BookingServices from './BookingServices'
 import { StarFilled } from '@ant-design/icons'
+import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService'
+import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore'
 
 const ProfessionalWithService = () => {
 
@@ -10,9 +12,57 @@ const ProfessionalWithService = () => {
     let specialist = location.state.teamMember
     let specialistServices = location.state.getSpecialistServices
 
+    const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
+    const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
+
+    const { servicesWithoutUnderscore, professionalsList } = salonDataZustand[0]
+
+    const [triggerUseEffect, setTriggerUseEffect] = useState(false)
+
+    // adds selected and suggested specialists to store
+    useEffect(() => {
+
+        const gettingSelectedSpecialist = () => {
+
+            const get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+            const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
+
+            return filterSpecialists
+        }
+
+        let getSpecialist = gettingSelectedSpecialist()
+
+        const gettingSuggestedSpecialists = () => {
+            let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+
+            let professionalsAgainstServices = []
+
+            for (let professionals of get_professionals_with_services_obj) {
+                for (let services of presistedSelectedServices) {
+                    professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
+                }
+            }
+
+            let removeDupProfessionals = []
+
+            professionalsAgainstServices.forEach((item) => {
+                let isDup = removeDupProfessionals?.some(items => items?.memberName.includes(item.memberName))
+                !isDup && removeDupProfessionals.push(item)
+            })
+
+            return removeDupProfessionals
+        }
+
+        let getSuggestedSpecialists = gettingSuggestedSpecialists()
+
+        let addSpecialistsToStorage = [{ ...salonDataZustand[0], selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }]
+        setSalonDataZustand(addSpecialistsToStorage)
+
+    }, [triggerUseEffect])
+
     let imgPathSliced = specialist.memberImg.slice(18)
 
-    console.log(specialistServices, "gggg")
+    let toAppointmentPage = true
 
     return (
         <div>
@@ -46,7 +96,7 @@ const ProfessionalWithService = () => {
                 </div>
             </div>
             <div>
-                <BookingServices specialistServices={specialistServices} />
+                <BookingServices triggerUseEffect={triggerUseEffect} setTriggerUseEffect={setTriggerUseEffect} specialistServices={specialistServices} toAppointmentPage={toAppointmentPage} />
             </div>
         </div>
     )

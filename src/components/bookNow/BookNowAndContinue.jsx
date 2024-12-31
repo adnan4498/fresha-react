@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore'
 
-const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
+const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false }) => {
 
     const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
 
@@ -10,12 +10,13 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
 
     const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
 
-    let navigate = useNavigate()
-    let serviceInCart = []
+    const navigate = useNavigate()
+    const serviceInCart = []
 
-    console.log(presistedSelectedServices, "presistedSelectedServices")
-    console.log(priceAndDuration, "priceAndDuration")
+    // either to appointment page (with professional) or chose professional
+    const dynamicUrl = toAppointmentPage ? "bookingService/professionalWithService/makeAppointment" : "bookingService/selectProfessional"
 
+    // localStorage.clear()
     return (
         <>
             {showBookNowBtn && <div>
@@ -66,12 +67,7 @@ const BookNowAndContinue = ({props, showBookNowBtn = false}) => {
                             </div>
                         </div>
                     </div>
-                    <div
-                        onClick={() =>
-                            navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional`)
-                        }
-                        className="bg-black text-white rounded-lg items-center flex px-8"
-                    >
+                    <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/${dynamicUrl}`)} className="bg-black text-white rounded-lg items-center flex px-8">
                         <p>Continue</p>
                     </div>
 

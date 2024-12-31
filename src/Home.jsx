@@ -3,33 +3,41 @@ import HeroSection from "./homeComponents/HeroSection";
 import GetAppQrBtn from "./components/getAppQrBtn/GetAppBtn";
 import SalonCarousels from "./homeComponents/SalonCarousels";
 import { useState } from "react";
+import { zustandDummyStore } from "./zustandStore";
 // import  nameStore  from "./zustandPresistingStore";
 
 function Home() {
 
-  // const { count, increase, decrease} = useStore((state) => state);
-  // const {myName, changeName} = nameStore((state) => state)
-
-  // console.log(myName, "localStorage")
+  const { zustandDummyData, setZustandDummyData } =
+    zustandDummyStore((state) => state);
 
   // localStorage.clear()
 
-  // const [dummy, setDummy] = useState()
+  // setZustandDummyData((e) => e.ad = "5")
+  // setZustandDummyData("5")
 
-  // let aa = []
-  // useEffect(() => {
-  //   aa = 5
-
-  //   setDummy(10)
-  // }, [])
+  let ab = {
+    name : "adnan",
+    city : "karachi",
+  }
   
+  const func = () => {
+    // setZustandDummyData(ab)
+    setZustandDummyData("5")
+    // setZustandDummyData((oldState) => [{...oldState.zustandDummyData, ab}])
+    // setZustandDummyData(ab)
+  }
+  console.log(zustandDummyData, "dummy d")
 
+  // let c = [7]
 
-  // console.log(dummy)
+  // let bb = [...c, 8]
+
+  // console.log(bb, "bb")
 
   return (
     <>
-    {/* adasd */}
+      {/* adasd */}
       {/* <div className="my-40">
         <h1>myName: {myName}</h1>
          <h1>count: {count}</h1> 
@@ -40,6 +48,11 @@ function Home() {
         <button onClick={ResetName}>ResetName</button>
         <button onClick={() => myName == "adnan" ? changeName("po") : }>changeName</button>
       </div> */}
+
+        <div className="my-20" onClick={() => func()}>
+          asdasd
+        </div>
+
       <HeroSection />
       <GetAppQrBtn />
       <SalonCarousels />

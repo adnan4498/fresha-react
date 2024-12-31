@@ -10,10 +10,10 @@ const servicesOfSpecialist = function (specialist, services) {
 
   let getSpecialistServices = {};
 
-  let spaServices = ["spa", "bath", "body"];
+  let spaServices = ["spa", "bath"];
   let barberServices = ["hair", "beard"];
   let massageServices = ["massage"];
-  let waxServices = ["wax", "body", "bath"];
+  let waxServices = ["wax", "bath"];
   let skincareServices = ["skincare", "facial"];
   let nailServices = ["nail", "pedicure", "manicure"];
   let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"];

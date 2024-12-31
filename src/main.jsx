@@ -19,6 +19,7 @@ import SelectProfessional from "./pages/bookings/SelectProfessional";
 import GroupOrPersonalAppointment from "./pages/bookings/GroupOrPersonalAppointment";
 import ProfessionalPerService from "./pages/bookings/ProfessionalPerService";
 import ProfessionalWithService from "./pages/bookings/ProfessionalWithService";
+import MakeAppointment from "./pages/bookings/MakeAppointment";
 
 
 const router = createBrowserRouter([
@@ -76,10 +77,14 @@ const router = createBrowserRouter([
     element: <ProfessionalPerService />,
     errorElement: <ErrorPage />,
   },
-
   {
     path: "/dynamic-category/:category/:city/:name/bookingService/professionalWithService",
     element: <ProfessionalWithService />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/dynamic-category/:category/:city/:name/bookingService/professionalWithService/makeAppointment",
+    element: <MakeAppointment />,
     errorElement: <ErrorPage />,
   },
 ]);
