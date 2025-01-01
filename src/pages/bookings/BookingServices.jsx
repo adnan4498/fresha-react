@@ -9,7 +9,7 @@ import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 
-const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect}) => {
+const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect }) => {
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
 
@@ -133,7 +133,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
         // console.log(priceAndDuration, "price")
     }, [])
-    
+
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
 
@@ -245,7 +245,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
                 item[0].top >= 0 &&
                 item[0].left >= 0 &&
                 item[0].bottom <=
-                (document.documentElement.clientHeight*0.50 ) &&
+                (document.documentElement.clientHeight * 0.50) &&
                 // (window.innerHeight || document.documentElement.clientWidth - 200) &&
                 item[0].right <=
                 (window.innerWidth || document.documentElement.clientWidth)
@@ -280,7 +280,12 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
         });
     }
 
+    let priceAndDuration
+
     const addService = (name, duration, price) => {
+
+        let getPriceAndDurationArr
+
         let noDupsFound = () => {
             let noDup;
 
@@ -296,6 +301,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
             let arr = [...presistedSelectedServices, theObj]
             setPresistedSelectedServices(arr)
+            getPriceAndDurationArr = arr
 
         } else {
             let getSelectedItems = selected.filter((item) => item?.name != name);
@@ -303,36 +309,13 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
             setSelected(getSelectedItems);
             setPresistedSelectedServices(getPresistedItems)
+
+            getPriceAndDurationArr = getPresistedItems
         }
+
+        priceAndDuration = handlePriceAndDuration(getPriceAndDurationArr)
+
     };
-
-
-
-    // const addService = (name, duration, price) => {
-    //     let noDupsFound = () => {
-    //         let noDup;
-
-    //         let findDup = presistedSelectedServices?.filter((item) => item?.name == name);
-    //         findDup.length == 0 && (noDup = true);
-
-    //         return noDup;
-    //     };
-
-    //     if (noDupsFound()) {
-    //         let theObj = { name: name, price: price, duration: duration }
-    //         let arr1 = [...presistedSelectedServices, theObj]
-
-    //         setPresistedSelectedServices(arr1)
-
-    //     } else {
-    //         let getItem2 = presistedSelectedServices.filter((item) => item?.name != name);
-    //         setPresistedSelectedServices(getItem2)
-    //     }
-    // };
-
-
-
-    // localStorage.clear()
 
     let tickMark = (serviceName) => {
         let checkItem = presistedSelectedServices.filter(item => item?.name == serviceName)
@@ -342,7 +325,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
         }
     };
 
-    const handlePriceAndDuration = () => {
+    const handlePriceAndDuration = (getPriceAndDurationArr) => {
         const replacements = (serviceVal, replacingVal) => {
             let valReplaced = [];
 
@@ -367,8 +350,20 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
         const passingArgsToReplacements = () => {
             let min = "min";
-            let getPrice = presistedSelectedServices.map((item) => item?.price);
-            let getDuration = presistedSelectedServices.map((item) => item?.duration);
+
+            let mappingOnPriceAndDuration
+
+            if (getPriceAndDurationArr != undefined && getPriceAndDurationArr.length != 0) {
+                mappingOnPriceAndDuration = getPriceAndDurationArr
+                console.log("in if")
+            }
+            else {
+                mappingOnPriceAndDuration = presistedSelectedServices
+                console.log("in else")
+            }
+
+            let getPrice = mappingOnPriceAndDuration.map((item) => item?.price);
+            let getDuration = mappingOnPriceAndDuration.map((item) => item?.duration);
 
             let price = replacements(getPrice, currencySymbol);
             let serviceDuration = replacements(getDuration, min);
@@ -384,17 +379,14 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
         return passingArgsToReplacements();
     };
 
-    const priceAndDuration = handlePriceAndDuration();
+    // const priceAndDuration = handlePriceAndDuration();
 
+    // console.log(presistedSelectedServices, "presistedSelectedServices")
+
+    console.log(priceAndDuration, "priceAndDuration outside")
     let addingPrice = () => {
-        let addPrice = {...salonDataZustand, priceAndDuration : priceAndDuration}
-
-        console.log(addPrice, "adada")
-        // setSalonDataZustand({...salonDataZustand, priceAndDuration : priceAndDuration})
-        // setSalonDataZustand((e) => ({...e, salonDataZustand : {...e.salonDataZustand , priceAndDuration : priceAndDuration}}))
+        setSalonDataZustand({ ...salonDataZustand, priceAndDuration: priceAndDuration })
     }
-
-    // console.log(salonDataZustand, "hi")
 
     const setPresistedAtStart = () => {
 
@@ -422,6 +414,11 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
     return (
         <>
+
+            {/* <div className="my-20" onClick={() => handleClick()}>
+            asdasda
+        </div> */}
+
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
@@ -516,7 +513,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
                                         <div
                                             // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
-                                            onClick={() => { addService( service.name, service.duration, service.price), addingPrice()}}
+                                            onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect),  addingPrice() }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
@@ -536,7 +533,7 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
                 ))}
             </div>
 
-            <BookNowAndContinue toAppointmentPage={toAppointmentPage}/>
+            <BookNowAndContinue toAppointmentPage={toAppointmentPage} />
         </>
     );
 };

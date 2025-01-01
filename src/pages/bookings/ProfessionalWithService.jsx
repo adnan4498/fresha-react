@@ -17,7 +17,7 @@ const ProfessionalWithService = () => {
 
     const { servicesWithoutUnderscore, professionalsList } = salonDataZustand
 
-    console.log(salonDataZustand, "salonDataZustand")
+    // console.log(salonDataZustand, "salonDataZustand")
 
     const [triggerUseEffect, setTriggerUseEffect] = useState(false)
 
