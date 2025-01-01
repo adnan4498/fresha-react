@@ -18,11 +18,13 @@ const SelectProfessional = () => {
   const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-  const { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList } = salonDataZustand[0]
+  const { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList } = salonDataZustand
+
+  console.log(professionalsList, "professionalsList")
 
   const getImgPaths = () => {
     let fullImgUrls = []
-    professionalsList[0].forEach(item => fullImgUrls.push(item.memberImg))
+    professionalsList?.forEach(item => fullImgUrls.push(item.memberImg))
 
     let removepaths = fullImgUrls.map((item) => {
       let pathSliced = item.slice(18)
@@ -75,7 +77,7 @@ const SelectProfessional = () => {
   // }, [])
 
   const getProfessionals = () => {
-    let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
+    let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList, presistedSelectedServices, servicesWithoutUnderscore)
 
     let professionalsAgainstServices = []
 
@@ -103,7 +105,7 @@ const SelectProfessional = () => {
     setClickedSpecialist(i)
 
     // setSalonDataZustand((oldState) => ([{...oldState[0], selectedSpecialists: getSpecialist}]))
-    setSalonDataZustand([{...salonDataZustand[0], selectedSpecialists: item}])
+    setSalonDataZustand({...salonDataZustand, selectedSpecialists: item})
     // console.log(item, "ee")
   }
 

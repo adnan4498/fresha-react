@@ -30,7 +30,7 @@ const ActualSalon = () => {
     setSalonDataZustand(getSalonDataForZustand)
   }, [])
 
-  console.log(salonDataZustand, "salonDataZustand")
+  // console.log(salonDataZustand, "salonDataZustand")
 
   let navigate = useNavigate()
   let match = useMatches();
@@ -198,7 +198,7 @@ const ActualSalon = () => {
 
   let showBookNowBtn = true
 
-  let getSalonDataForZustand = [{
+  let getSalonDataForZustand = {
     salonServicesLength: salonServicesLength,
     categoryName: categoryName,
     cityName: cityName,
@@ -206,7 +206,7 @@ const ActualSalon = () => {
     servicesWithoutUnderscore: servicesWithoutUnderscore,
     currencySymbol: currencySymbol,
     professionalsList: getTeamMembers,
-  }]
+  }
 
   return (
     <>

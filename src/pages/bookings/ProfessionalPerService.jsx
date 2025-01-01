@@ -9,7 +9,7 @@ const ProfessionalPerService = () => {
     const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
-    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
+    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
 
     console.log(presistedSelectedServices)
 

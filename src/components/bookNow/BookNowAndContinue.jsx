@@ -8,7 +8,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
 
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
-    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand[0]
+    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
 
     const navigate = useNavigate()
     const serviceInCart = []

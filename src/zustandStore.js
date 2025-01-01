@@ -18,8 +18,8 @@ export const selectedServicesStore = create(
 export const salonDataZustandStore = create(
   persist(
     (set) => ({
-      salonDataZustand: [],
-      setSalonDataZustand: (newData) => set({ salonDataZustand: newData }), // please store array in this
+      salonDataZustand: {},
+      setSalonDataZustand: (newData) => set({ salonDataZustand: newData }),
     }),
     {
       name: "salon-data-storage",
@@ -28,18 +28,22 @@ export const salonDataZustandStore = create(
   )
 );
 
-export const zustandDummyStore = create(
-  persist(
-    (set) => ({
-      zustandDummyData: [7],
-      setZustandDummyData: (newData) => set((oldState) => ([...oldState.zustandDummyData, newData ])), // please store array in this
-      // setZustandDummyData: (newData) => set((oldState) => ({zustandDummyData : newData})), // please store array in this
-      // setZustandDummyData: (newData) => set(newData), // please store array in this
-    }),
-    {
-      name: "zustand-dummy-data-storage",
-      getStorage: () => localStorage,
-    }
-  )
-);
+// export const zustandDummyStore = create(
+//   persist(
+//     (set) => ({
+//       // zustandDummyData: {
+//       //   name : 5
+//       // },
+//       zustandDummyData: [10],
+//       // setZustandDummyData: (newData) =>set((oldState) => ({...oldState, zustandDummyData: {...oldState.zustandDummyData, w: newData, }})),
+//       setZustandDummyData: (newData) =>set((oldState) => console.log(oldState, "consoled") ({...oldState, zustandDummyData : [...oldState.zustandDummyData, newData]}) ),
+//       // setZustandDummyData: (newData) => set((oldState) => ({zustandDummyData : newData})), // please store array in this
+//       // setZustandDummyData: (newData) => set(newData), // please store array in this
+//     }),
+//     {
+//       name: "zustand-dummy-data-storage",
+//       getStorage: () => localStorage,
+//     }
+//   )
+// );
 

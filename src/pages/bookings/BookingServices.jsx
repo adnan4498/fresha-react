@@ -17,7 +17,6 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
     let navigate = useNavigate();
 
-    console.log(salonDataZustand, "salonDataZustand")
 
     let match = useMatches();
 
@@ -126,20 +125,15 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
         };
         activateHeading();
 
-        // pushing priceAndDuration into presisted state
-        // salonDataZustand[0].priceAndDuration = priceAndDuration
-        // console.log(priceAndDuration, "priceAndDuration in effect")
-        // setSalonDataZustand(salonDataZustand)
     }, []);
 
     useEffect(() => {
-        salonDataZustand[0].priceAndDuration = priceAndDuration
-        setSalonDataZustand(salonDataZustand)
-    }, [selected])
+        // let addingPriceAndDuration = {...salonDataZustand, priceAndDuration : priceAndDuration}
+        // setSalonDataZustand(addingPriceAndDuration)
+
+        // console.log(priceAndDuration, "price")
+    }, [])
     
-
-    // console.log(salonDataZustand, "salonDataZustand")
-
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
 
@@ -392,6 +386,16 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
 
     const priceAndDuration = handlePriceAndDuration();
 
+    let addingPrice = () => {
+        let addPrice = {...salonDataZustand, priceAndDuration : priceAndDuration}
+
+        console.log(addPrice, "adada")
+        // setSalonDataZustand({...salonDataZustand, priceAndDuration : priceAndDuration})
+        // setSalonDataZustand((e) => ({...e, salonDataZustand : {...e.salonDataZustand , priceAndDuration : priceAndDuration}}))
+    }
+
+    // console.log(salonDataZustand, "hi")
+
     const setPresistedAtStart = () => {
 
         if (serviceInCart.length != 0 && presistedSelectedServices.length == 0) {
@@ -511,7 +515,8 @@ const BookingServices = ({specialistServices, toAppointmentPage, triggerUseEffec
                                         </div>
 
                                         <div
-                                            onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect)}}
+                                            // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
+                                            onClick={() => { addService( service.name, service.duration, service.price), addingPrice()}}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}

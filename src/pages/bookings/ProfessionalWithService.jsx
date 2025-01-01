@@ -15,7 +15,9 @@ const ProfessionalWithService = () => {
     const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-    const { servicesWithoutUnderscore, professionalsList } = salonDataZustand[0]
+    const { servicesWithoutUnderscore, professionalsList } = salonDataZustand
+
+    console.log(salonDataZustand, "salonDataZustand")
 
     const [triggerUseEffect, setTriggerUseEffect] = useState(false)
 
@@ -55,7 +57,7 @@ const ProfessionalWithService = () => {
 
         let getSuggestedSpecialists = gettingSuggestedSpecialists()
 
-        let addSpecialistsToStorage = [{ ...salonDataZustand[0], selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }]
+        let addSpecialistsToStorage = { ...salonDataZustand, selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }
         setSalonDataZustand(addSpecialistsToStorage)
 
     }, [triggerUseEffect])
