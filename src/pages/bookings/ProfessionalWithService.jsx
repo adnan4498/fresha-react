@@ -66,6 +66,8 @@ const ProfessionalWithService = () => {
 
     let toAppointmentPage = true
 
+    // console.log(salonDataZustand, "presisted again")
+
     return (
         <div>
             <div className='relative mt-20'>

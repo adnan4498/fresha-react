@@ -113,14 +113,25 @@ const ActualSalon = () => {
   let tabItems = [];
 
   let setFirstServiceInLocalStorage = (name, price, duration) => {
-    let serviceInCart = [{
+    let serviceInCartArr = [{
       name: name,
       duration: duration,
       price: price,
     }]
 
-    setPresistedSelectedServices(serviceInCart)
+    let serviceInCartObj = [{
+      name: name,
+      duration: duration,
+      price: price,
+    }]
+
+    // setPresistedSelectedServices(serviceInCartArr)
+    setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartObj })
   }
+
+  let addPriceAndDuration = () => {
+  }
+  // console.log(salonDataZustand, "salonDataZustand sss")
 
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
@@ -149,7 +160,7 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              <div onClick={() => {
+              <div onClick={() => { addPriceAndDuration()
                 setFirstServiceInLocalStorage(service.name, service.price, service.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                   state: {
                     servicesWithoutUnderscore,

@@ -38,7 +38,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
             </div>}
 
 
-            {presistedSelectedServices != undefined && presistedSelectedServices.length != 0 ? (
+            {priceAndDuration != undefined && priceAndDuration.length != 0 ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">

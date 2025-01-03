@@ -9,7 +9,8 @@ import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 
-const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect }) => {
+const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function(){} }) => {
+
     const { presistedSelectedServices, setPresistedSelectedServices } =
         selectedServicesStore((state) => state);
 
@@ -125,14 +126,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         };
         activateHeading();
 
+        // addService()
+
     }, []);
-
-    useEffect(() => {
-        // let addingPriceAndDuration = {...salonDataZustand, priceAndDuration : priceAndDuration}
-        // setSalonDataZustand(addingPriceAndDuration)
-
-        // console.log(priceAndDuration, "price")
-    }, [])
 
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
@@ -282,7 +278,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     let priceAndDuration
 
-    const addService = (name, duration, price) => {
+    function addService(name, duration, price){
 
         let getPriceAndDurationArr
 
@@ -312,9 +308,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             getPriceAndDurationArr = getPresistedItems
         }
-
+        
         priceAndDuration = handlePriceAndDuration(getPriceAndDurationArr)
-
+        
     };
 
     let tickMark = (serviceName) => {
@@ -355,11 +351,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             if (getPriceAndDurationArr != undefined && getPriceAndDurationArr.length != 0) {
                 mappingOnPriceAndDuration = getPriceAndDurationArr
-                console.log("in if")
             }
             else {
                 mappingOnPriceAndDuration = presistedSelectedServices
-                console.log("in else")
             }
 
             let getPrice = mappingOnPriceAndDuration.map((item) => item?.price);
@@ -379,13 +373,10 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         return passingArgsToReplacements();
     };
 
-    // const priceAndDuration = handlePriceAndDuration();
 
-    // console.log(presistedSelectedServices, "presistedSelectedServices")
 
-    console.log(priceAndDuration, "priceAndDuration outside")
     let addingPrice = () => {
-        setSalonDataZustand({ ...salonDataZustand, priceAndDuration: priceAndDuration })
+        setSalonDataZustand({ ...salonDataZustand, priceAndDuration: priceAndDuration, selectedServices : [] })
     }
 
     const setPresistedAtStart = () => {
@@ -410,6 +401,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     isBool && setPresistedAtStart();
 
+    // console.log(presistedSelectedServices, "presisted")
+    console.log(salonDataZustand, "salonData")
 
 
     return (
@@ -417,6 +410,11 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             {/* <div className="my-20" onClick={() => handleClick()}>
             asdasda
+        </div> */}
+
+
+        {/* <div onClick={() => } className="my-20">
+            asd
         </div> */}
 
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
@@ -513,7 +511,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
                                         <div
                                             // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
-                                            onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect),  addingPrice() }}
+                                            onClick={() => { addService(service.name, service.duration, service.price),  setTriggerUseEffect(!triggerUseEffect),  addingPrice() }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
