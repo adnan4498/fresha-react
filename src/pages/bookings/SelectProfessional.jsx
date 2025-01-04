@@ -1,26 +1,23 @@
 import { StarFilled, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import React, { useEffect, useState } from 'react'
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
-import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
+import { salonDataZustandStore } from '../../zustandStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
 
 const SelectProfessional = () => {
 
   const navigate = useNavigate()
-  const location = useLocation()
 
   const [clickedSpecialist, setClickedSpecialist] = useState()
 
-  // let specialist = location.state.teamMember
-  // let specialistServices = location.state.getSpecialistServices
-
-  const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-  const { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList } = salonDataZustand
+  let { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
 
-  console.log(professionalsList, "professionalsList")
+  professionalsList = professionalsList[0]
+  
+  console.log(selectedServices, "salonData selectedServices")
 
   const getImgPaths = () => {
     let fullImgUrls = []
@@ -77,12 +74,12 @@ const SelectProfessional = () => {
   // }, [])
 
   const getProfessionals = () => {
-    let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList, presistedSelectedServices, servicesWithoutUnderscore)
+    let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList, selectedServices, servicesWithoutUnderscore)
 
     let professionalsAgainstServices = []
 
     for (let professionals of get_professionals_with_services_obj) {
-      for (let services of presistedSelectedServices) {
+      for (let services of selectedServices) {
         professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
       }
     }
@@ -99,17 +96,12 @@ const SelectProfessional = () => {
 
   let professionalsOfServices = getProfessionals()
 
-  console.log(professionalsOfServices, "professionalsOfServices")
 
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
 
-    // setSalonDataZustand((oldState) => ([{...oldState[0], selectedSpecialists: getSpecialist}]))
     setSalonDataZustand({...salonDataZustand, selectedSpecialists: item})
-    // console.log(item, "ee")
   }
-
-  console.log(salonDataZustand, "tzz")
 
   return (
     <div>
@@ -128,7 +120,7 @@ const SelectProfessional = () => {
 
         </div>
 
-        {presistedSelectedServices.length > 1 && <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`)}
+        {selectedServices.length > 1 && <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`)}
           className='border-[1px] border-gray-500 rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4'>
           <div className="text-3xl min-h-[50px]"><UserAddOutlined /></div>
           <span className='text-base text-center leading-[20px]'>Select professional <br></br>per service </span>

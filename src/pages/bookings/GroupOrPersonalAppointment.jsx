@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { useLocation, useMatches, useNavigate } from 'react-router-dom'
-import { selectedServicesStore } from '../../zustandStore';
-// import selectedServicesStore from '../../zustandStore';
+import { salonDataZustandStore } from '../../zustandStore';
 
 const GroupOrPersonalAppointment = () => {
-    
-    const { setPresistedSelectedServices } = selectedServicesStore((state) => state);
+
+    const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
+
     let match = useMatches();
     let navigate = useNavigate()
     const location = useLocation();
@@ -15,14 +15,15 @@ const GroupOrPersonalAppointment = () => {
     let salonName = match[0].params.name
 
 
-    useEffect(() => {
-        setPresistedSelectedServices([])
-    }, [])
 
 
     let currencySymbol = location.state.currencySymbol
     let servicesWithoutUnderscore = location.state.servicesWithoutUnderscore
     let serviceInCart = []
+    
+    let addEmptyServiceInCart = () => {
+        setSalonDataZustand({ ...salonDataZustand, selectedServices: [] })
+    }
 
     return (
         <div>
@@ -35,13 +36,13 @@ const GroupOrPersonalAppointment = () => {
             </div>
 
             <div className=''>
-                <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                <div onClick={() => { addEmptyServiceInCart() ,  navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                     state: {
                         servicesWithoutUnderscore,
                         currencySymbol,
                         serviceInCart,
                     }
-                })} className='border-[1px] border-gray-500 rounded-lg py-4 pl-2 '>
+                })}} className='border-[1px] border-gray-500 rounded-lg py-4 pl-2 '>
                     <span> Book an appointment </span>
                     <h3 className='text-sm'> Schedule services for yourself </h3>
                 </div>

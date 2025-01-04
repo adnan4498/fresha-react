@@ -6,13 +6,10 @@ import { useCallback } from "react";
 // import selectedServicesStore from "../../zustandStore";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
-import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 
-const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function(){} }) => {
+const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function () { } }) => {
 
-    const { presistedSelectedServices, setPresistedSelectedServices } =
-        selectedServicesStore((state) => state);
 
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
@@ -35,14 +32,13 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
 
     // Object.entries(services).forEach((item) => {
-    //     console.log(item, "item")
     // })
 
     let serviceInCart = []
 
     // if no selected services, page referesh will show no selected services
     const pageRefereshOnNoServices = () => {
-        if (presistedSelectedServices.length == 0) {
+        if (salonDataZustand.length == 0) {
             serviceInCart = []
         }
         else {
@@ -70,6 +66,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     const [getSelectedServices, setSelectedServices] = useState([]);
 
+
+
     // localStorage.clear()
 
     // let getLocal = JSON.parse(localStorage.getItem("count-storage"))
@@ -79,7 +77,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     // even just 10 mili-seconds puts great impact on re-rendering
     const throttledOnScroll = useCallback(
         _.throttle(triggerScroll, 100, { trailing: false }),
-        [presistedSelectedServices]
+        [salonDataZustand]
     );
 
     useEffect(() => {
@@ -89,7 +87,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         return () => {
             document.removeEventListener("scroll", throttledOnScroll);
         };
-    }, [presistedSelectedServices, throttledOnScroll]);
+    }, [salonDataZustand, throttledOnScroll]);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -133,10 +131,13 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
 
+        console.log(salonDataZustand, "sssss")
+
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                for (let services of presistedSelectedServices) {
+                for (let services of salonDataZustand.selectedServices) {
                     if (item?.textContent == services?.name) {
+                        console.log('hii')
                         selectedServicesDivs.push(item);
                     }
                 }
@@ -276,51 +277,69 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         });
     }
 
-    let priceAndDuration
 
-    function addService(name, duration, price){
+    function addService(name, duration, price) {
+        let priceAndDuration
 
-        let getPriceAndDurationArr
+        let selectedServices
 
         let noDupsFound = () => {
             let noDup;
 
-            let findDup = presistedSelectedServices?.filter((item) => item?.name == name);
+            let findDup = salonDataZustand.selectedServices?.filter((item) => item?.name == name);
             findDup.length == 0 && (noDup = true);
 
             return noDup;
         };
 
         if (noDupsFound()) {
-            let theObj = { name: name, price: price, duration: duration }
-            setSelected((oldState) => [...oldState, theObj]);
+            let serviceDetailsObj = { name: name, price: price, duration: duration }
+            setSelected((oldState) => [...oldState, serviceDetailsObj]);
 
-            let arr = [...presistedSelectedServices, theObj]
-            setPresistedSelectedServices(arr)
-            getPriceAndDurationArr = arr
+            let storedSelectedServices
 
+            if (salonDataZustand.selectedServices != undefined) {
+                storedSelectedServices = [...salonDataZustand.selectedServices, serviceDetailsObj]
+            }
+            else {
+                storedSelectedServices = [serviceDetailsObj]
+            }
+
+            selectedServices = storedSelectedServices
+
+            console.log('if')
         } else {
             let getSelectedItems = selected.filter((item) => item?.name != name);
-            let getPresistedItems = presistedSelectedServices.filter((item) => item?.name != name);
+            let getPresistedItems = salonDataZustand.selectedServices.filter((item) => item?.name != name);
 
             setSelected(getSelectedItems);
-            setPresistedSelectedServices(getPresistedItems)
 
-            getPriceAndDurationArr = getPresistedItems
+
+            selectedServices = getPresistedItems
+            console.log('else')
         }
-        
-        priceAndDuration = handlePriceAndDuration(getPriceAndDurationArr)
-        
+
+        // how is handlePriceAndDuration accessed earlier ?
+        console.log(selectedServices, 'else')
+
+        priceAndDuration = handlePriceAndDuration(selectedServices)
+        console.log(priceAndDuration, "priceAndDuration")
+
+
+        setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
+
     };
 
     let tickMark = (serviceName) => {
-        let checkItem = presistedSelectedServices.filter(item => item?.name == serviceName)
+        let checkItem = salonDataZustand?.selectedServices?.filter(item => item?.name == serviceName)
 
-        if (checkItem.length > 0) {
+        if (checkItem?.length > 0) {
             return checkItem;
         }
     };
 
+
+    // how is handlePriceAndDuration accessed earlier ?
     const handlePriceAndDuration = (getPriceAndDurationArr) => {
         const replacements = (serviceVal, replacingVal) => {
             let valReplaced = [];
@@ -349,12 +368,15 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             let mappingOnPriceAndDuration
 
-            if (getPriceAndDurationArr != undefined && getPriceAndDurationArr.length != 0) {
-                mappingOnPriceAndDuration = getPriceAndDurationArr
-            }
-            else {
-                mappingOnPriceAndDuration = presistedSelectedServices
-            }
+            mappingOnPriceAndDuration = getPriceAndDurationArr 
+
+            
+
+            // if (getPriceAndDurationArr != undefined && getPriceAndDurationArr.length != 0) {
+            // }
+            // else {
+            //     mappingOnPriceAndDuration = salonDataZustand.selectedServices
+            // }
 
             let getPrice = mappingOnPriceAndDuration.map((item) => item?.price);
             let getDuration = mappingOnPriceAndDuration.map((item) => item?.duration);
@@ -367,42 +389,36 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                 duration: serviceDuration,
             };
 
+            console.log(result, "result")
             return result;
         };
 
         return passingArgsToReplacements();
     };
 
+    // const setPresistedAtStart = () => {
 
+    //     if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length == 0) {
+    //         serviceInCart.forEach((item, i, arr) => {
+    //             if (arr.length != 0) {
+    //                 item = [item]
+    //                 // remove all setPresistedSelectedServices
+    //                 setPresistedSelectedServices(item); 
+    //             }
+    //         });
+    //     }
+    //     else if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length > 0) {
+    //         setPresistedSelectedServices(salonDataZustand.selectedServices)
+    //         setSelected(salonDataZustand.selectedServices)
+    //     }
+    //     else if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length > 0) {
+    //         setPresistedSelectedServices([])
+    //     }
+    //     setIsBool(false);
+    // };
 
-    let addingPrice = () => {
-        setSalonDataZustand({ ...salonDataZustand, priceAndDuration: priceAndDuration, selectedServices : [] })
-    }
+    // isBool && setPresistedAtStart();
 
-    const setPresistedAtStart = () => {
-
-        if (serviceInCart.length != 0 && presistedSelectedServices.length == 0) {
-            serviceInCart.forEach((item, i, arr) => {
-                if (arr.length != 0) {
-                    item = [item]
-                    setPresistedSelectedServices(item);
-                }
-            });
-        }
-        else if (serviceInCart.length != 0 && presistedSelectedServices.length > 0) {
-            setPresistedSelectedServices(presistedSelectedServices)
-            setSelected(presistedSelectedServices)
-        }
-        else if (serviceInCart.length != 0 && presistedSelectedServices.length > 0) {
-            setPresistedSelectedServices([])
-        }
-        setIsBool(false);
-    };
-
-    isBool && setPresistedAtStart();
-
-    // console.log(presistedSelectedServices, "presisted")
-    console.log(salonDataZustand, "salonData")
 
 
     return (
@@ -413,7 +429,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         </div> */}
 
 
-        {/* <div onClick={() => } className="my-20">
+            {/* <div onClick={() => } className="my-20">
             asd
         </div> */}
 
@@ -511,7 +527,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
                                         <div
                                             // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
-                                            onClick={() => { addService(service.name, service.duration, service.price),  setTriggerUseEffect(!triggerUseEffect),  addingPrice() }}
+                                            onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect) }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}

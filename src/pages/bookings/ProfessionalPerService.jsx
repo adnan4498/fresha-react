@@ -54,7 +54,8 @@ const ProfessionalPerService = () => {
             </Drawer>
 
             <div className='mt-4'>
-                {presistedSelectedServices.map((item, i) => (
+                {/* {presistedSelectedServices.map((item, i) => ( */}
+                {salonDataZustand.selectedServices.map((item, i) => (
                     <>
                         <div className='py-2'>
                             <div className='text-lg font-semibold'>

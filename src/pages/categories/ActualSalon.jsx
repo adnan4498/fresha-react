@@ -113,11 +113,11 @@ const ActualSalon = () => {
   let tabItems = [];
 
   let setFirstServiceInLocalStorage = (name, price, duration) => {
-    let serviceInCartArr = [{
+    let serviceInCartArr = {
       name: name,
       duration: duration,
       price: price,
-    }]
+    }
 
     let serviceInCartObj = [{
       name: name,
@@ -126,12 +126,11 @@ const ActualSalon = () => {
     }]
 
     // setPresistedSelectedServices(serviceInCartArr)
-    setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartObj })
+    setSalonDataZustand({ ...salonDataZustand, priceAndDuration : serviceInCartArr, selectedServices: serviceInCartObj })
   }
 
   let addPriceAndDuration = () => {
   }
-  // console.log(salonDataZustand, "salonDataZustand sss")
 
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
@@ -296,13 +295,19 @@ const ActualSalon = () => {
                   getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
                   teamMember : item,
                   currencySymbol,
+
+                  serviceInCart: []
                 }
 
-                // serviceInCart: {
-                //   name: service.name,
-                //   duration: service.duration,
-                //   price: service.price,
-                // },
+                // state: {
+                //   servicesWithoutUnderscore,
+                //   serviceInCart: {
+                //     name: service.name,
+                //     duration: service.duration,
+                //     price: service.price,
+                //   },
+                //   currencySymbol,
+                // }
 
               })} className="relative">
                 <div className="w-24 h-24 ">

@@ -1,15 +1,13 @@
 import React from 'react'
-import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
+import { salonDataZustandStore } from '../../zustandStore';
 
 const MakeAppointment = () => {
 
-  const { presistedSelectedServices, setPresistedSelectedServices } =
-    selectedServicesStore((state) => state);
 
-        const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
-    
 
-  console.log(presistedSelectedServices, "w")
+  const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
+
+
   console.log(salonDataZustand, "salonDataZustand")
 
   return (

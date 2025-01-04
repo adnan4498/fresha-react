@@ -1,10 +1,9 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore'
+import { salonDataZustandStore} from '../../zustandStore'
 
 const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false }) => {
 
-    const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
 
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
@@ -16,7 +15,8 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
     // either to appointment page (with professional) or chose professional
     const dynamicUrl = toAppointmentPage ? "bookingService/professionalWithService/makeAppointment" : "bookingService/selectProfessional"
 
-    // localStorage.clear()
+    // console.log(salonDataZustand, 'book')
+
     return (
         <>
             {showBookNowBtn && <div>
@@ -38,17 +38,16 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
             </div>}
 
 
-            {priceAndDuration != undefined && priceAndDuration.length != 0 ? (
+            {priceAndDuration?.price != '' && priceAndDuration != undefined ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">
                         <div>
                             <h3 className="text-left font-semibold text-black">
                                 {/* writing code in `${}` will add space between currencySymbol and price */}
-                                {priceAndDuration?.price
-                                    && `${currencySymbol} ${priceAndDuration?.price}`
-                                    // : presistedSelectedServices?.price
-                                }
+
+                                
+                                {priceAndDuration?.price.includes(currencySymbol) ? priceAndDuration?.price :  `${currencySymbol} ${priceAndDuration?.price}`}
 
 
                             </h3>
@@ -57,13 +56,11 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
                         <div className="flex gap-2 text-sm">
                             <div>
                                 {" "}
-                                {presistedSelectedServices.length} service{presistedSelectedServices.length > 1 && "s"}{" "}
+                                {salonDataZustand?.selectedServices?.length} service{salonDataZustand?.selectedServices?.length > 1 && "s"}{" "}
                             </div>
 
                             <div>
-                                {priceAndDuration?.duration
-                                    ? priceAndDuration?.duration
-                                    : presistedSelectedServices?.duration}
+                                {priceAndDuration?.duration}
                             </div>
                         </div>
                     </div>
