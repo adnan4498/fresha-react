@@ -131,7 +131,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     function triggerScroll() {
         let serviceNameDiv = [document.querySelectorAll(".serviceNameDiv")];
 
-        console.log(salonDataZustand, "sssss")
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
@@ -307,7 +306,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             selectedServices = storedSelectedServices
 
-            console.log('if')
         } else {
             let getSelectedItems = selected.filter((item) => item?.name != name);
             let getPresistedItems = salonDataZustand.selectedServices.filter((item) => item?.name != name);
@@ -316,14 +314,11 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
 
             selectedServices = getPresistedItems
-            console.log('else')
         }
 
         // how is handlePriceAndDuration accessed earlier ?
-        console.log(selectedServices, 'else')
 
         priceAndDuration = handlePriceAndDuration(selectedServices)
-        console.log(priceAndDuration, "priceAndDuration")
 
 
         setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
@@ -389,7 +384,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                 duration: serviceDuration,
             };
 
-            console.log(result, "result")
             return result;
         };
 
@@ -529,7 +523,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                             // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
                                             onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect) }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
-                                                // className={`text-xl font-semibold border border-gray-300 ${presistedSelectedServices[i]?.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
                                         >
                                             {tickMark(service.name) ? (

@@ -31,12 +31,7 @@ const servicesOfSpecialist = function (specialist, services) {
     }
   };
 
-  let get_key_and_specific_services = (
-    item,
-    i,
-    services,
-    serviceNameTolowerCase
-  ) => {
+  let get_key_and_specific_services = ( item, i, services, serviceNameTolowerCase) => {
     if (Object.keys(getSpecialistServices).includes(item)) {
       let checkDup = getSpecialistServices[item].some((getServicesItem) => {
         let lowerTheName = getServicesItem.name.toLowerCase();

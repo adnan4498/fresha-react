@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { salonDataZustandStore, selectedServicesStore } from '../../zustandStore';
+import { salonDataZustandStore } from '../../zustandStore';
 import { CloseOutlined, DownOutlined, RightOutlined, UserOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 
 const ProfessionalPerService = () => {
 
-    const presistedSelectedServices = selectedServicesStore((state) => state.presistedSelectedServices);
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
     const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
-
-    console.log(presistedSelectedServices)
-
 
     const [open, setOpen] = useState(false);
     const [placement, setPlacement] = useState("left");

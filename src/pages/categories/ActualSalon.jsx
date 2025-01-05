@@ -13,7 +13,7 @@ import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/making
 import { useEffect } from "react";
 // import selectedServicesStore from "../../zustandStore";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
-import { selectedServicesStore } from "../../zustandStore";
+// import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 import servicesOfSpecialist from "../../ownModules/specialistServices/SpecialistServices";
 
@@ -21,12 +21,12 @@ const ActualSalon = () => {
 
   let globalSalons = getGlobalSalons()
 
-  const { presistedSelectedServices, setPresistedSelectedServices } = selectedServicesStore((state) => state);
+  // const { presistedSelectedServices, setPresistedSelectedServices } = selectedServicesStore((state) => state);
 
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   useEffect(() => {
-    setPresistedSelectedServices([])
+    // setPresistedSelectedServices([])
     setSalonDataZustand(getSalonDataForZustand)
   }, [])
 
@@ -290,7 +290,7 @@ const ActualSalon = () => {
 
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
-              <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
+              <div onClick={() => {setSalonDataZustand({...salonDataZustand, selectedServices : []}), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
                 state: {
                   getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
                   teamMember : item,
@@ -309,7 +309,7 @@ const ActualSalon = () => {
                 //   currencySymbol,
                 // }
 
-              })} className="relative">
+              })}} className="relative">
                 <div className="w-24 h-24 ">
                   <img
                     src={item.memberImg}
