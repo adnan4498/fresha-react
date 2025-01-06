@@ -14,9 +14,6 @@ const GroupOrPersonalAppointment = () => {
     let cityName = match[0].params.city
     let salonName = match[0].params.name
 
-
-
-
     let currencySymbol = location.state.currencySymbol
     let servicesWithoutUnderscore = location.state.servicesWithoutUnderscore
     let serviceInCart = []

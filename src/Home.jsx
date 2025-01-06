@@ -5,8 +5,6 @@ import SalonCarousels from "./homeComponents/SalonCarousels";
 
 function Home() {
 
-  // localStorage.clear()
-
   return (
     <>
       <HeroSection />

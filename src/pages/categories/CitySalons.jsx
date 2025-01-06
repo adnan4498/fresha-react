@@ -4,12 +4,13 @@ import React from "react";
 import { useMatches } from "react-router-dom";
 import CarouselWithServices from "../../components/carousel/CarouselWithServices";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
-import removingDuplicates from "../../ownModules/removeDuplicates/removeDuplicates";
+// import removingDuplicates from "../../ownModules/removingModules/removeDuplicates";
 import allDubaiSalons from "../../data/salondata/dubai/dubaiData";
 import allPakistanSalons from "../../data/salondata/pakistan/pakistanData";
 import allOmanSalons from "../../data/salondata/oman/omanData";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
+import removingDuplicates from "../../ownModules/removing/removeDuplicates";
 
 const CitySalons = () => {
   let match = useMatches();

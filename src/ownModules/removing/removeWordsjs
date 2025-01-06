@@ -1,0 +1,10 @@
+export const splittingServiceWords = (item) => {
+  let speciality = item.memberSpeciality.toLowerCase();
+
+  let regex = /\b(yoga|specialist|therapist|head|technician|stylist)\b|&/gi;
+  let removedWords = speciality.replace(regex, "").trim();
+  removedWords.includes("  ") && (removedWords = removedWords.replace(" ", ""));
+
+  return (removedWords = removedWords.split(" "));
+};
+

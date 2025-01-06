@@ -19,6 +19,8 @@ const ProfessionalPerService = () => {
         setOpen(false);
     };
 
+    console.log(salonDataZustand, "salonDataZustand")
+
     return (
         <div className='mb-28'>
             <div>

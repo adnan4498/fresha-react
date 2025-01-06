@@ -1,22 +1,11 @@
+import { splittingServiceWords } from "../removing/removeWordsjs";
+import { getServicesOnServiceWord } from "./getServicesOnServiceWord";
+
 const servicesOfSpecialist = function (specialist, services) {
-  // console.log(services, "services");
-
-  let speciality = specialist.memberSpeciality.toLocaleLowerCase();
-
-  let regex = /\b(yoga|specialist|therapist|head|technician)\b|&/gi;
-  let removedWords = speciality.replace(regex, "").trim();
-  removedWords.includes("  ") && (removedWords = removedWords.replace(" ", ""));
-  removedWords = removedWords.split(" ");
 
   let getSpecialistServices = {};
 
-  let spaServices = ["spa", "bath"];
-  let barberServices = ["hair", "beard"];
-  let massageServices = ["massage"];
-  let waxServices = ["wax", "bath"];
-  let skincareServices = ["skincare", "facial"];
-  let nailServices = ["nail", "pedicure", "manicure"];
-  let beautyServices = ["beauty", "skincare", "facial", "pamper", "makeup"];
+  let checkWord = ["barber", "spa", "massage", "wax", "skincare", "beauty", "nail", ]
 
   let get_key_and_all_services = (item, i, services) => {
     if (Object.keys(getSpecialistServices).includes(item)) {
@@ -48,66 +37,20 @@ const servicesOfSpecialist = function (specialist, services) {
       let serviceNameTolowerCase = services[item][i].name.toLowerCase();
       let itemToLowerCase = item.toLowerCase();
 
+      let removedWords = splittingServiceWords(specialist)
+
       removedWords.forEach((word) => {
-        if (
-          word == "barber" ||
-          word == "spa" ||
-          word == "massage" ||
-          word == "wax" ||
-          word == "skincare" ||
-          word == "beauty" ||
-          word == "nail" 
-        ) {
-          let servicesOnWord;
+        if (checkWord.includes(word)) {
 
-          switch (word) {
-            case "barber":
-              servicesOnWord = barberServices;
-              break;
+          let servicesOnWord = getServicesOnServiceWord(word) 
 
-            case "spa":
-              servicesOnWord = spaServices;
-              break;
-
-            case "massage":
-              servicesOnWord = massageServices;
-              break;
-
-            case "wax":
-              servicesOnWord = waxServices;
-              break;
-
-            case "skincare":
-              servicesOnWord = skincareServices;
-              break;
-
-            case "beauty":
-              servicesOnWord = beautyServices;
-              break;
-
-            case "nail":
-              servicesOnWord = nailServices;
-              break;
-
-            default:
-              break;
+          if (servicesOnWord.some((item) => serviceNameTolowerCase.includes(item))) {
+            get_key_and_specific_services(item, i, services, serviceNameTolowerCase);
           }
+        } 
+        else {
+          if ( itemToLowerCase.includes(word) || serviceNameTolowerCase.includes(word)) {
 
-          if (
-            servicesOnWord.some((item) => serviceNameTolowerCase.includes(item))
-          ) {
-            get_key_and_specific_services(
-              item,
-              i,
-              services,
-              serviceNameTolowerCase
-            );
-          }
-        } else {
-          if (
-            itemToLowerCase.includes(word) ||
-            serviceNameTolowerCase.includes(word)
-          ) {
             // to push whole obj, e.g: {key : [full array]}
             if (itemToLowerCase.includes(word)) {
               get_key_and_all_services(item, i, services);
@@ -115,20 +58,13 @@ const servicesOfSpecialist = function (specialist, services) {
 
             // to push a some services, e.g: {key : [some services]}
             if (serviceNameTolowerCase.includes(word)) {
-              get_key_and_specific_services(
-                item,
-                i,
-                services,
-                serviceNameTolowerCase
-              );
+              get_key_and_specific_services( item, i, services, serviceNameTolowerCase);
             }
           }
         }
       });
     }
   }
-
-  console.log(getSpecialistServices, "ss")
 
   return getSpecialistServices;
 };
