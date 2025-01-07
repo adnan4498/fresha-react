@@ -141,12 +141,6 @@ const ActualSalon = () => {
           {item[1].map((service, index) => (
             <div key={index} className="mt-5 flex justify-between items-center" >
               <div
-              // onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
-              //   state: {
-              //     servicesWithoutUnderscore,
-              //     currencySymbol,
-              //   }
-              // })}
               >
                 <div>
                   <p className="text-xl">{service.name}</p>

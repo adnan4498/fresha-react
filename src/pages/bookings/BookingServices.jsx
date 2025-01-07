@@ -316,10 +316,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             selectedServices = getPresistedItems
         }
 
-        // how is handlePriceAndDuration accessed earlier ?
-
         priceAndDuration = handlePriceAndDuration(selectedServices)
-
 
         setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
 
@@ -333,8 +330,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         }
     };
 
-
-    // how is handlePriceAndDuration accessed earlier ?
     const handlePriceAndDuration = (getPriceAndDurationArr) => {
         const replacements = (serviceVal, replacingVal) => {
             let valReplaced = [];
@@ -413,6 +408,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     // isBool && setPresistedAtStart();
 
+    console.log(salonDataZustand, "salonData in select")
 
 
     return (

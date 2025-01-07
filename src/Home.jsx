@@ -5,6 +5,17 @@ import SalonCarousels from "./homeComponents/SalonCarousels";
 
 function Home() {
 
+  // function a(){
+  //   ab()
+  // }
+
+
+  // let ab = () => {
+  //   console.log("hi")
+  // }
+
+  // a()
+
   return (
     <>
       <HeroSection />

@@ -4,6 +4,8 @@ import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore } from '../../zustandStore';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
+import { isArray } from 'lodash';
+import { getSelectedAndSuggestedSpecialists } from '../../ownModules/specialistServices/getSelectedAndSuggestedSpecialists';
 
 const SelectProfessional = () => {
 
@@ -16,8 +18,7 @@ const SelectProfessional = () => {
   let { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
 
   professionalsList = professionalsList[0]
-  
-  console.log(selectedServices, "salonData selectedServices")
+
 
   const getImgPaths = () => {
     let fullImgUrls = []
@@ -33,45 +34,6 @@ const SelectProfessional = () => {
 
   let imgPaths = getImgPaths()
 
-  // useEffect(() => {
-
-  //   const gettingSelectedSpecialist = () => {
-
-  //     const get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
-  //     const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
-
-  //     return filterSpecialists
-  //   }
-
-  //   let getSpecialist = gettingSelectedSpecialist()
-
-  //   const gettingSuggestedSpecialists = () => {
-  //     let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], presistedSelectedServices, servicesWithoutUnderscore)
-
-  //     let professionalsAgainstServices = []
-
-  //     for (let professionals of get_professionals_with_services_obj) {
-  //       for (let services of presistedSelectedServices) {
-  //         professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
-  //       }
-  //     }
-
-  //     let removeDupProfessionals = []
-
-  //     professionalsAgainstServices.forEach((item) => {
-  //       let isDup = removeDupProfessionals?.some(items => items?.memberName.includes(item.memberName))
-  //       !isDup && removeDupProfessionals.push(item)
-  //     })
-
-  //     return removeDupProfessionals
-  //   }
-
-  //   let getSuggestedSpecialists = gettingSuggestedSpecialists()
-
-  //   let addSpecialistsToStorage = [{ ...salonDataZustand[0], selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }]
-  //   setSalonDataZustand(addSpecialistsToStorage)
-
-  // }, [])
 
   const getProfessionals = () => {
     let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList, selectedServices, servicesWithoutUnderscore)
@@ -94,14 +56,57 @@ const SelectProfessional = () => {
     return removeDupProfessionals
   }
 
-  let professionalsOfServices = getProfessionals()
+  const professionalsOfServices = getProfessionals()
 
+  useEffect(() => {
+
+    const propsObj = {
+      professionalsList,
+      selectedServices,
+      servicesWithoutUnderscore,
+      professionalsOfServices,
+      salonDataZustand
+    };
+    
+    const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
+    
+
+    setSalonDataZustand(get_Selected_and_suggested_specialists);
+
+  }, [])
+
+
+
+
+  let isMultipleSpecialists
+
+  const check_single_or_multiple_specialist = () => {
+
+    const checkWord = ["hair", "barber", "spa", "massage", "wax", "skincare", "beauty", "nail"];
+    const specialities = professionalsOfServices.map(item => item.memberSpeciality.toLowerCase());
+
+    const specialistSet = new Set();
+
+    specialities.forEach(speciality => {
+      checkWord.forEach(word => {
+        if (speciality.includes(word)) specialistSet.add(word);
+      });
+    });
+
+    // if > 1 specialist, user chose multiple specialists for multiple services
+    isMultipleSpecialists = specialistSet.size > 1;
+
+  };
+
+  check_single_or_multiple_specialist()
 
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
 
-    setSalonDataZustand({...salonDataZustand, selectedSpecialists: item})
+    setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: item })
   }
+
+  let toAppointmentPage = true
 
   return (
     <div>
@@ -120,18 +125,30 @@ const SelectProfessional = () => {
 
         </div>
 
-        {selectedServices.length > 1 && <div onClick={() => navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`)}
-          className='border-[1px] border-gray-500 rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4'>
-          <div className="text-3xl min-h-[50px]"><UserAddOutlined /></div>
-          <span className='text-base text-center leading-[20px]'>Select professional <br></br>per service </span>
-        </div>}
-
-        {professionalsOfServices.map((item, i) => (
-          <>
+        {isMultipleSpecialists ? (
+          <div
+            onClick={() =>
+              navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`)
+            }
+            className="border-[1px] border-gray-500 rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4"
+          >
+            <div className="text-3xl min-h-[50px]">
+              <UserAddOutlined />
+            </div>
+            <span className="text-base text-center leading-[20px]">
+              Select professional <br /> per service
+            </span>
+          </div>
+        ) : (
+          professionalsOfServices.map((item, i) => (
             <div
-             onClick={() => handleClickedSpecialist(item, i)} className={`border-[1px] ${clickedSpecialist == i ? "border-blue-500" : "border-gray-500"}  rounded-lg py-4 h-48  flex flex-col justify-center items-center gap-4`}>
+              key={i}
+              onClick={() => handleClickedSpecialist(item, i)}
+              className={`border-[1px] ${clickedSpecialist === i ? "border-blue-500" : "border-gray-500"
+                } rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4`}
+            >
               <div className="relative">
-                <div className="w-24 h-24 ">
+                <div className="w-24 h-24">
                   <img
                     src={imgPaths[i]}
                     className="rounded-full w-full h-full object-cover"
@@ -153,17 +170,19 @@ const SelectProfessional = () => {
                   </div>
 
                   <div className="text-ellipsis text-center">
-                    <h4 className="text-xs truncate">
-                      {item.memberSpeciality}
-                    </h4>
+                    <h4 className="text-xs truncate">{item.memberSpeciality}</h4>
                   </div>
                 </div>
               </div>
             </div>
-          </>
-        ))}
+          ))
+        )}
+
+
+
       </div>
-      <BookNowAndContinue />
+      <BookNowAndContinue toAppointmentPage={toAppointmentPage} />
+      {/* <BookingServices triggerUseEffect={triggerUseEffect} setTriggerUseEffect={setTriggerUseEffect}  toAppointmentPage={toAppointmentPage} /> */}
 
     </div >
   )
