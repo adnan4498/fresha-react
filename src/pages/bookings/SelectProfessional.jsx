@@ -19,7 +19,6 @@ const SelectProfessional = () => {
 
   professionalsList = professionalsList[0]
 
-
   const getImgPaths = () => {
     let fullImgUrls = []
     professionalsList?.forEach(item => fullImgUrls.push(item.memberImg))
@@ -58,8 +57,8 @@ const SelectProfessional = () => {
 
   const professionalsOfServices = getProfessionals()
 
+  // adds selected and suggested specialists to store
   useEffect(() => {
-
     const propsObj = {
       professionalsList,
       selectedServices,
@@ -69,14 +68,9 @@ const SelectProfessional = () => {
     };
     
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
-    
-
     setSalonDataZustand(get_Selected_and_suggested_specialists);
 
   }, [])
-
-
-
 
   let isMultipleSpecialists
 

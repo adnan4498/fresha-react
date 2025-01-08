@@ -6,7 +6,7 @@ export const getSpecialistsOfService = function ( professionalsList, selectedSer
 
   // to push whole obj, e.g: {key : [full array]}
   professionalsList.forEach((item) => {
-    
+
     let wordsSplitted = splittingServiceWords(item);
     
     Object.entries(allServices).forEach((service, index) => {
@@ -32,6 +32,7 @@ export const getSpecialistsOfService = function ( professionalsList, selectedSer
 
   // to push a some services, e.g: {key : [some services]}
   memberWithService.forEach((item) => {
+
 
     let wordsSplitted = splittingServiceWords(item);
     

@@ -1,4 +1,6 @@
 export const splittingServiceWords = (item) => {
+  console.log(item, "item")
+
   let speciality = item.memberSpeciality.toLowerCase();
 
   let regex = /\b(yoga|specialist|therapist|head|technician|stylist)\b|&/gi;
@@ -8,3 +10,4 @@ export const splittingServiceWords = (item) => {
   return (removedWords = removedWords.split(" "));
 };
 
+ 

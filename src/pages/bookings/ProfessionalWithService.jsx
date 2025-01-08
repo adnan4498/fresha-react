@@ -4,6 +4,7 @@ import BookingServices from './BookingServices'
 import { StarFilled } from '@ant-design/icons'
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService'
 import { salonDataZustandStore } from '../../zustandStore'
+import { getSelectedAndSuggestedSpecialists } from '../../ownModules/specialistServices/getSelectedAndSuggestedSpecialists'
 
 const ProfessionalWithService = () => {
 
@@ -15,51 +16,22 @@ const ProfessionalWithService = () => {
 
     let { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
 
-    console.log(salonDataZustand, "salonDataZustand in professioanl")
-
-    
-    console.log(specialist, "specialist")
+    professionalsList = professionalsList[0]
 
     const [triggerUseEffect, setTriggerUseEffect] = useState(false)
 
     // adds selected and suggested specialists to store
     useEffect(() => {
-
-        const gettingSelectedSpecialist = () => {
-
-            const get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], selectedServices, servicesWithoutUnderscore)
-            const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
-
-            return filterSpecialists
-        }
-
-        let getSpecialist = gettingSelectedSpecialist()
-
-        const gettingSuggestedSpecialists = () => {
-            let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList[0], selectedServices, servicesWithoutUnderscore)
-
-            let professionalsAgainstServices = []
-
-            for (let professionals of get_professionals_with_services_obj) {
-                for (let services of selectedServices) {
-                    professionals.memberServices.forEach(item => item.name == services.name && professionalsAgainstServices.push(professionals))
-                }
-            }
-
-            let removeDupProfessionals = []
-
-            professionalsAgainstServices.forEach((item) => {
-                let isDup = removeDupProfessionals?.some(items => items?.memberName.includes(item.memberName))
-                !isDup && removeDupProfessionals.push(item)
-            })
-
-            return removeDupProfessionals
-        }
-
-        let getSuggestedSpecialists = gettingSuggestedSpecialists()
-
-        let addSpecialistsToStorage = { ...salonDataZustand, selectedSpecialists: getSpecialist, suggestedSpecialists: getSuggestedSpecialists }
-        setSalonDataZustand(addSpecialistsToStorage)
+    const propsObj = {
+      professionalsList,
+      selectedServices,
+      servicesWithoutUnderscore,
+      specialist,
+      salonDataZustand
+    };
+    
+    const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
+    setSalonDataZustand(get_Selected_and_suggested_specialists);
 
     }, [triggerUseEffect])
     

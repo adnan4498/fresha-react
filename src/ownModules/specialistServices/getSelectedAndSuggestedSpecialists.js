@@ -5,7 +5,8 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
   let professionalsList = props.professionalsList;
   let selectedServices = props.selectedServices;
   let servicesWithoutUnderscore = props.servicesWithoutUnderscore;
-  let professionalsOfServices = props.professionalsOfServices;
+  let specialistOfServices = props.specialist || props.professionalsOfServices
+
   let salonDataZustand = props.salonDataZustand;
   
   const gettingSelectedSpecialist = () => {
@@ -16,9 +17,7 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
     );
 
     // const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
-    const filterSpecialists = get_professionals_with_services_obj.filter(
-      (item) => item.memberName == professionalsOfServices.memberName
-    );
+    const filterSpecialists = get_professionals_with_services_obj.filter((item) => item.memberName == specialistOfServices.memberName);
 
     return filterSpecialists;
   };

@@ -4,7 +4,6 @@ import { salonDataZustandStore} from '../../zustandStore'
 
 const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false }) => {
 
-
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
     const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand

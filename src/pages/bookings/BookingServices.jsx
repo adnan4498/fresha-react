@@ -136,7 +136,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             for (let item of items) {
                 for (let services of salonDataZustand.selectedServices) {
                     if (item?.textContent == services?.name) {
-                        console.log('hii')
+                        // console.log('hii')
                         selectedServicesDivs.push(item);
                     }
                 }
@@ -408,7 +408,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     // isBool && setPresistedAtStart();
 
-    console.log(salonDataZustand, "salonData in select")
+    // console.log(salonDataZustand, "salonData in select")
 
 
     return (

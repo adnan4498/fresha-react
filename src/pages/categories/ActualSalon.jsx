@@ -202,6 +202,14 @@ const ActualSalon = () => {
 
   let showBookNowBtn = true
 
+  // console.log(salonDataZustand, "sssss")
+
+  let serviceInCartObj = [{
+    name: "",
+    duration: "",
+    price: "",
+  }]
+
   let getSalonDataForZustand = {
     salonServicesLength: salonServicesLength,
     categoryName: categoryName,
@@ -210,6 +218,7 @@ const ActualSalon = () => {
     servicesWithoutUnderscore: servicesWithoutUnderscore,
     currencySymbol: currencySymbol,
     professionalsList: getTeamMembers,
+    selectedServices : serviceInCartObj,
   }
 
   return (
