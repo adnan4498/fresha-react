@@ -126,7 +126,7 @@ const ActualSalon = () => {
     }]
 
     // setPresistedSelectedServices(serviceInCartArr)
-    setSalonDataZustand({ ...salonDataZustand, priceAndDuration : serviceInCartArr, selectedServices: serviceInCartObj })
+    setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj })
   }
 
   let addPriceAndDuration = () => {
@@ -153,7 +153,8 @@ const ActualSalon = () => {
                   <h3>{service.price}</h3>
                 </div>
               </div>
-              <div onClick={() => { addPriceAndDuration()
+              <div onClick={() => {
+                addPriceAndDuration()
                 setFirstServiceInLocalStorage(service.name, service.price, service.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                   state: {
                     servicesWithoutUnderscore,
@@ -204,11 +205,7 @@ const ActualSalon = () => {
 
   // console.log(salonDataZustand, "sssss")
 
-  let serviceInCartObj = [{
-    name: "",
-    duration: "",
-    price: "",
-  }]
+  let serviceInCartObj = []
 
   let getSalonDataForZustand = {
     salonServicesLength: salonServicesLength,
@@ -218,8 +215,10 @@ const ActualSalon = () => {
     servicesWithoutUnderscore: servicesWithoutUnderscore,
     currencySymbol: currencySymbol,
     professionalsList: getTeamMembers,
-    selectedServices : serviceInCartObj,
+    selectedServices: serviceInCartObj,
   }
+
+  console.log(salonDataZustand, "salonData in actual")
 
   return (
     <>
@@ -293,26 +292,28 @@ const ActualSalon = () => {
 
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
-              <div onClick={() => {setSalonDataZustand({...salonDataZustand, selectedServices : []}), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
-                state: {
-                  getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
-                  teamMember : item,
-                  currencySymbol,
+              <div onClick={() => {
+                setSalonDataZustand({ ...salonDataZustand, selectedServices: [] }), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
+                  state: {
+                    getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
+                    teamMember: item,
+                    currencySymbol,
 
-                  serviceInCart: []
-                }
+                    serviceInCart: []
+                  }
 
-                // state: {
-                //   servicesWithoutUnderscore,
-                //   serviceInCart: {
-                //     name: service.name,
-                //     duration: service.duration,
-                //     price: service.price,
-                //   },
-                //   currencySymbol,
-                // }
+                  // state: {
+                  //   servicesWithoutUnderscore,
+                  //   serviceInCart: {
+                  //     name: service.name,
+                  //     duration: service.duration,
+                  //     price: service.price,
+                  //   },
+                  //   currencySymbol,
+                  // }
 
-              })}} className="relative">
+                })
+              }} className="relative">
                 <div className="w-24 h-24 ">
                   <img
                     src={item.memberImg}

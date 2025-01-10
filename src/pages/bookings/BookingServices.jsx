@@ -408,8 +408,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     // isBool && setPresistedAtStart();
 
-    // console.log(salonDataZustand, "salonData in select")
-
+    console.log(salonDataZustand, "salonData in bookingService")
 
     return (
         <>
