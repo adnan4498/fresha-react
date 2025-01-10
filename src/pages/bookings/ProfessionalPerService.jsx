@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { salonDataZustandStore } from '../../zustandStore';
 import { CloseOutlined, DownOutlined, RightOutlined, StarFilled, UsergroupAddOutlined, UserOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
@@ -17,7 +17,6 @@ const ProfessionalPerService = () => {
     const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState()
     const [indexState, setIndexState] = useState()
 
-    const [itemName, setItemName] = useState()
 
     const [isFillState, setIsFillState] = useState(true)
 
@@ -60,19 +59,18 @@ const ProfessionalPerService = () => {
     let imgPaths = getImgPaths()
 
 
-
-    const fillSelectedSpecialistState = (arr) => {
+    useEffect(() => {
         let ppp = []
 
         if (isFillState == true) {
             setIsFillState(false)
-            for (let i = 0; i < arr.length; i++) {
-                // setSelectedSpecialistInDrawer([ {...selectedSpecialistInDrawer} ,{specialistItems: { memberName: "Any Professional"}, specialistIndex: i}])
+            for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
                 ppp.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i })
             }
             setSelectedSpecialistInDrawer(ppp)
         }
-    }
+
+    }, [])
 
     const selectingSpecialist = (item, i) => {
 
@@ -99,7 +97,17 @@ const ProfessionalPerService = () => {
 
     let toAppointmentPage = true
 
-    console.log(selectedSpecialistInDrawer, "SelectedSpecialistInDrawer")
+    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
+    console.log(drawerData, "drawerData")
+
+
+    const printSpecialistName = (index) => {
+
+
+
+    }
+
+    // printSpecialistName()
 
     return (
         <div className='mb-28'>
@@ -141,7 +149,7 @@ const ProfessionalPerService = () => {
                         {drawerData?.map((item, i) => (
                             <div
                                 key={i}
-                                onClick={() => [setClickedSpecialist(i) , selectingSpecialist(item, i)]}
+                                onClick={() => [setClickedSpecialist(i), selectingSpecialist(item, i)]}
                                 className={`border-[1px] ${clickedSpecialist === i ? "border-blue-500" : "border-gray-500"
                                     } rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4`}
                             >
@@ -194,11 +202,13 @@ const ProfessionalPerService = () => {
                                 </h3>
                             </div>
 
-                            <div onClick={() => [showDrawer(item), getDrawerData(item, salonDataZustand), fillSelectedSpecialistState(arr), setIndexState(i)]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
+                            <div onClick={() => [showDrawer(item), getDrawerData(item, salonDataZustand), setIndexState(i)]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
                                         <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
-                                        <div className='font-medium text-sm'>Any Professional</div>
+                                        {/* <div className='font-medium text-sm'>Any Professional</div> */}
+
+                                        {printSpecialistName()}
 
                                     </div>
                                     <div className='text-xs pr-4'><DownOutlined /></div>
