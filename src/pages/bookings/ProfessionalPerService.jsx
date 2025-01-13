@@ -8,15 +8,14 @@ import removingDuplicates from '../../ownModules/removing/removeDuplicates';
 
 const ProfessionalPerService = () => {
 
-    const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
+    const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
+
     let { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
 
     const [drawerData, setDrawerData] = useState()
     const [clickedSpecialist, setClickedSpecialist] = useState()
-    // const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState({specialistItems: { memberName: "Any Professional"}, specialistIndex: 0})
     const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState()
     const [indexState, setIndexState] = useState()
-
 
     const [isFillState, setIsFillState] = useState(true)
 
@@ -65,9 +64,12 @@ const ProfessionalPerService = () => {
         if (isFillState == true) {
             setIsFillState(false)
             for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
-                ppp.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i })
+                ppp.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName : salonDataZustand.selectedServices[i].name })
             }
             setSelectedSpecialistInDrawer(ppp)
+            if(salonDataZustand.selectedSpecialists.length == 0){
+                setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: ppp })
+            }
         }
 
     }, [])
@@ -76,9 +78,11 @@ const ProfessionalPerService = () => {
 
         let ppp = selectedSpecialistInDrawer
 
+        let getClickedSpecialist = salonDataZustand.suggestedSpecialists.filter(spe => spe.memberName.includes(item.memberName))
+
         ppp = ppp.map((items) => {
             if (items.specialistIndex == indexState) {
-                return { ...items, specialistItems: { memberName: item.memberName } }
+                return { ...items, specialistItems: { memberName: getClickedSpecialist[0] } }
             }
             else {
                 return items
@@ -86,6 +90,7 @@ const ProfessionalPerService = () => {
         })
 
         setSelectedSpecialistInDrawer(ppp)
+        setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: ppp })
 
         setOpen(false)
 
@@ -97,17 +102,28 @@ const ProfessionalPerService = () => {
 
     let toAppointmentPage = true
 
-    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
-    console.log(drawerData, "drawerData")
+    console.log(salonDataZustand, "salonDataZustand")
 
 
-    const printSpecialistName = (index) => {
+    function printSpecialistName(index) {
+        // let pp = []
 
+        // for (let i = 0; i < selectedSpecialistInDrawer?.length; i++) {
+        //     selectedSpecialistInDrawer[i].specialistIndex == index && pp.push(selectedSpecialistInDrawer[i])
+        // }
 
+        // return pp[0]?.specialistItems?.memberName.memberName || pp[0]?.specialistItems?.memberName
+        
+        for(let i = 0; i < salonDataZustand?.selectedSpecialists.length; i++){
+            if(salonDataZustand.selectedSpecialists[i].specialistIndex == index){
+                return salonDataZustand.selectedSpecialists[i].specialistItems.memberName.memberName || salonDataZustand.selectedSpecialists[i].specialistItems.memberName
+            } 
+        }
 
+        
     }
+    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
 
-    // printSpecialistName()
 
     return (
         <div className='mb-28'>
@@ -208,7 +224,7 @@ const ProfessionalPerService = () => {
                                         <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
                                         {/* <div className='font-medium text-sm'>Any Professional</div> */}
 
-                                        {printSpecialistName()}
+                                        {printSpecialistName(i)}
 
                                     </div>
                                     <div className='text-xs pr-4'><DownOutlined /></div>
