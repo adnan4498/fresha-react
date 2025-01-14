@@ -87,6 +87,11 @@ const router = createBrowserRouter([
     element: <MakeAppointment />,
     errorElement: <ErrorPage />,
   },
+  {
+    path: "/dynamic-category/:category/:city/:name/bookingService/selectProfessional/professionalPerService/makeAppointment",
+    element: <MakeAppointment />,
+    errorElement: <ErrorPage />,
+  },
 ]);
 
 // now Link={"/"} on navbar logo will work

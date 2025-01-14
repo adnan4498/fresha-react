@@ -11,7 +11,7 @@ const SelectProfessional = () => {
 
   const navigate = useNavigate()
 
-  const [clickedSpecialist, setClickedSpecialist] = useState()
+  const [clickedSpecialist, setClickedSpecialist] = useState(0)
 
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
@@ -57,7 +57,6 @@ const SelectProfessional = () => {
 
   const professionalsOfServices = getProfessionals()
 
-  // adds selected and suggested specialists to store
   useEffect(() => {
     const propsObj = {
       professionalsList,
@@ -67,10 +66,20 @@ const SelectProfessional = () => {
       salonDataZustand
     };
     
+    // adds selected and suggested specialists to store
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
     setSalonDataZustand(get_Selected_and_suggested_specialists);
 
+    // at start, sets the first specialist as selectedSpecialist
+    if(salonDataZustand.selectedServices.length <= 1){
+      for(let specialists of professionalsOfServices){
+        setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [specialists] })
+        break
+      }
+    } 
   }, [])
+
+
 
   let isMultipleSpecialists
 
@@ -97,10 +106,12 @@ const SelectProfessional = () => {
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
 
-    setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: item })
+    setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
   }
 
   let toAppointmentPage = true
+
+  console.log(salonDataZustand, "sss")
 
   return (
     <div>
@@ -171,12 +182,9 @@ const SelectProfessional = () => {
             </div>
           ))
         )}
-
-
-
       </div>
+
       <BookNowAndContinue toAppointmentPage={toAppointmentPage} />
-      {/* <BookingServices triggerUseEffect={triggerUseEffect} setTriggerUseEffect={setTriggerUseEffect}  toAppointmentPage={toAppointmentPage} /> */}
 
     </div >
   )

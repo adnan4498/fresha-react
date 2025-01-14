@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { salonDataZustandStore} from '../../zustandStore'
 
-const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false }) => {
+const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false, is_dynamic_url_professional_per_service = false }) => {
 
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
@@ -11,10 +11,18 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
     const navigate = useNavigate()
     const serviceInCart = []
 
-    // either to appointment page (with professional) or chose professional
-    const dynamicUrl = toAppointmentPage ? "bookingService/professionalWithService/makeAppointment" : "bookingService/selectProfessional"
-
-    // console.log(salonDataZustand, 'book')
+    // either to appointment page with ( professionalWithService || professionalPerService ) or chose professional
+    let dynamicUrl 
+    
+    if(toAppointmentPage){
+        dynamicUrl = "bookingService/professionalWithService/makeAppointment"
+    } 
+    else if(is_dynamic_url_professional_per_service){
+        dynamicUrl = "bookingService/selectProfessional/professionalPerService/makeAppointment"
+    }
+    else{
+        dynamicUrl = "bookingService/selectProfessional"
+    }
 
     return (
         <>

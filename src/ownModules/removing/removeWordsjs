@@ -1,5 +1,4 @@
 export const splittingServiceWords = (item) => {
-  console.log(item, "item")
 
   let speciality = item.memberSpeciality.toLowerCase();
 

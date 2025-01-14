@@ -9,39 +9,29 @@ import removingDuplicates from '../../ownModules/removing/removeDuplicates';
 const ProfessionalPerService = () => {
 
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
-
-    let { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
-
-    const [drawerData, setDrawerData] = useState()
-    const [clickedSpecialist, setClickedSpecialist] = useState()
-    const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState()
-    const [indexState, setIndexState] = useState()
-
-    const [isFillState, setIsFillState] = useState(true)
-
+    let { professionalsList } = salonDataZustand
+    
     professionalsList = professionalsList[0]
 
+    const [drawerData, setDrawerData] = useState()
+    const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState()
+    const [indexState, setIndexState] = useState()
     const [open, setOpen] = useState(false);
-    const [placement, setPlacement] = useState("left");
+    const [placement] = useState("left");
 
-    const showDrawer = () => {
-        setOpen(true);
-    };
+    // populating selectedSpecialist arr against services length. default value is Any Professional
+    useEffect(() => {
+        // no selectedSpecialists by user ? populate it with default value
+        if (salonDataZustand.selectedSpecialists.length == 0) {
+            let specialists_obj_against_services_length = []
 
-    const getDrawerData = (item, arr) => {
-        let specialists = arr.suggestedSpecialists
-
-        let getSpecialists = new Set()
-
-        for (let specialistItems of specialists) {
-            for (let memberServices of specialistItems.memberServices) {
-                memberServices.name.includes(item.name) && getSpecialists.add(specialistItems)
+            for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
+                specialists_obj_against_services_length.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName: salonDataZustand.selectedServices[i].name })
             }
+            setSelectedSpecialistInDrawer(specialists_obj_against_services_length)
+            setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: specialists_obj_against_services_length })
         }
-
-        getSpecialists = removingDuplicates(getSpecialists)
-        setDrawerData(getSpecialists)
-    }
+    }, [])
 
     const getImgPaths = () => {
         let fullImgUrls = []
@@ -57,30 +47,35 @@ const ProfessionalPerService = () => {
 
     let imgPaths = getImgPaths()
 
+    const onClose = () => {
+        setOpen(false);
+    };
 
-    useEffect(() => {
-        let ppp = []
+    const showDrawer = () => {
+        setOpen(true);
+    };
 
-        if (isFillState == true) {
-            setIsFillState(false)
-            for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
-                ppp.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName : salonDataZustand.selectedServices[i].name })
-            }
-            setSelectedSpecialistInDrawer(ppp)
-            if(salonDataZustand.selectedSpecialists.length == 0){
-                setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: ppp })
+    // getting specialists of that service for drawer
+    const getDrawerData = (item, arr) => {
+        let specialists = arr.suggestedSpecialists
+        let getSpecialists = new Set()
+
+        for (let specialistItems of specialists) {
+            for (let memberServices of specialistItems.memberServices) {
+                memberServices.name.includes(item.name) && getSpecialists.add(specialistItems)
             }
         }
 
-    }, [])
+        getSpecialists = removingDuplicates(getSpecialists)
+        setDrawerData(getSpecialists)
+    }
 
-    const selectingSpecialist = (item, i) => {
+    const selectingSpecialist = (item) => {
 
-        let ppp = selectedSpecialistInDrawer
-
+        let selectedSpecialistArr = selectedSpecialistInDrawer || salonDataZustand.selectedSpecialists
         let getClickedSpecialist = salonDataZustand.suggestedSpecialists.filter(spe => spe.memberName.includes(item.memberName))
 
-        ppp = ppp.map((items) => {
+        selectedSpecialistArr = selectedSpecialistArr.map((items) => {
             if (items.specialistIndex == indexState) {
                 return { ...items, specialistItems: { memberName: getClickedSpecialist[0] } }
             }
@@ -89,49 +84,34 @@ const ProfessionalPerService = () => {
             }
         })
 
-        setSelectedSpecialistInDrawer(ppp)
-        setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: ppp })
+        setSelectedSpecialistInDrawer(selectedSpecialistArr)
+        setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: selectedSpecialistArr })
 
         setOpen(false)
 
     }
 
-    const onClose = () => {
-        setOpen(false);
-    };
-
-    let toAppointmentPage = true
-
-    console.log(salonDataZustand, "salonDataZustand")
-
-
     function printSpecialistName(index) {
-        // let pp = []
+        for (let i = 0; i < salonDataZustand?.selectedSpecialists.length; i++) {
+            if (salonDataZustand.selectedSpecialists[i].specialistIndex == index) {
 
-        // for (let i = 0; i < selectedSpecialistInDrawer?.length; i++) {
-        //     selectedSpecialistInDrawer[i].specialistIndex == index && pp.push(selectedSpecialistInDrawer[i])
-        // }
-
-        // return pp[0]?.specialistItems?.memberName.memberName || pp[0]?.specialistItems?.memberName
-        
-        for(let i = 0; i < salonDataZustand?.selectedSpecialists.length; i++){
-            if(salonDataZustand.selectedSpecialists[i].specialistIndex == index){
+                // print specialistName or print Any Professional
                 return salonDataZustand.selectedSpecialists[i].specialistItems.memberName.memberName || salonDataZustand.selectedSpecialists[i].specialistItems.memberName
-            } 
+            }
         }
 
-        
     }
-    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
 
+    let is_dynamic_url_professional_per_service = true
+
+    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
+    console.log(salonDataZustand, "salonDataZustand")
 
     return (
         <div className='mb-28'>
             <div>
                 <h2> Select professional</h2>
             </div>
-
-
             <Drawer
                 title={
                     <div className="flex justify-between items-center">
@@ -165,8 +145,9 @@ const ProfessionalPerService = () => {
                         {drawerData?.map((item, i) => (
                             <div
                                 key={i}
-                                onClick={() => [setClickedSpecialist(i), selectingSpecialist(item, i)]}
-                                className={`border-[1px] ${clickedSpecialist === i ? "border-blue-500" : "border-gray-500"
+                                onClick={() => selectingSpecialist(item)}
+                                // className={`border-[1px] ${clickedSpecialist === i ? "border-blue-500" : "border-gray-500"
+                                className={`border-[1px] ${printSpecialistName(indexState) == item.memberName ? "border-blue-500" : "border-gray-500"
                                     } rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4`}
                             >
                                 <div className="relative">
@@ -205,7 +186,6 @@ const ProfessionalPerService = () => {
 
 
             <div className='mt-4'>
-                {/* {presistedSelectedServices.map((item, i) => ( */}
                 {salonDataZustand.selectedServices.map((item, i, arr) => (
                     <>
                         <div className='py-2'>
@@ -222,7 +202,6 @@ const ProfessionalPerService = () => {
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
                                         <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
-                                        {/* <div className='font-medium text-sm'>Any Professional</div> */}
 
                                         {printSpecialistName(i)}
 
@@ -239,7 +218,7 @@ const ProfessionalPerService = () => {
                 ))}
             </div>
 
-            <BookNowAndContinue toAppointmentPage={toAppointmentPage} />
+            <BookNowAndContinue is_dynamic_url_professional_per_service={is_dynamic_url_professional_per_service} />
         </div>
     )
 }
