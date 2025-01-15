@@ -19,21 +19,6 @@ const SelectProfessional = () => {
 
   professionalsList = professionalsList[0]
 
-  const getImgPaths = () => {
-    let fullImgUrls = []
-    professionalsList?.forEach(item => fullImgUrls.push(item.memberImg))
-
-    let removepaths = fullImgUrls.map((item) => {
-      let pathSliced = item.slice(18)
-      return pathSliced
-    })
-
-    return removepaths
-  }
-
-  let imgPaths = getImgPaths()
-
-
   const getProfessionals = () => {
     let get_professionals_with_services_obj = getSpecialistsOfService(professionalsList, selectedServices, servicesWithoutUnderscore)
 
@@ -57,6 +42,20 @@ const SelectProfessional = () => {
 
   const professionalsOfServices = getProfessionals()
 
+  const getImgPaths = () => {
+    let fullImgUrls = []
+    professionalsOfServices?.forEach(item => fullImgUrls.push(item.memberImg))
+
+    let removepaths = fullImgUrls.map((item) => {
+      let pathSliced = item.slice(18)
+      return pathSliced
+    })
+
+    return removepaths
+  }
+
+  let imgPaths = getImgPaths()
+
   useEffect(() => {
     const propsObj = {
       professionalsList,
@@ -68,7 +67,11 @@ const SelectProfessional = () => {
     
     // adds selected and suggested specialists to store
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
-    setSalonDataZustand(get_Selected_and_suggested_specialists);
+
+    let ab = {...get_Selected_and_suggested_specialists, professionalsOfServices : professionalsOfServices}
+
+    setSalonDataZustand(ab);
+    // console.log(ab, "hi")
 
     // at start, sets the first specialist as selectedSpecialist
     if(salonDataZustand.selectedServices.length <= 1){
@@ -77,9 +80,9 @@ const SelectProfessional = () => {
         break
       }
     } 
+
+
   }, [])
-
-
 
   let isMultipleSpecialists
 
@@ -110,8 +113,6 @@ const SelectProfessional = () => {
   }
 
   let toAppointmentPage = true
-
-  console.log(salonDataZustand, "sss")
 
   return (
     <div>

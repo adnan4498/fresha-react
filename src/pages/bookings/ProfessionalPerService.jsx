@@ -9,8 +9,8 @@ import removingDuplicates from '../../ownModules/removing/removeDuplicates';
 const ProfessionalPerService = () => {
 
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
-    let { professionalsList } = salonDataZustand
-    
+    let { professionalsList, professionalsOfServices } = salonDataZustand
+
     professionalsList = professionalsList[0]
 
     const [drawerData, setDrawerData] = useState()
@@ -35,11 +35,12 @@ const ProfessionalPerService = () => {
 
     const getImgPaths = () => {
         let fullImgUrls = []
-        professionalsList?.forEach(item => fullImgUrls.push(item.memberImg))
+        // professionalsOfServices?.forEach(item => fullImgUrls.push(item.memberImg))
+        drawerData?.forEach(item => fullImgUrls.push({ memberImg: item.memberImg, memberName: item.memberName }))
 
         let removepaths = fullImgUrls.map((item) => {
-            let pathSliced = item.slice(18)
-            return pathSliced
+            let pathSliced = item.memberImg.slice(18)
+            return { memberImg: pathSliced, memberName: item.memberName }
         })
 
         return removepaths
@@ -69,6 +70,7 @@ const ProfessionalPerService = () => {
         getSpecialists = removingDuplicates(getSpecialists)
         setDrawerData(getSpecialists)
     }
+
 
     const selectingSpecialist = (item) => {
 
@@ -103,9 +105,6 @@ const ProfessionalPerService = () => {
     }
 
     let is_dynamic_url_professional_per_service = true
-
-    console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
-    console.log(salonDataZustand, "salonDataZustand")
 
     return (
         <div className='mb-28'>
@@ -153,9 +152,11 @@ const ProfessionalPerService = () => {
                                 <div className="relative">
                                     <div className="w-24 h-24">
                                         <img
-                                            src={imgPaths[i]}
+                                            src={imgPaths[i].memberImg}
                                             className="rounded-full w-full h-full object-cover"
                                         />
+
+                                        {/* {showImgAgainstName(item, i)} */}
                                     </div>
 
                                     <div className="absolute border top-20 left-5 border-gray-300 rounded-full bg-white px-2 flex gap-1">
@@ -183,8 +184,6 @@ const ProfessionalPerService = () => {
                 </div>
             </Drawer>
 
-
-
             <div className='mt-4'>
                 {salonDataZustand.selectedServices.map((item, i, arr) => (
                     <>
@@ -201,7 +200,17 @@ const ProfessionalPerService = () => {
                             <div onClick={() => [showDrawer(item), getDrawerData(item, salonDataZustand), setIndexState(i)]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
-                                        <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+
+                                        {salonDataZustand.selectedSpecialists[i]?.specialistItems?.memberName?.memberImg != undefined ?
+
+                                            <div className="w-7 h-7 border-[2px] border-white rounded-full">
+                                                <img
+                                                    src={salonDataZustand.selectedSpecialists[i].specialistItems?.memberName?.memberImg?.slice(18)}
+                                                    className="rounded-full w-full h-full object-cover"
+                                                />
+                                            </div> :
+                                            <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+                                        }
 
                                         {printSpecialistName(i)}
 
