@@ -4,6 +4,7 @@ import { CloseOutlined, DownOutlined, RightOutlined, StarFilled, UsergroupAddOut
 import { Drawer } from 'antd';
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import removingDuplicates from '../../ownModules/removing/removeDuplicates';
+import { handleDrawerData, handleSelectingSpecialistInDrawer } from '../../ownModules/drawerModules/drawerModules';
 // import removingDuplicates from '../../ownModules/removeDuplicates/removeDuplicates';
 
 const ProfessionalPerService = () => {
@@ -26,7 +27,8 @@ const ProfessionalPerService = () => {
             let specialists_obj_against_services_length = []
 
             for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
-                specialists_obj_against_services_length.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName: salonDataZustand.selectedServices[i].name })
+                // specialists_obj_against_services_length.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName: salonDataZustand.selectedServices[i].name })
+                specialists_obj_against_services_length.push({ specialistItems: { memberDetails: { memberName: `Any Professional` } }, specialistIndex: i, serviceName: salonDataZustand.selectedServices[i].name })
             }
             setSelectedSpecialistInDrawer(specialists_obj_against_services_length)
             setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: specialists_obj_against_services_length })
@@ -34,11 +36,9 @@ const ProfessionalPerService = () => {
     }, [])
 
     const getImgPaths = () => {
-        let fullImgUrls = []
-        // professionalsOfServices?.forEach(item => fullImgUrls.push(item.memberImg))
-        drawerData?.forEach(item => fullImgUrls.push({ memberImg: item.memberImg, memberName: item.memberName }))
+        let imgUrlsAndSpecialistNames = drawerData?.map(item => ({ memberImg: item.memberImg, memberName: item.memberName }))
 
-        let removepaths = fullImgUrls.map((item) => {
+        let removepaths = imgUrlsAndSpecialistNames?.map((item) => {
             let pathSliced = item.memberImg.slice(18)
             return { memberImg: pathSliced, memberName: item.memberName }
         })
@@ -56,55 +56,20 @@ const ProfessionalPerService = () => {
         setOpen(true);
     };
 
-    // getting specialists of that service for drawer
-    const getDrawerData = (item, arr) => {
-        let specialists = arr.suggestedSpecialists
-        let getSpecialists = new Set()
-
-        for (let specialistItems of specialists) {
-            for (let memberServices of specialistItems.memberServices) {
-                memberServices.name.includes(item.name) && getSpecialists.add(specialistItems)
-            }
-        }
-
-        getSpecialists = removingDuplicates(getSpecialists)
-        setDrawerData(getSpecialists)
-    }
-
-
-    const selectingSpecialist = (item) => {
-
-        let selectedSpecialistArr = selectedSpecialistInDrawer || salonDataZustand.selectedSpecialists
-        let getClickedSpecialist = salonDataZustand.suggestedSpecialists.filter(spe => spe.memberName.includes(item.memberName))
-
-        selectedSpecialistArr = selectedSpecialistArr.map((items) => {
-            if (items.specialistIndex == indexState) {
-                return { ...items, specialistItems: { memberName: getClickedSpecialist[0] } }
-            }
-            else {
-                return items
-            }
-        })
-
-        setSelectedSpecialistInDrawer(selectedSpecialistArr)
-        setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: selectedSpecialistArr })
-
-        setOpen(false)
-
-    }
-
     function printSpecialistName(index) {
         for (let i = 0; i < salonDataZustand?.selectedSpecialists.length; i++) {
             if (salonDataZustand.selectedSpecialists[i].specialistIndex == index) {
 
                 // print specialistName or print Any Professional
-                return salonDataZustand.selectedSpecialists[i].specialistItems.memberName.memberName || salonDataZustand.selectedSpecialists[i].specialistItems.memberName
+                return salonDataZustand.selectedSpecialists[i].specialistItems.memberDetails.memberName
             }
         }
 
     }
 
     let is_dynamic_url_professional_per_service = true
+
+    console.log(drawerData, "dddd")
 
     return (
         <div className='mb-28'>
@@ -144,7 +109,8 @@ const ProfessionalPerService = () => {
                         {drawerData?.map((item, i) => (
                             <div
                                 key={i}
-                                onClick={() => selectingSpecialist(item)}
+                                // onClick={() => selectingSpecialist(item)}
+                                onClick={() => handleSelectingSpecialistInDrawer(item, selectedSpecialistInDrawer, setSelectedSpecialistInDrawer, salonDataZustand, setSalonDataZustand, indexState, setOpen)}
                                 // className={`border-[1px] ${clickedSpecialist === i ? "border-blue-500" : "border-gray-500"
                                 className={`border-[1px] ${printSpecialistName(indexState) == item.memberName ? "border-blue-500" : "border-gray-500"
                                     } rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4`}
@@ -197,15 +163,15 @@ const ProfessionalPerService = () => {
                                 </h3>
                             </div>
 
-                            <div onClick={() => [showDrawer(item), getDrawerData(item, salonDataZustand), setIndexState(i)]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
+                            <div onClick={() => [showDrawer(item), setDrawerData(handleDrawerData(item, salonDataZustand)), setIndexState(i)]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
                                 <div className='flex items-center justify-between gap-2'>
                                     <div className='flex items-center gap-2'>
 
-                                        {salonDataZustand.selectedSpecialists[i]?.specialistItems?.memberName?.memberImg != undefined ?
+                                        {salonDataZustand.selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined ?
 
                                             <div className="w-7 h-7 border-[2px] border-white rounded-full">
                                                 <img
-                                                    src={salonDataZustand.selectedSpecialists[i].specialistItems?.memberName?.memberImg?.slice(18)}
+                                                    src={salonDataZustand.selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
                                                     className="rounded-full w-full h-full object-cover"
                                                 />
                                             </div> :

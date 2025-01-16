@@ -18,35 +18,9 @@ const MakeAppointment = () => {
   const [indexState, setIndexState] = useState()
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
-  const [placement] = useState("left");
+  const [placement] = useState("");
 
-  // populating selectedSpecialist arr against services length. default value is Any Professional
-  useEffect(() => {
-    // no selectedSpecialists by user ? populate it with default value
-    if (salonDataZustand.selectedSpecialists.length == 0) {
-      let specialists_obj_against_services_length = []
-
-      for (let i = 0; i < salonDataZustand.selectedServices.length; i++) {
-        specialists_obj_against_services_length.push({ specialistItems: { memberName: `Any Professional` }, specialistIndex: i, serviceName: salonDataZustand.selectedServices[i].name })
-      }
-      setSelectedSpecialistInDrawer(specialists_obj_against_services_length)
-      setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: specialists_obj_against_services_length })
-    }
-  }, [])
-
-  const getImgPaths = () => {
-    let fullImgUrls = []
-    professionalsList?.forEach(item => fullImgUrls.push(item.memberImg))
-
-    let removepaths = fullImgUrls.map((item) => {
-      let pathSliced = item.slice(18)
-      return pathSliced
-    })
-
-    return removepaths
-  }
-
-  let imgPaths = getImgPaths()
+  console.log(salonDataZustand, "salonDataZustand")
 
   const onClose = () => {
     setOpen(false);
@@ -81,12 +55,15 @@ const MakeAppointment = () => {
 
   const selectingSpecialist = (item) => {
 
-    let selectedSpecialistArr = selectedSpecialistInDrawer || salonDataZustand.selectedSpecialists
+    let selectedSpecialistArr = selectedSpecialistInDrawer || selectedSpecialists
     let getClickedSpecialist = salonDataZustand.suggestedSpecialists.filter(spe => spe.memberName.includes(item.memberName))
+
+    console.log(selectedSpecialistArr, "selectedSpecialistArr")
+    console.log(getClickedSpecialist, "getClickedSpecialist")
 
     selectedSpecialistArr = selectedSpecialistArr.map((items) => {
       if (items.specialistIndex == indexState) {
-        return { ...items, specialistItems: { memberName: getClickedSpecialist[0] } }
+        return { ...items, specialistItems: { memberDetails: getClickedSpecialist[0] } }
       }
       else {
         return items
@@ -101,25 +78,18 @@ const MakeAppointment = () => {
   }
 
   function printSpecialistName(index) {
-    for (let i = 0; i < salonDataZustand?.selectedSpecialists.length; i++) {
-      if (salonDataZustand.selectedSpecialists[i].specialistIndex == index) {
+    for (let i = 0; i < selectedSpecialists.length; i++) {
+      if (selectedSpecialists[i].specialistIndex == index) {
 
         // print specialistName or print Any Professional
-        return salonDataZustand.selectedSpecialists[i].specialistItems.memberName.memberName || salonDataZustand.selectedSpecialists[i].specialistItems.memberName
+        return selectedSpecialists[i].specialistItems.memberDetails.memberName
       }
     }
 
   }
 
-  let is_dynamic_url_professional_per_service = true
-
-  console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
-  console.log(salonDataZustand, "salonDataZustand")
-
-
-
   const handleSpecialistsImgs = () => {
-    let getImgs = selectedSpecialists?.map(item => item.specialistItems.memberName.memberImg)
+    let getImgs = selectedSpecialists?.map(item => item.specialistItems.memberDetails.memberImg)
 
     getImgs = getImgs?.map((item) => {
       let pathSliced = item?.slice(18)
@@ -174,17 +144,11 @@ const MakeAppointment = () => {
         </div>
       </div>
 
-
-
-
-
-
-
       <Drawer
         title={
           <div className="flex justify-between items-center">
             <div className="w-[74px]">
-              asd
+              drawer 1
             </div>
             <div onClick={() => onClose()} className="pt-1">
               <CloseOutlined className="text-lg" />
@@ -200,7 +164,7 @@ const MakeAppointment = () => {
       >
         <div>
 
-          <div 
+          <div
           // className="grid grid-cols-2 gap-3 mt-5"
           >
 
@@ -227,9 +191,29 @@ const MakeAppointment = () => {
                     </div>
 
                     <div onClick={() => [getDrawerData(item, salonDataZustand), setIndexState(i), showDrawer2()]} className='border border-gray-300 rounded-full pl-[4px] py-[2px] mt-3 w-[55%]'>
-                      <div className='flex items-center justify-between gap-2'>
+                      {/* <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center gap-2'>
                           <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+
+                          {printSpecialistName(i)}
+
+                        </div>
+                        <div className='text-xs pr-4'><DownOutlined /></div>
+                      </div> */}
+
+                      <div className='flex items-center justify-between gap-2'>
+                        <div className='flex items-center gap-2'>
+
+                          {selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined ?
+
+                            <div className="w-7 h-7 border-[2px] border-white rounded-full">
+                              <img
+                                src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
+                                className="rounded-full w-full h-full object-cover"
+                              />
+                            </div> :
+                            <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+                          }
 
                           {printSpecialistName(i)}
 
@@ -293,7 +277,7 @@ const MakeAppointment = () => {
         title={
           <div className="flex justify-between items-center">
             <div className="w-[74px]">
-              asd
+              drawer 2
             </div>
             <div onClick={() => onClose2()} className="pt-1">
               <CloseOutlined className="text-lg" />
@@ -309,7 +293,7 @@ const MakeAppointment = () => {
       >
         <div>
 
-          <div 
+          <div
           // className="grid grid-cols-2 gap-3 mt-5"
           >
 
@@ -324,7 +308,8 @@ const MakeAppointment = () => {
                 <div className="relative">
                   <div className="w-24 h-24">
                     <img
-                      src={imgPaths[i]}
+                      // src={imgPaths[i]}
+                      src={selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg?.slice(18)}
                       className="rounded-full w-full h-full object-cover"
                     />
                   </div>
