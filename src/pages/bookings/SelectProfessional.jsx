@@ -2,9 +2,8 @@ import { StarFilled, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/i
 import React, { useEffect, useState } from 'react'
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore } from '../../zustandStore';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
-import { isArray } from 'lodash';
 import { getSelectedAndSuggestedSpecialists } from '../../ownModules/specialistServices/getSelectedAndSuggestedSpecialists';
 
 const SelectProfessional = () => {
@@ -68,10 +67,9 @@ const SelectProfessional = () => {
     // adds selected and suggested specialists to store
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
 
-    let ab = {...get_Selected_and_suggested_specialists, professionalsOfServices : professionalsOfServices}
+    let mergedArr = {...get_Selected_and_suggested_specialists, professionalsOfServices : professionalsOfServices}
 
-    setSalonDataZustand(ab);
-    // console.log(ab, "hi")
+    setSalonDataZustand(mergedArr);
 
     // at start, sets the first specialist as selectedSpecialist
     if(salonDataZustand.selectedServices.length <= 1){
