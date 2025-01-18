@@ -11,9 +11,7 @@ import BookNow from "../../components/bookNow/BookNowAndContinue";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import makingOfAllServicesArray from "../../ownModules/makeAllServicesArr/makingOfAllServicesArray";
 import { useEffect } from "react";
-// import selectedServicesStore from "../../zustandStore";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
-// import { selectedServicesStore } from "../../zustandStore";
 import { salonDataZustandStore } from "../../zustandStore";
 import servicesOfSpecialist from "../../ownModules/specialistServices/SpecialistServices";
 
@@ -21,12 +19,9 @@ const ActualSalon = () => {
 
   let globalSalons = getGlobalSalons()
 
-  // const { presistedSelectedServices, setPresistedSelectedServices } = selectedServicesStore((state) => state);
-
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   useEffect(() => {
-    // setPresistedSelectedServices([])
     setSalonDataZustand(getSalonDataForZustand)
   }, [])
 
@@ -125,7 +120,6 @@ const ActualSalon = () => {
       price: price,
     }]
 
-    // setPresistedSelectedServices(serviceInCartArr)
     setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj })
   }
 
@@ -477,7 +471,6 @@ const ActualSalon = () => {
         </div>
 
         {salonDataZustand.length != 0 && <div>
-          {/* <BookNowAndContinue salonServicesLength={salonServicesLength} category={categoryName} cityName={cityName} salonName={salonName} servicesWithoutUnderscore={servicesWithoutUnderscore} currencySymbol={currencySymbol} presistedSelectedServices={presistedSelectedServices} showBookNowBtn={showBookNowBtn} /> */}
           <BookNowAndContinue showBookNowBtn={showBookNowBtn} />
         </div>}
 

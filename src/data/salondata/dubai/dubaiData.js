@@ -80,53 +80,72 @@ export const sharjahSalons = [
     },
     teamMembers: [
       {
+        memberId : 0,
         memberName: "Saleem",
         memberRating: 4.9,
         memberSpeciality: "Hair & Beard Specialist",
-        memberImg:
-          "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+        memberImg: "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
       },
       {
+        memberId : 1,
         memberName: "David",
         memberRating: 4.8,
         memberSpeciality: "Hair Stylist",
         memberImg:
           "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
       {
+        memberId : 2,
         memberName: "Rose",
         memberRating: 4.6,
         memberSpeciality: "Spa Therapist",
         memberImg:
           "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
       {
+        memberId : 3,
         memberName: "Velleria",
         memberRating: 5.0,
         memberSpeciality: "Nail Specialist",
         memberImg:
           "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
       {
+        memberId : 4,
         memberName: "Maria",
         memberRating: 5.0,
         memberSpeciality: "Massage Specialist",
         memberImg:
           "../../../../public/images/salons/hairSalon/female-barber-img.webp",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
       {
+        memberId : 5,
         memberName: "Jhon",
         memberRating: 4.9,
         memberSpeciality: "Head Barber",
         memberImg:
           "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
       {
+        memberId : 6,
         memberName: "dummy",
         memberRating: 4.9,
         memberSpeciality: "",
         memberImg:
           "../../../../public/images/salons/hairSalon/male-barber-img.avif",
+        memberTimings : ["12:00", "12:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30",  "09:00", "09:30", "10:00", "10:00"]
+
       },
     ],
     customerReviews: [

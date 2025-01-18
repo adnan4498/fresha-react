@@ -1,20 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-export const selectedServicesStore = create(
-  persist(
-    (set) => ({
-      presistedSelectedServices: [],
-      setPresistedSelectedServices: (newService) =>
-        set({ presistedSelectedServices: newService }),
-    }),
-    {
-      name: "selected-services-storage",
-      getStorage: () => localStorage,
-    }
-  )
-);
-
 export const salonDataZustandStore = create(
   persist(
     (set) => ({
@@ -27,3 +13,16 @@ export const salonDataZustandStore = create(
     }
   )
 );
+
+export const timeBookingZustandStore = create(
+  persist(
+    (set) => ({
+      timeBookingZustand : [],
+      setTimeBookingZustand : (newData) => set({timeBookingZustand : newData})
+    }),
+    {
+      name: "time-booking-data-storage",
+      getStorage: () => localStorage,
+    }
+  )
+)

@@ -4,6 +4,7 @@ import { CloseOutlined, DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Drawer } from 'antd';
 import { handleDrawerData, printSpecialistNameInDropwDown } from '../../ownModules/drawerModules/drawerDataModules';
 import ProfessionalSelectingDrawer from '../../ownModules/drawerModules/DrawerOfProfessionals';
+import DateAndTime from '../../components/appointmentComponents/DateAndTime';
 
 const MakeAppointment = () => {
 
@@ -18,6 +19,8 @@ const MakeAppointment = () => {
   const [openDrawer1, setOpenDrawer1] = useState(false);
   const [openDrawer2, setOpenDrawer2] = useState(false);
   const [placement] = useState("");
+
+  console.log(selectedSpecialists, "selectedSpecialists")
 
   const onClose1 = () => {
     setOpenDrawer1(false);
@@ -36,7 +39,9 @@ const MakeAppointment = () => {
   };
 
   const handleSpecialistsImgs = () => {
-    let getImgs = selectedSpecialists?.map(item => item.specialistItems.memberDetails.memberImg)
+    let getImgs = selectedSpecialists?.map((item) => (
+      item.specialistItems ? item.specialistItems?.memberDetails?.memberImg : item.memberImg
+    ))
 
     getImgs = getImgs?.map((item) => {
       let pathSliced = item?.slice(18)
@@ -88,7 +93,7 @@ const MakeAppointment = () => {
                 </div>
 
                 <div className='font-semibold text-[14px]'>
-                  {getSpecialistsImgs.length > 1 ? "Multiple Professionals" : "Any Professional"}
+                  {getSpecialistsImgs?.length > 1 ? "Multiple Professionals" : "Any Professional"}
                 </div>
 
               </div>
@@ -142,11 +147,12 @@ const MakeAppointment = () => {
                       <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center gap-2'>
 
-                          {selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined ?
+                          {selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined || selectedSpecialists[i].memberImg != undefined ?
 
                             <div className="w-7 h-7 border-[2px] border-white rounded-full">
                               <img
-                                src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
+                                // src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
+                                src={selectedSpecialists[i].specialistItems? selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[i].memberImg.slice(18)}
                                 className="rounded-full w-full h-full object-cover"
                               />
                             </div> :
@@ -173,6 +179,10 @@ const MakeAppointment = () => {
       </Drawer>
 
       <ProfessionalSelectingDrawer drawerProps={drawerProps} />
+
+      <DateAndTime />
+
+      
 
     </div>
   )

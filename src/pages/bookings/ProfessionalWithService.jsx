@@ -14,7 +14,7 @@ const ProfessionalWithService = () => {
     let specialistServices = location.state.getSpecialistServices
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
-    let { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
+    let { servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
 
     professionalsList = professionalsList[0]
 

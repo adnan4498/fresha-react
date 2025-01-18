@@ -57,10 +57,15 @@ export const printSpecialistNameInDropwDown = function (
   selectedSpecialists
 ) {
   for (let i = 0; i < selectedSpecialists.length; i++) {
+    console.log(selectedSpecialists[i], "i");
     if (selectedSpecialists[i].specialistIndex == index) {
-        
-      // print specialistName or print Any Professional
+      // for multiple Specialists
       return selectedSpecialists[i].specialistItems.memberDetails.memberName;
+    }
+
+    if (selectedSpecialists[i].specialistIndex == undefined) {
+      // for single Specialists
+      return selectedSpecialists[i].memberName;
     }
   }
 };

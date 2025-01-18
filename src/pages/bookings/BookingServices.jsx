@@ -3,7 +3,6 @@ import { useLocation, useMatches, useNavigate } from "react-router-dom";
 import { CheckOutlined } from "@ant-design/icons";
 import _, { get, isArray } from "lodash";
 import { useCallback } from "react";
-// import selectedServicesStore from "../../zustandStore";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { salonDataZustandStore } from "../../zustandStore";
@@ -136,7 +135,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             for (let item of items) {
                 for (let services of salonDataZustand.selectedServices) {
                     if (item?.textContent == services?.name) {
-                        // console.log('hii')
                         selectedServicesDivs.push(item);
                     }
                 }
@@ -385,43 +383,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         return passingArgsToReplacements();
     };
 
-    // const setPresistedAtStart = () => {
-
-    //     if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length == 0) {
-    //         serviceInCart.forEach((item, i, arr) => {
-    //             if (arr.length != 0) {
-    //                 item = [item]
-    //                 // remove all setPresistedSelectedServices
-    //                 setPresistedSelectedServices(item); 
-    //             }
-    //         });
-    //     }
-    //     else if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length > 0) {
-    //         setPresistedSelectedServices(salonDataZustand.selectedServices)
-    //         setSelected(salonDataZustand.selectedServices)
-    //     }
-    //     else if (serviceInCart.length != 0 && salonDataZustand.selectedServices.length > 0) {
-    //         setPresistedSelectedServices([])
-    //     }
-    //     setIsBool(false);
-    // };
-
-    // isBool && setPresistedAtStart();
-
-    console.log(salonDataZustand, "salonData in bookingService")
-
     return (
         <>
-
-            {/* <div className="my-20" onClick={() => handleClick()}>
-            asdasda
-        </div> */}
-
-
-            {/* <div onClick={() => } className="my-20">
-            asd
-        </div> */}
-
             <div className="fixed top-0 left-5 w-full overflow-x-scroll h-20 py-5 bg-white">
                 <div className="flex gap-16 w-[800px]">
                     {Object.entries(services).map((item, index) => (
