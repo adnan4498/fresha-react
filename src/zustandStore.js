@@ -21,7 +21,7 @@ export const timeBookingZustandStore = create(
       setTimeBookingZustand : (newData) => set({timeBookingZustand : newData})
     }),
     {
-      name: "time-booking-data-storage",
+      name: "time-booking-data-storage", 
       getStorage: () => localStorage,
     }
   )
