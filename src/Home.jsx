@@ -32,7 +32,7 @@ function Home() {
       check = firstSliced == ending
     }
 
-    return check
+    return check    
   }
 
   console.log(solution("abcwde", "cwde"))
