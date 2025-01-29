@@ -5,16 +5,37 @@ import SalonCarousels from "./homeComponents/SalonCarousels";
 
 function Home() {
 
-  // function a(){
-  //   ab()
-  // }
 
+  function solution(str, ending) {
+    let firstIndex = str.indexOf(ending[0])
 
-  // let ab = () => {
-  //   console.log("hi")
-  // }
+    let checkArr = []
+    let firstSliced
 
-  // a()
+    for (let i = 0; i < str.length; i++) {
+      str[i] == ending[0] && checkArr.push(i)
+    }
+
+    if (checkArr.length == 1) {
+      firstSliced = str.slice(firstIndex)
+    }
+    else {
+      firstSliced = str.slice(checkArr.pop())
+    }
+
+    let check
+
+    if(ending.length == 0){
+      return true
+    }
+    else{
+      check = firstSliced == ending
+    }
+
+    return check
+  }
+
+  console.log(solution("abcwde", "cwde"))
 
   return (
     <>
