@@ -19,7 +19,7 @@ function Home() {
     if (checkArr.length == 1) {
       firstSliced = str.slice(firstIndex)
     }
-    else {
+    else {     
       firstSliced = str.slice(checkArr.pop())
     }
 
