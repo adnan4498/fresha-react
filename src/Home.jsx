@@ -24,7 +24,7 @@ function Home() {
     }
 
     let check
-
+     
     if(ending.length == 0){
       return true
     }
