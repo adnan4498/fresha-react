@@ -5,7 +5,7 @@ export const salonDataZustandStore = create(
   persist(
     (set) => ({
       salonDataZustand: {},
-      setSalonDataZustand: (newData) => set({ salonDataZustand: newData }),
+      setSalonDataZustand: (newObj) => set({ salonDataZustand: newObj }),
     }),
     {
       name: "salon-data-storage",
@@ -18,7 +18,7 @@ export const timeBookingZustandStore = create(
   persist(
     (set) => ({
       timeBookingZustand : [],
-      setTimeBookingZustand : (newData) => set({timeBookingZustand : newData})
+      setTimeBookingZustand : (newObj) => set({timeBookingZustand : newObj})
     }),   
     {
       name: "time-booking-data-storage", 

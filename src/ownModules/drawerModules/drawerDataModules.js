@@ -44,10 +44,7 @@ export const handleSelectingSpecialistInDrawer = function (
   });
 
   setSelectedSpecialistInDrawer(selectedSpecialistArr);
-  setSalonDataZustand({
-    ...salonDataZustand,
-    selectedSpecialists: selectedSpecialistArr,
-  });
+  setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: selectedSpecialistArr, }, }))
 
   setOpenDrawer(false);
 };

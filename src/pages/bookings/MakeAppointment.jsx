@@ -20,7 +20,7 @@ const MakeAppointment = () => {
   const [openDrawer2, setOpenDrawer2] = useState(false);
   const [placement] = useState("");
 
-  console.log(selectedSpecialists, "selectedSpecialists")
+  console.log(salonDataZustand, "salonDataZustand")
 
   const onClose1 = () => {
     setOpenDrawer1(false);

@@ -24,7 +24,7 @@ const countrySalonsServices = function(){
       Object.assign(getCountrySalons[i], { allServices: item })
     );
 
-    // each empty array will get services
+    // making empty arrays, each empty array will get services 
     for (let item of getAllCountryServices) {
       countryServicesWithNamesAndPrice.push([]);
     }

@@ -14,6 +14,7 @@ const SelectProfessional = () => {
 
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
+  console.log(salonDataZustand, "salonDataZustand")
   let { categoryName, cityName, salonName, servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
 
   professionalsList = professionalsList[0]
@@ -107,7 +108,8 @@ const SelectProfessional = () => {
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
 
-    setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
+    // setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
+    setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [item], }, }))
   }
 
   let toAppointmentPage = true
