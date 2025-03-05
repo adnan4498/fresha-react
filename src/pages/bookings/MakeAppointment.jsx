@@ -20,7 +20,7 @@ const MakeAppointment = () => {
   const [openDrawer2, setOpenDrawer2] = useState(false);
   const [placement] = useState("");
 
-  console.log(salonDataZustand, "salonDataZustand")
+  console.log(selectedServices, "selectedServices")
 
   const onClose1 = () => {
     setOpenDrawer1(false);
@@ -66,6 +66,8 @@ const MakeAppointment = () => {
     selectedSpecialistInDrawer: selectedSpecialistInDrawer,
     setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
   }
+
+  console.log(selectedSpecialists, "selectedSpecialists")
 
   return (
     <div className='mb-28'>
@@ -128,7 +130,6 @@ const MakeAppointment = () => {
         <div>
           <div
           >
-
             <div className='mt-4'>
               {selectedServices.map((item, i, arr) => (
                 <>
@@ -147,17 +148,30 @@ const MakeAppointment = () => {
                       <div className='flex items-center justify-between gap-2'>
                         <div className='flex items-center gap-2'>
 
-                          {selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined || selectedSpecialists[i].memberImg != undefined ?
-
+                          {/* if single specialist enough for selected services */}
+                          {selectedSpecialists.length == 1 ?
                             <div className="w-7 h-7 border-[2px] border-white rounded-full">
                               <img
                                 // src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
-                                src={selectedSpecialists[i].specialistItems? selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[i].memberImg.slice(18)}
+                                src={selectedSpecialists[0].specialistItems ? selectedSpecialists[0].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[0].memberImg.slice(18)}
                                 className="rounded-full w-full h-full object-cover"
                               />
                             </div> :
-                            <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+                            /* if multiple specialists required for selected services */
+                            selectedSpecialists[i]?.specialistItems?.memberDetails?.memberImg != undefined || selectedSpecialists[i].memberImg != undefined ?
+
+                              <div className="w-7 h-7 border-[2px] border-white rounded-full">
+                                <img
+                                  // src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
+                                  src={selectedSpecialists[i].specialistItems ? selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[i].memberImg.slice(18)}
+                                  className="rounded-full w-full h-full object-cover"
+                                />
+                              </div> :
+                              <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
+
                           }
+
+
 
                           {printSpecialistNameInDropwDown(i, selectedSpecialists)}
 
@@ -182,7 +196,7 @@ const MakeAppointment = () => {
 
       <DateAndTime />
 
-      
+
 
     </div>
   )

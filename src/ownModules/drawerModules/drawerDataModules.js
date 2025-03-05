@@ -29,9 +29,6 @@ export const handleSelectingSpecialistInDrawer = function (
     (spe) => spe.memberName.includes(item.memberName)
   );
 
-  console.log(selectedSpecialistArr, "selectedSpecialistArr");
-  console.log(getClickedSpecialist, "getClickedSpecialist");
-
   selectedSpecialistArr = selectedSpecialistArr.map((items) => {
     if (items.specialistIndex == indexState) {
       return {
@@ -56,7 +53,6 @@ export const printSpecialistNameInDropwDown = function (
   selectedSpecialists
 ) {
   for (let i = 0; i < selectedSpecialists.length; i++) {
-    console.log(selectedSpecialists[i], "i");
     if (selectedSpecialists[i].specialistIndex == index) {
       // for multiple Specialists
       return selectedSpecialists[i].specialistItems.memberDetails.memberName;

@@ -99,7 +99,7 @@ const SelectProfessional = () => {
       });
     });
 
-    // if > 1 specialist, user chose multiple specialists for multiple services
+    // if specialists > 1, user chose multiple specialists for multiple services
     isMultipleSpecialists = specialistSet.size > 1;
 
   };
@@ -111,7 +111,8 @@ const SelectProfessional = () => {
     console.log(salonDataZustand, "salonDataZustand")
 
     // setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
-    setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [item], }, }))
+    // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [item], }, }))
+    setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [item] }))
   }
 
   let toAppointmentPage = true
