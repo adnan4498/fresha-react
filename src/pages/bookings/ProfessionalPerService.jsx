@@ -35,7 +35,10 @@ const ProfessionalPerService = () => {
                 specialists_obj_against_services_length.push({ specialistItems: { memberDetails: { memberName: `Any Professional` } }, specialistIndex: i, serviceName: selectedServices[i].name })
             }
             setSelectedSpecialistInDrawer(specialists_obj_against_services_length)
-            setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: specialists_obj_against_services_length })
+            // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: specialists_obj_against_services_length  }, }))
+
+            setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: specialists_obj_against_services_length}));
+
         }
     }, [])
 

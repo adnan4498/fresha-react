@@ -15,6 +15,8 @@ const ProfessionalWithService = () => {
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
     let { servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
+    console.log(salonDataZustand, "gggggg")
+
 
     professionalsList = professionalsList[0]
 
@@ -30,8 +32,9 @@ const ProfessionalWithService = () => {
       salonDataZustand
     };
     
-    const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
-    setSalonDataZustand(get_Selected_and_suggested_specialists);
+    const get_selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
+    // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, get_selected_and_suggested_specialists}, }))
+    setSalonDataZustand(get_selected_and_suggested_specialists);
 
     }, [triggerUseEffect])
     

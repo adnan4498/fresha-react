@@ -19,7 +19,9 @@ const GroupOrPersonalAppointment = () => {
     let serviceInCart = []
     
     let addEmptyServiceInCart = () => {
-        setSalonDataZustand({ ...salonDataZustand, selectedServices: [] })
+        // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedServices: []  }, }))
+
+        setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: []}));
     }
 
     return (

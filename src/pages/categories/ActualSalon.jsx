@@ -22,10 +22,10 @@ const ActualSalon = () => {
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
   useEffect(() => {
+    // setSalonDataZustand(getSalonDataForZustand)
+    // setSalonDataZustand((store) => ({...store, salonDataZustand : {...store.salonDataZustand, getSalonDataForZustand}}))
     setSalonDataZustand(getSalonDataForZustand)
   }, [])
-
-  // console.log(salonDataZustand, "salonDataZustand")
 
   let navigate = useNavigate()
   let match = useMatches();
@@ -62,8 +62,6 @@ const ActualSalon = () => {
 
   let getTeamMembers = theSalon.map((item) => item.teamMembers);
   let customers = theSalon.map((item) => item.customerReviews);
-
-  // console.log(theSalon[0], "gs")
 
   // service heading first letter capitalized
   const serviceCapitalized = () => {
@@ -120,7 +118,14 @@ const ActualSalon = () => {
       price: price,
     }]
 
-    setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj })
+
+    // setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj })
+    // setSalonDataZustand((store) => {
+    //   return { ...store.salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj }
+    // }
+    // )
+
+    setSalonDataZustand((prevState) => ({ ...prevState, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj}));
   }
 
   let addPriceAndDuration = () => {
@@ -196,8 +201,6 @@ const ActualSalon = () => {
   let salonServicesLength = theSalon[0].serviceNameAndPrice.length
 
   let showBookNowBtn = true
-
-  // console.log(salonDataZustand, "sssss")
 
   let serviceInCartObj = []
 
@@ -287,7 +290,7 @@ const ActualSalon = () => {
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
               <div onClick={() => {
-                setSalonDataZustand({ ...salonDataZustand, selectedServices: [] }), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
+                setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: []  })), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
                   state: {
                     getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
                     teamMember: item,
@@ -443,6 +446,7 @@ const ActualSalon = () => {
         <div className="my-6">
           <h2>Google Map Here</h2>
 
+          {/* <div className="mt-5" onClick={()=> setSalonDataZustand((store) => ({...store, salonDataZustand: {}}))}> */}
           <div className="mt-5">
             {theSalon.map(item => item.address)}
             <span className="text-blue-700"> Get direction</span>

@@ -133,7 +133,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                for (let services of salonDataZustand.selectedServices) {
+                for (let services of salonDataZustand?.selectedServices) {
                     if (item?.textContent == services?.name) {
                         selectedServicesDivs.push(item);
                     }
@@ -316,8 +316,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
         priceAndDuration = handlePriceAndDuration(selectedServices)
 
-        setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
+        // setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
 
+        setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration}));
     };
 
     let tickMark = (serviceName) => {
@@ -382,6 +383,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
         return passingArgsToReplacements();
     };
+
+    console.log(salonDataZustand, "ss")
 
     return (
         <>
