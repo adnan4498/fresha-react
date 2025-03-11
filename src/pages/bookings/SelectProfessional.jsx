@@ -98,6 +98,8 @@ const SelectProfessional = () => {
       });
     });
 
+    console.log(specialistSet, "specialistSet")
+
     // if specialists > 1, user chose multiple specialists for multiple services
     isMultipleSpecialists = specialistSet.size > 1;
 

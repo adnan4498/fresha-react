@@ -27,6 +27,13 @@ export const sharjahSalons = [
           duration: "120 min",
           price: "OMR 20",
           details: "3 services",
+          
+          // isPackage : true,
+          // subServices : [
+          //   { name: "Haircut", duration: "30 min", price: "OMR 4" },
+          //   { name: "Beard Trimming", duration: "30 min", price: "OMR 2" },
+          //   { name: "Full Body Massage", duration: "60 min", price: "OMR 20" },
+          // ]
         },
         { name: "Moroccan Bath", duration: "60 min", price: "OMR 18" },
         { name: "Beard Trimming", duration: "30 min", price: "OMR 2" },

@@ -201,9 +201,7 @@ const MakeAppointment = () => {
       <ProfessionalSelectingDrawer drawerProps={drawerProps} />
 
       <DateAndTime />
-
-
-
+      
     </div>
   )
 }

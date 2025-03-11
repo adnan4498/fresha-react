@@ -1,19 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useLocation, useMatches, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useMatches } from "react-router-dom";
 import { CheckOutlined } from "@ant-design/icons";
-import _, { get, isArray } from "lodash";
+import _, { isArray } from "lodash";
 import { useCallback } from "react";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { salonDataZustandStore } from "../../zustandStore";
 
 const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function () { } }) => {
-
-
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
-
-    let navigate = useNavigate();
-
 
     let match = useMatches();
 
@@ -277,7 +272,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     function addService(name, duration, price) {
         let priceAndDuration
-
         let selectedServices
 
         let noDupsFound = () => {
@@ -310,15 +304,15 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             setSelected(getSelectedItems);
 
-
             selectedServices = getPresistedItems
         }
 
         priceAndDuration = handlePriceAndDuration(selectedServices)
 
-        // setSalonDataZustand({ ...salonDataZustand, selectedServices: selectedServices, priceAndDuration: priceAndDuration })
+        console.log(selectedServices, 'selectedServices')
+        console.log(priceAndDuration, 'priceAndDuration')
 
-        setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration}));
+        setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
     };
 
     let tickMark = (serviceName) => {
@@ -329,15 +323,18 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         }
     };
 
-    const handlePriceAndDuration = (getPriceAndDurationArr) => {
+    const handlePriceAndDuration = (selectedServices) => {
         const replacements = (serviceVal, replacingVal) => {
-            let valReplaced = [];
 
-            serviceVal.forEach((item) => {
-                let replacingSymbol = item?.replace(`${replacingVal}`, "");
-                let replacingComa;
-                replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""));
-                valReplaced.push(replacingComa);
+            let valReplaced = serviceVal.map((item) => {
+                // let replacingSymbol = item?.replace(${replacingVal}, "");
+                // let replacingComa;
+                // replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""));
+                // return replacingComa
+
+
+                return item?.replace(`${replacingVal}`, "").replace(",", "")
+        
             });
 
             valReplaced.length > 1 &&
@@ -346,7 +343,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                 ));
 
             let minsText = replacingVal == "min" ? " mins" : "";
-            // let valWithText = valReplaced + minsText;
             let valWithText = valReplaced + minsText;
 
             return valWithText;
@@ -355,20 +351,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         const passingArgsToReplacements = () => {
             let min = "min";
 
-            let mappingOnPriceAndDuration
-
-            mappingOnPriceAndDuration = getPriceAndDurationArr 
-
-            
-
-            // if (getPriceAndDurationArr != undefined && getPriceAndDurationArr.length != 0) {
-            // }
-            // else {
-            //     mappingOnPriceAndDuration = salonDataZustand.selectedServices
-            // }
-
-            let getPrice = mappingOnPriceAndDuration.map((item) => item?.price);
-            let getDuration = mappingOnPriceAndDuration.map((item) => item?.duration);
+            let getPrice = selectedServices.map((item) => item?.price);
+            let getDuration = selectedServices.map((item) => item?.duration);
 
             let price = replacements(getPrice, currencySymbol);
             let serviceDuration = replacements(getDuration, min);
@@ -382,9 +366,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         };
 
         return passingArgsToReplacements();
-    };
-
-    console.log(salonDataZustand, "ss")
+    };
 
     return (
         <>

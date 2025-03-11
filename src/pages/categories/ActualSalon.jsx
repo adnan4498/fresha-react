@@ -105,7 +105,7 @@ const ActualSalon = () => {
 
   let tabItems = [];
 
-  let setFirstServiceInLocalStorage = (name, price, duration) => {
+  let showClickedServiceInBookingService = (name, price, duration) => {
     let serviceInCartArr = {
       name: name,
       duration: duration,
@@ -118,17 +118,14 @@ const ActualSalon = () => {
       price: price,
     }]
 
-
-    // setSalonDataZustand({ ...salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj })
-    // setSalonDataZustand((store) => {
-    //   return { ...store.salonDataZustand, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj }
-    // }
-    // )
-
-    setSalonDataZustand((prevState) => ({ ...prevState, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj}));
+    setSalonDataZustand((prevState) => ({ ...prevState, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj }));
   }
 
-  let addPriceAndDuration = () => {
+  const handleIsPackgeData = (subServices) => {
+    console.log(subServices, "SS")
+
+    
+
   }
 
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
@@ -144,6 +141,10 @@ const ActualSalon = () => {
                 <div>
                   <p className="text-xl">{service.name}</p>
                 </div>
+
+                {service?.isPackage && handleIsPackgeData(service.subServices)}
+
+
                 <div>
                   <h3>{service.duration}</h3>
                 </div>
@@ -153,8 +154,7 @@ const ActualSalon = () => {
                 </div>
               </div>
               <div onClick={() => {
-                addPriceAndDuration()
-                setFirstServiceInLocalStorage(service.name, service.price, service.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                showClickedServiceInBookingService(service.name, service.price, service.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
                   state: {
                     servicesWithoutUnderscore,
                     serviceInCart: {
@@ -290,7 +290,7 @@ const ActualSalon = () => {
           <div className="grid grid-cols-3 gap-10 mt-5">
             {getTeamMembers[0].map((item, index) => (
               <div onClick={() => {
-                setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: []  })), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
+                setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: [] })), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/professionalWithService`, {
                   state: {
                     getSpecialistServices: servicesOfSpecialist(item, servicesWithoutUnderscore),
                     teamMember: item,
