@@ -33,7 +33,6 @@ const ProfessionalWithService = () => {
     };
     
     const get_selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
-    // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, get_selected_and_suggested_specialists}, }))
     setSalonDataZustand(get_selected_and_suggested_specialists);
 
     }, [triggerUseEffect])

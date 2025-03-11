@@ -71,6 +71,8 @@ const ProfessionalPerService = () => {
         setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
     }
 
+    console.log(salonDataZustand, "zsss")
+
     return (
         <div className='mb-28'>
             <div>

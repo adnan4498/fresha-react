@@ -1,0 +1,56 @@
+"filename", "language", "JavaScript", "JavaScript JSX", "CSS", "XML", "comment", "blank", "total"
+"e:\coding projects\fresha-react\src\App.css", "CSS", 0, 0, 4, 0, 0, 0, 4
+"e:\coding projects\fresha-react\src\App.jsx", "JavaScript JSX", 0, 11, 0, 0, 7, 5, 23
+"e:\coding projects\fresha-react\src\Home.jsx", "JavaScript JSX", 0, 14, 0, 0, 1, 6, 21
+"e:\coding projects\fresha-react\src\assets\react.svg", "XML", 0, 0, 0, 1, 0, 0, 1
+"e:\coding projects\fresha-react\src\components\Error\ErrorPage.jsx", "JavaScript JSX", 0, 14, 0, 0, 0, 2, 16
+"e:\coding projects\fresha-react\src\components\appointmentComponents\DateAndTime.jsx", "JavaScript JSX", 0, 9, 0, 0, 0, 5, 14
+"e:\coding projects\fresha-react\src\components\appointmentIncreasing\AppointmentIncreasing.jsx", "JavaScript JSX", 0, 27, 0, 0, 1, 6, 34
+"e:\coding projects\fresha-react\src\components\bookNow\BookNowAndContinue.jsx", "JavaScript JSX", 0, 64, 0, 0, 2, 19, 85
+"e:\coding projects\fresha-react\src\components\booking\Booking.jsx", "JavaScript JSX", 0, 49, 0, 0, 0, 6, 55
+"e:\coding projects\fresha-react\src\components\breadCrumbs\BreadCrumbs.jsx", "JavaScript JSX", 0, 41, 0, 0, 1, 7, 49
+"e:\coding projects\fresha-react\src\components\carousel\CarouselComp.jsx", "JavaScript JSX", 0, 49, 0, 0, 0, 5, 54
+"e:\coding projects\fresha-react\src\components\carousel\CarouselToShop.jsx", "JavaScript JSX", 0, 49, 0, 0, 0, 4, 53
+"e:\coding projects\fresha-react\src\components\carousel\CarouselWithServices.jsx", "JavaScript JSX", 0, 235, 0, 0, 17, 53, 305
+"e:\coding projects\fresha-react\src\components\getAppQrBtn\GetAppBtn.jsx", "JavaScript JSX", 0, 12, 0, 0, 0, 1, 13
+"e:\coding projects\fresha-react\src\components\getBookingApp\GetBookingApp.jsx", "JavaScript JSX", 0, 78, 0, 0, 2, 14, 94
+"e:\coding projects\fresha-react\src\components\reviews\TopReviewsSalons.jsx", "JavaScript JSX", 0, 99, 0, 0, 3, 19, 121
+"e:\coding projects\fresha-react\src\components\subCategories\SubCategories.jsx", "JavaScript JSX", 0, 42, 0, 0, 0, 12, 54
+"e:\coding projects\fresha-react\src\components\subCategories\subCategoryLink.jsx", "JavaScript JSX", 0, 7, 0, 0, 0, 2, 9
+"e:\coding projects\fresha-react\src\container\Container.jsx", "JavaScript JSX", 0, 9, 0, 0, 0, 2, 11
+"e:\coding projects\fresha-react\src\data\salondata\dubai\dubaiData.js", "JavaScript", 1607, 0, 0, 0, 1, 21, 1629
+"e:\coding projects\fresha-react\src\data\salondata\global\globalSalonData.js", "JavaScript", 13, 0, 0, 0, 10, 11, 34
+"e:\coding projects\fresha-react\src\data\salondata\oman\omanData.js", "JavaScript", 1669, 0, 0, 0, 0, 8, 1677
+"e:\coding projects\fresha-react\src\data\salondata\pakistan\pakistanData.js", "JavaScript", 1464, 0, 0, 0, 1, 18, 1483
+"e:\coding projects\fresha-react\src\data\salondata\services\citySalonServices.js", "JavaScript", 34, 0, 0, 0, 3, 12, 49
+"e:\coding projects\fresha-react\src\homeComponents\HeroSection.jsx", "JavaScript JSX", 0, 17, 0, 0, 0, 5, 22
+"e:\coding projects\fresha-react\src\homeComponents\SalonCarousels.jsx", "JavaScript JSX", 0, 31, 0, 0, 0, 8, 39
+"e:\coding projects\fresha-react\src\index.css", "CSS", 0, 0, 113, 0, 2, 32, 147
+"e:\coding projects\fresha-react\src\main.jsx", "JavaScript JSX", 0, 104, 0, 0, 7, 8, 119
+"e:\coding projects\fresha-react\src\ownModules\categoryData\categoryAndSubCategory.js", "JavaScript", 93, 0, 0, 0, 25, 14, 132
+"e:\coding projects\fresha-react\src\ownModules\categoryData\generateSubCategoryLink.js", "JavaScript", 17, 0, 0, 0, 1, 6, 24
+"e:\coding projects\fresha-react\src\ownModules\countrySalons\countrySalonsServices.js", "JavaScript", 33, 0, 0, 0, 7, 12, 52
+"e:\coding projects\fresha-react\src\ownModules\drawerModules\DrawerOfProfessionals.jsx", "JavaScript JSX", 0, 73, 0, 0, 2, 12, 87
+"e:\coding projects\fresha-react\src\ownModules\drawerModules\drawerDataModules.js", "JavaScript", 57, 0, 0, 0, 3, 12, 72
+"e:\coding projects\fresha-react\src\ownModules\makeAllServicesArr\makingOfAllServicesArray.js", "JavaScript", 42, 0, 0, 0, 4, 10, 56
+"e:\coding projects\fresha-react\src\ownModules\randomSalons\generateRandomSalons.js", "JavaScript", 21, 0, 0, 0, 2, 8, 31
+"e:\coding projects\fresha-react\src\ownModules\removing\removeDuplicates.js", "JavaScript", 9, 0, 0, 0, 2, 4, 15
+"e:\coding projects\fresha-react\src\ownModules\responsive\responsive.js", "JavaScript", 22, 0, 0, 0, 1, 2, 25
+"e:\coding projects\fresha-react\src\ownModules\specialistServices\SpecialistServices.js", "JavaScript", 56, 0, 0, 0, 2, 15, 73
+"e:\coding projects\fresha-react\src\ownModules\specialistServices\getSelectedAndSuggestedSpecialists.js", "JavaScript", 50, 0, 0, 0, 1, 16, 67
+"e:\coding projects\fresha-react\src\ownModules\specialistServices\getServicesOnServiceWord.js", "JavaScript", 36, 0, 0, 0, 0, 11, 47
+"e:\coding projects\fresha-react\src\ownModules\specialistServices\getSpecialistsOfService.js", "JavaScript", 38, 0, 0, 0, 3, 16, 57
+"e:\coding projects\fresha-react\src\pages\bookings\BookingServices.jsx", "JavaScript JSX", 0, 370, 0, 0, 26, 115, 511
+"e:\coding projects\fresha-react\src\pages\bookings\GroupOrPersonalAppointment.jsx", "JavaScript JSX", 0, 45, 0, 0, 1, 12, 58
+"e:\coding projects\fresha-react\src\pages\bookings\MakeAppointment.jsx", "JavaScript JSX", 0, 161, 0, 0, 2, 38, 201
+"e:\coding projects\fresha-react\src\pages\bookings\ProfessionalPerService.jsx", "JavaScript JSX", 0, 100, 0, 0, 3, 27, 130
+"e:\coding projects\fresha-react\src\pages\bookings\ProfessionalWithService.jsx", "JavaScript JSX", 0, 64, 0, 0, 2, 18, 84
+"e:\coding projects\fresha-react\src\pages\bookings\SelectProfessional.jsx", "JavaScript JSX", 0, 144, 0, 0, 7, 46, 197
+"e:\coding projects\fresha-react\src\pages\categories\ActualSalon.jsx", "JavaScript JSX", 0, 377, 0, 0, 21, 89, 487
+"e:\coding projects\fresha-react\src\pages\categories\CitySalons.jsx", "JavaScript JSX", 0, 144, 0, 0, 17, 45, 206
+"e:\coding projects\fresha-react\src\pages\categories\DynamicCategory.jsx", "JavaScript JSX", 0, 174, 0, 0, 9, 33, 216
+"e:\coding projects\fresha-react\src\pages\categories\Salon.jsx", "JavaScript JSX", 0, 14, 0, 0, 0, 3, 17
+"e:\coding projects\fresha-react\src\pages\categories\SubCategorySalons.jsx", "JavaScript JSX", 0, 7, 0, 0, 0, 2, 9
+"e:\coding projects\fresha-react\src\shared\Header.jsx", "JavaScript JSX", 0, 83, 0, 0, 0, 9, 92
+"e:\coding projects\fresha-react\src\zustandStore.js", "JavaScript", 28, 0, 0, 0, 34, 8, 70
+"Total", "-", 5289, 2717, 117, 1, 233, 874, 9231

@@ -49,12 +49,9 @@ const DrawerOfProfessionals = ({ drawerProps }) => {
                             <div className="relative">
                                 <div className="w-24 h-24">
                                     <img
-                                        // src={imgPaths[i].memberImg}
                                         src={ imgPaths[i]?.memberImg ? imgPaths[i]?.memberImg : imgPaths[i] }
                                         className="rounded-full w-full h-full object-cover"
                                     />
-
-                                    {/* {showImgAgainstName(item, i)} */}
                                 </div>
 
                                 <div className="absolute border top-20 left-5 border-gray-300 rounded-full bg-white px-2 flex gap-1">

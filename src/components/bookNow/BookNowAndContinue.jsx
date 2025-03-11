@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { salonDataZustandStore} from '../../zustandStore'
+import { salonDataZustandStore } from '../../zustandStore'
 
 const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage = false, is_dynamic_url_professional_per_service = false }) => {
 
@@ -12,18 +12,19 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
     const serviceInCart = []
 
     // either to appointment page with ( professionalWithService || professionalPerService ) or chose professional
-    let dynamicUrl 
-    
-    if(toAppointmentPage){
+    let dynamicUrl
+    let showAnyProfessional
+
+    if (toAppointmentPage) {
         dynamicUrl = "bookingService/professionalWithService/makeAppointment"
-    } 
-    else if(is_dynamic_url_professional_per_service){
+    }
+    else if (is_dynamic_url_professional_per_service) {
         dynamicUrl = "bookingService/selectProfessional/professionalPerService/makeAppointment"
     }
-    else{
+    else {
         dynamicUrl = "bookingService/selectProfessional"
     }
-
+    
     return (
         <>
             {showBookNowBtn && <div>
@@ -53,8 +54,8 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
                             <h3 className="text-left font-semibold text-black">
                                 {/* writing code in `${}` will add space between currencySymbol and price */}
 
-                                
-                                {priceAndDuration?.price.includes(currencySymbol) ? priceAndDuration?.price :  `${currencySymbol} ${priceAndDuration?.price}`}
+
+                                {priceAndDuration?.price.includes(currencySymbol) ? priceAndDuration?.price : `${currencySymbol} ${priceAndDuration?.price}`}
 
 
                             </h3>

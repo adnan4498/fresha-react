@@ -481,13 +481,11 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                         </div>
 
                                         <div
-                                            // onClick={() => { addService( service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect), addingPrice()}}
                                             onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect) }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
                                         >
                                             {tickMark(service.name) ? (
-                                                // {tickMark(presistedSelected  Services[i]?.name) ? (
                                                 <CheckOutlined className="text-white bg-purple-300" />
                                             ) : (
                                                 "+"

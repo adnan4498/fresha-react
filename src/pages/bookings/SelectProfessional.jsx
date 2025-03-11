@@ -2,13 +2,16 @@ import { StarFilled, UserAddOutlined, UsergroupAddOutlined } from '@ant-design/i
 import React, { useEffect, useState } from 'react'
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
 import { salonDataZustandStore } from '../../zustandStore';
-import { useNavigate } from 'react-router-dom';
+import { useMatches, useNavigate } from 'react-router-dom';
 import { getSpecialistsOfService } from '../../ownModules/specialistServices/getSpecialistsOfService';
 import { getSelectedAndSuggestedSpecialists } from '../../ownModules/specialistServices/getSelectedAndSuggestedSpecialists';
 
 const SelectProfessional = () => {
 
   const navigate = useNavigate()
+  const match = useMatches();
+
+  let showAnyProfessional = match[0].pathname.includes("/professionalPerService")
 
   const [clickedSpecialist, setClickedSpecialist] = useState(0)
 
@@ -63,24 +66,20 @@ const SelectProfessional = () => {
       professionalsOfServices,
       salonDataZustand
     };
-    
+
     // adds selected and suggested specialists to store
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
 
-    let mergedArr = {...get_Selected_and_suggested_specialists, professionalsOfServices : professionalsOfServices}
-
+    let mergedArr = { ...get_Selected_and_suggested_specialists, professionalsOfServices: professionalsOfServices }
     setSalonDataZustand(mergedArr);
 
-    // at start, sets the first specialist as selectedSpecialist
-    if(salonDataZustand.selectedServices.length <= 1){
-      for(let specialists of professionalsOfServices){
-        // setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [specialists] })
-        // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [specialists], }, }))
+    // if not at /professionalPerService, select first specialist by default
+    if (!showAnyProfessional) {
+      for (let specialists of professionalsOfServices) {
         setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [specialists] }))
         break
       }
-    } 
-
+    }
 
   }, [])
 
@@ -108,7 +107,6 @@ const SelectProfessional = () => {
 
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
-    console.log(salonDataZustand, "salonDataZustand")
 
     // setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
     // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [item], }, }))
@@ -136,8 +134,12 @@ const SelectProfessional = () => {
 
         {isMultipleSpecialists ? (
           <div
-            onClick={() =>
-              navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`)
+            onClick={() => [
+              navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService/selectProfessional/professionalPerService`),
+
+              // emptied selectedSpecialists, will show Any professional by default in drawer select
+              setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [] })) 
+            ]
             }
             className="border-[1px] border-gray-500 rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4"
           >

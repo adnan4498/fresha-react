@@ -20,8 +20,6 @@ const MakeAppointment = () => {
   const [openDrawer2, setOpenDrawer2] = useState(false);
   const [placement] = useState("");
 
-  console.log(selectedServices, "selectedServices")
-
   const onClose1 = () => {
     setOpenDrawer1(false);
   };
@@ -67,7 +65,20 @@ const MakeAppointment = () => {
     setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
   }
 
-  console.log(selectedSpecialists, "selectedSpecialists")
+  // console.log(salonDataZustand, "salonDataZustand")
+  // console.log(selectedServices, "selectedServices")
+  // console.log(selectedSpecialists, "selectedSpecialists")
+
+  // const [selectedHeading, setSelectedHeading] = useState()
+
+  // const handleSelectedHeading = () => {
+  //   if(selectedServices.length == 1 ){
+  //     setSelectedHeading(selectedSpecialists[0])
+  //   }
+  //   else{
+  //     if()
+  //   }
+  // }
 
   return (
     <div className='mb-28'>
@@ -152,7 +163,6 @@ const MakeAppointment = () => {
                           {selectedSpecialists.length == 1 ?
                             <div className="w-7 h-7 border-[2px] border-white rounded-full">
                               <img
-                                // src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
                                 src={selectedSpecialists[0].specialistItems ? selectedSpecialists[0].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[0].memberImg.slice(18)}
                                 className="rounded-full w-full h-full object-cover"
                               />
@@ -162,16 +172,12 @@ const MakeAppointment = () => {
 
                               <div className="w-7 h-7 border-[2px] border-white rounded-full">
                                 <img
-                                  // src={selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18)}
                                   src={selectedSpecialists[i].specialistItems ? selectedSpecialists[i].specialistItems?.memberDetails?.memberImg?.slice(18) : selectedSpecialists[i].memberImg.slice(18)}
                                   className="rounded-full w-full h-full object-cover"
                                 />
                               </div> :
                               <div className='bg-blue-50 rounded-full w-8 h-8  flex justify-center items-center'> <div className='text-blue-300 text-xs'><UserOutlined /> </div></div>
-
-                          }
-
-
+                            }
 
                           {printSpecialistNameInDropwDown(i, selectedSpecialists)}
 
