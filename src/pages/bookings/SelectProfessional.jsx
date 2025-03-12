@@ -98,8 +98,6 @@ const SelectProfessional = () => {
       });
     });
 
-    console.log(specialistSet, "specialistSet")
-
     // if specialists > 1, user chose multiple specialists for multiple services
     isMultipleSpecialists = specialistSet.size > 1;
 
@@ -109,9 +107,6 @@ const SelectProfessional = () => {
 
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
-
-    // setSalonDataZustand({ ...salonDataZustand, selectedSpecialists: [item] })
-    // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: [item], }, }))
     setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [item] }))
   }
 

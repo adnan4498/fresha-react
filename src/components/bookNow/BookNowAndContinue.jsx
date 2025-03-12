@@ -13,7 +13,6 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
 
     // either to appointment page with ( professionalWithService || professionalPerService ) or chose professional
     let dynamicUrl
-    let showAnyProfessional
 
     if (toAppointmentPage) {
         dynamicUrl = "bookingService/professionalWithService/makeAppointment"
@@ -46,15 +45,13 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
             </div>}
 
 
-            {priceAndDuration?.price != '' && priceAndDuration != undefined ? (
+            {priceAndDuration?.price != 0 && priceAndDuration != undefined ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">
                         <div>
                             <h3 className="text-left font-semibold text-black">
                                 {/* writing code in `${}` will add space between currencySymbol and price */}
-
-
                                 {priceAndDuration?.price.includes(currencySymbol) ? priceAndDuration?.price : `${currencySymbol} ${priceAndDuration?.price}`}
 
 

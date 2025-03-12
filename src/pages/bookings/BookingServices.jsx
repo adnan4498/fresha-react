@@ -119,8 +119,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         };
         activateHeading();
 
-        // addService()
-
     }, []);
 
     function triggerScroll() {
@@ -308,11 +306,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             selectedServices = getPresistedItems
         }
 
+        console.log(selectedServices, "selectedServices")
+
         priceAndDuration = handlePriceAndDuration(selectedServices, currencySymbol)
-
-        console.log(selectedServices, 'selectedServices')
-        console.log(priceAndDuration, 'priceAndDuration')
-
         setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
     };
 
@@ -399,6 +395,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                         key={i}
                                         className="mt-5 flex justify-between items-center "
                                     >
+                                        {console.log(service, "sss")}
                                         <div>
                                             <div>
                                                 <div
