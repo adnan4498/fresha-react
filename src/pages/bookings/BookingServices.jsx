@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useMatches } from "react-router-dom";
-import { CheckOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import _, { isArray } from "lodash";
 import { useCallback } from "react";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { salonDataZustandStore } from "../../zustandStore";
 import { handlePriceAndDuration } from "../../ownModules/others/handlePriceAndDuration";
+import { Drawer } from "antd";
+import ServiceDetailsDrawer from "../../ownModules/drawerModules/ServiceDetailsDrawer";
 
 const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function () { } }) => {
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
@@ -269,21 +271,25 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     }
 
 
-    function addService(name, duration, price) {
-        let priceAndDuration
+    function addService(service) {
+
+        let { name, duration, price, subServices } = service
+
+        // console.log(service, "service")
+        // console.log(subServices, "subServices")
+
         let selectedServices
+        let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
 
-        let noDupsFound = () => {
-            let noDup;
-
-            let findDup = salonDataZustand.selectedServices?.filter((item) => item?.name == name);
-            findDup.length == 0 && (noDup = true);
-
-            return noDup;
-        };
-
-        if (noDupsFound()) {
+        if (!findDup) {
             let serviceDetailsObj = { name: name, price: price, duration: duration }
+            // let serviceDetailsObj = subServices[0]
+            // console.log(subServices[0], "zero")
+
+            let gg = [...selected, subServices]
+
+            console.log(gg[0], "gggg")
+            
             setSelected((oldState) => [...oldState, serviceDetailsObj]);
 
             let storedSelectedServices
@@ -298,27 +304,48 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             selectedServices = storedSelectedServices
 
         } else {
-            let getSelectedItems = selected.filter((item) => item?.name != name);
-            let getPresistedItems = salonDataZustand.selectedServices.filter((item) => item?.name != name);
-
-            setSelected(getSelectedItems);
-
-            selectedServices = getPresistedItems
+            selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
         }
 
-        console.log(selectedServices, "selectedServices")
-
-        priceAndDuration = handlePriceAndDuration(selectedServices, currencySymbol)
+        let priceAndDuration = handlePriceAndDuration(selectedServices, currencySymbol)
         setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
     };
 
-    let tickMark = (serviceName) => {
-        let checkItem = salonDataZustand?.selectedServices?.filter(item => item?.name == serviceName)
+    console.log(salonDataZustand?.selectedServices, "selected")
 
-        if (checkItem?.length > 0) {
-            return checkItem;
-        }
+    // matches selectedService with serviceName and ticks it
+    const tickMark = (serviceName) => {
+        return salonDataZustand?.selectedServices?.some(item => item?.name === serviceName);
+    }
+
+    const handleIsPackgeData = (subServices) => {
+        let subServicesPriceAndDuration = handlePriceAndDuration(subServices, currencySymbol)
+        const { price, duration } = subServicesPriceAndDuration
+
+        return (
+            <>
+                <div className="flex gap-2 items-center">
+                    <div>
+                        <h3>{duration} mins</h3>
+                    </div>
+                    <div>
+                        -
+                    </div>
+                    <div>
+                        <h3>{subServices.length} services</h3>
+                    </div>
+                </div>
+                <div className="mt-2">
+                    <h3>
+                        {currencySymbol} {price}
+                    </h3>
+                </div>
+            </>
+        )
     };
+
+    const [openDrawer, setOpenDrawer] = useState(false);
+    const [drawerData, setDrawerData] = useState();
 
     return (
         <>
@@ -393,10 +420,10 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                 {item[1]?.map((service, i) => (
                                     <div
                                         key={i}
-                                        className="mt-5 flex justify-between items-center "
+                                        className="mt-5 flex justify-between items-center"
+
                                     >
-                                        {console.log(service, "sss")}
-                                        <div>
+                                        <div className="w-[90%]" onClick={() => [setOpenDrawer(true), setDrawerData(service)]}>
                                             <div>
                                                 <div
                                                     id={i}
@@ -405,6 +432,9 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                                     {service.name}
                                                 </div>
                                             </div>
+
+                                            {service?.isPackage && handleIsPackgeData(service.subServices)}
+
 
                                             <div>
                                                 <h3>{service.duration}</h3>
@@ -416,7 +446,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                                         </div>
 
                                         <div
-                                            onClick={() => { addService(service.name, service.duration, service.price), setTriggerUseEffect(!triggerUseEffect) }}
+                                            onClick={() => { addService(service), setTriggerUseEffect(!triggerUseEffect) }}
                                             className={`text-xl font-semibold border border-gray-300 ${selected.name?.includes(service.name)
                                                 ? "bg-[#6950f3]" : "bg-white"} rounded-lg px-3 py-1 pb-2`}
                                         >
@@ -435,6 +465,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             </div>
 
             <BookNowAndContinue toAppointmentPage={toAppointmentPage} />
+            <ServiceDetailsDrawer openDrawer={openDrawer} setOpenDrawer={setOpenDrawer} drawerData={drawerData} currencySymbol={currencySymbol} addService={addService} />
         </>
     );
 };

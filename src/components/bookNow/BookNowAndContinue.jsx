@@ -45,6 +45,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
             </div>}
 
 
+            {console.log(priceAndDuration, 'priceAndDuration')}
             {priceAndDuration?.price != 0 && priceAndDuration != undefined ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
@@ -52,7 +53,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
                         <div>
                             <h3 className="text-left font-semibold text-black">
                                 {/* writing code in `${}` will add space between currencySymbol and price */}
-                                {priceAndDuration?.price.includes(currencySymbol) ? priceAndDuration?.price : `${currencySymbol} ${priceAndDuration?.price}`}
+                                {priceAndDuration?.price?.includes(currencySymbol) ? priceAndDuration?.price : `${currencySymbol} ${priceAndDuration?.price}`}
 
 
                             </h3>
