@@ -1,9 +1,9 @@
 import React, { useContext, useMemo, useState } from "react";
 import { useMatches, useNavigate } from "react-router-dom";
 import Carousel from "react-multi-carousel";
-import { StarFilled } from "@ant-design/icons";
+import { CloseOutlined, StarFilled } from "@ant-design/icons";
 import BreadCrumbs from "../../components/breadCrumbs/BreadCrumbs";
-import { Tabs } from "antd";
+import { Drawer, Tabs } from "antd";
 import CarouselComp from "../../components/carousel/CarouselComp";
 import SubCategories from "../../components/subCategories/SubCategories";
 import { carouselResponsiveCode } from "../../ownModules/responsive/responsive";
@@ -14,12 +14,17 @@ import { useEffect } from "react";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { salonDataZustandStore } from "../../zustandStore";
 import servicesOfSpecialist from "../../ownModules/specialistServices/SpecialistServices";
+import { handlePriceAndDuration } from "../../ownModules/others/handlePriceAndDuration";
 
 const ActualSalon = () => {
 
   let globalSalons = getGlobalSalons()
 
   const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [drawerData, setDrawerData] = useState()
+  const [placement] = useState("");
 
   useEffect(() => {
     // setSalonDataZustand(getSalonDataForZustand)
@@ -80,10 +85,17 @@ const ActualSalon = () => {
   let getServicesCapital = serviceCapitalized()
 
   function getcurrencySymbol() {
-    // just to get currencySymbol
-    let getPrice = theSalon[0].serviceNameAndPrice[0].price
-    let getCurrency = getPrice?.includes("OMR") ? "OMR" : getPrice?.includes("PKR") ? "PKR" : getPrice?.includes("AED") ? "AED" : ""
+    let getPrice
 
+    // find a price and just return it, to takeout currency symbol from it
+    for (let item of theSalon[0].serviceNameAndPrice) {
+      if (item.price != undefined) {
+        getPrice = item.price
+        break
+      }
+    }
+
+    let getCurrency = getPrice?.includes("OMR") ? "OMR" : getPrice?.includes("PKR") ? "PKR" : getPrice?.includes("AED") ? "AED" : ""
     return getCurrency
   }
 
@@ -121,12 +133,43 @@ const ActualSalon = () => {
     setSalonDataZustand((prevState) => ({ ...prevState, priceAndDuration: serviceInCartArr, selectedServices: serviceInCartObj }));
   }
 
+  // Drawer Stuff
+
+  const onClose = () => {
+    setOpenDrawer(false);
+  };
+
+  const showDrawer = () => {
+    setOpenDrawer(true);
+  };
+
+
   const handleIsPackgeData = (subServices) => {
-    console.log(subServices, "SS")
+    let subServicesPriceAndDuration = handlePriceAndDuration(subServices, currencySymbol)
+    const { price, duration } = subServicesPriceAndDuration
 
-    
+    return (
+      <>
+        <div className="flex gap-2 items-center">
+          <div>
+            <h3>{duration} mins</h3>
+          </div>
+          <div>
+            -
+          </div>
+          <div>
+            <h3>{subServices.length} services</h3>
+          </div>
+        </div>
+        <div className="mt-2">
+          <h3>
+            {currencySymbol} {price}
+          </h3>
+        </div>
+      </>
+    )
+  };
 
-  }
 
   Object.entries(servicesWithoutUnderscore).forEach((item, index) => {
     tabItems.push({
@@ -135,7 +178,7 @@ const ActualSalon = () => {
       children: (
         <>
           {item[1].map((service, index) => (
-            <div key={index} className="mt-5 flex justify-between items-center" >
+            <div key={index} className="mt-5 flex justify-between items-center" onClick={() => [showDrawer(), setDrawerData(service)]}>
               <div
               >
                 <div>
@@ -215,7 +258,7 @@ const ActualSalon = () => {
     selectedServices: serviceInCartObj,
   }
 
-  console.log(salonDataZustand, "salonData in actual")
+  console.log(drawerData, "drawerData")
 
   return (
     <>
@@ -479,6 +522,64 @@ const ActualSalon = () => {
         </div>}
 
       </div>
+
+
+
+      <Drawer
+        title={
+          <div className="flex justify-between items-center">
+            <div className="w-[74px]">
+            </div>
+            <div onClick={() => onClose()} className="pt-1">
+              <CloseOutlined className="text-lg" />
+            </div>
+          </div>
+        }
+        placement={"bottom"}
+        closable={false}
+        onClose={onClose}
+        open={openDrawer}
+        key={placement}
+        className='professional-per-service-drawer'
+      >
+        <div>
+          <div>
+            <h2>
+              {drawerData?.name}
+            </h2>
+          </div>
+          <div className="mt-6 text-base">
+            <h3>
+              {drawerData?.duration + "s"}
+            </h3>
+          </div>
+          <div className="text-base text-black font-semibold">
+            <h3>
+              {drawerData?.price}
+            </h3>
+          </div>
+
+          <div
+            className="fixed flex justify-between items-center px-5 mt-10 py-5 bottom-0 w-[100%] left-0 text-center bg-white"
+          >
+            <div onClick={() => {
+              showClickedServiceInBookingService(drawerData.name, drawerData.price, drawerData.duration), navigate(`/dynamic-category/${categoryName}/${cityName}/${salonName}/bookingService`, {
+                state: {
+                  servicesWithoutUnderscore,
+                  serviceInCart: {
+                    name: drawerData.name,
+                    duration: drawerData.duration,
+                    price: drawerData.price,
+                  },
+                  currencySymbol,
+                }
+              })
+            }} className="text-lg  text-white bg-black font-semibold rounded-lg w-full px-4 py-[10px] ">
+              Add to booking
+            </div>
+          </div>
+        </div>
+      </Drawer>
     </>
   );
 };

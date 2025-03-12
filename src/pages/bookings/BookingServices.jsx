@@ -6,6 +6,7 @@ import { useCallback } from "react";
 import getGlobalSalons from "../../data/salondata/global/globalSalonData";
 import BookNowAndContinue from "../../components/bookNow/BookNowAndContinue";
 import { salonDataZustandStore } from "../../zustandStore";
+import { handlePriceAndDuration } from "../../ownModules/others/handlePriceAndDuration";
 
 const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffect, setTriggerUseEffect = function () { } }) => {
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
@@ -307,7 +308,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             selectedServices = getPresistedItems
         }
 
-        priceAndDuration = handlePriceAndDuration(selectedServices)
+        priceAndDuration = handlePriceAndDuration(selectedServices, currencySymbol)
 
         console.log(selectedServices, 'selectedServices')
         console.log(priceAndDuration, 'priceAndDuration')
@@ -322,51 +323,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             return checkItem;
         }
     };
-
-    const handlePriceAndDuration = (selectedServices) => {
-        const replacements = (serviceVal, replacingVal) => {
-
-            let valReplaced = serviceVal.map((item) => {
-                // let replacingSymbol = item?.replace(${replacingVal}, "");
-                // let replacingComa;
-                // replacingSymbol && (replacingComa = replacingSymbol.replace(",", ""));
-                // return replacingComa
-
-
-                return item?.replace(`${replacingVal}`, "").replace(",", "")
-        
-            });
-
-            valReplaced.length > 1 &&
-                (valReplaced = valReplaced.reduce(
-                    (accu, currentVal) => Number(accu) + Number(currentVal)
-                ));
-
-            let minsText = replacingVal == "min" ? " mins" : "";
-            let valWithText = valReplaced + minsText;
-
-            return valWithText;
-        };
-
-        const passingArgsToReplacements = () => {
-            let min = "min";
-
-            let getPrice = selectedServices.map((item) => item?.price);
-            let getDuration = selectedServices.map((item) => item?.duration);
-
-            let price = replacements(getPrice, currencySymbol);
-            let serviceDuration = replacements(getDuration, min);
-
-            let result = {
-                price: price,
-                duration: serviceDuration,
-            };
-
-            return result;
-        };
-
-        return passingArgsToReplacements();
-    };
 
     return (
         <>
