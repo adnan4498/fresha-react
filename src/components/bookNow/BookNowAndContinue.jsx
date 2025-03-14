@@ -6,7 +6,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
 
     const salonDataZustand = salonDataZustandStore((state) => state.salonDataZustand)
 
-    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
+    const { categoryName, cityName, currencySymbol, salonName, salonServicesLength, selectedServices, servicesWithoutUnderscore, professionalsList, priceAndDuration } = salonDataZustand
 
     const navigate = useNavigate()
     const serviceInCart = []
@@ -45,8 +45,9 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
             </div>}
 
 
-            {console.log(priceAndDuration, 'priceAndDuration')}
-            {priceAndDuration?.price != 0 && priceAndDuration != undefined ? (
+            {/* {console.log(priceAndDuration, 'priceAndDuration')} */}
+            {/* {priceAndDuration?.price != 0 && priceAndDuration != undefined ? ( */}
+            {selectedServices.length != 0 ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">
