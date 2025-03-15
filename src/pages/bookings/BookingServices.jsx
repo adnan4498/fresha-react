@@ -293,6 +293,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
                 }
             })
 
+            console.log(servsAndSubServs, "selectedServices in if")
+
             setSalonDataZustand(prev => ({
                 ...prev,
                 selectedServices,
@@ -327,6 +329,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         }
     };
 
+    console.log(salonDataZustand?.selectedServices, "salonDataZustand.selectedServices")
+    console.log(selected, "selected")
 
     // function addService(service) {
 
@@ -393,7 +397,6 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     // };
 
-    console.log(selected, "selected")
 
 
     // const addService = (service) => {
