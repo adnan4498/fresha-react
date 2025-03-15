@@ -271,133 +271,129 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     }
 
 
-    function addService(service) {
+    const addService = (service) => {
+        const { name, duration, price, subServices } = service;
+        const isDuplicate = salonDataZustand.selectedServices?.some(item => item?.name === name);
 
-        let { name, duration, price, subServices } = service
+        if (subServices) {
 
-        if (subServices == undefined) {
-            let selectedServices
-            let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
+            const selectedServices = isDuplicate
+                ? salonDataZustand.selectedServices.filter(item => item?.name !== name)
+                : [...(salonDataZustand.selectedServices || []), { name, price, duration, subServices }];
 
-            if (!findDup) {
-                let serviceDetailsObj = { name: name, price: price, duration: duration }
+            setSelected(prev => isDuplicate ? prev.filter(item => item.name !== name) : [...prev, { name, price, duration, subServices }]);
 
-                setSelected((oldState) => [...oldState, serviceDetailsObj]);
+            let servsAndSubServs = []
+            selectedServices.forEach((item) => {
+                if (item.subServices) {
+                    servsAndSubServs.push(...item.subServices)
+                }
+                else {
+                    servsAndSubServs.push(item)
+                }
+            })
 
-                selectedServices = salonDataZustand.selectedServices != undefined ?
-                    [...salonDataZustand.selectedServices, serviceDetailsObj]
-                    : [serviceDetailsObj]
+            setSalonDataZustand(prev => ({
+                ...prev,
+                selectedServices,
+                priceAndDuration: handlePriceAndDuration(servsAndSubServs, currencySymbol),
+            }));
 
-            } else {
-                selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
-            }
-
-            let takeOutServices = selectedServices.filter(item => !item.subServices)
-            let getSubService = selectedServices.filter(item => item.subServices)
-
-            console.log(takeOutServices, "take out services")
-
-            let gg = []
-
-            if(getSubService != undefined && getSubService.length != 0){
-                console.log(...getSubService[0], "getSubService")   
-                gg = [...takeOutServices, ...getSubService[0]]
-            }
-            else{
-                gg = [...takeOutServices]
-            }
-
-            console.log(gg, "gg in if")
-
-            let priceAndDuration = handlePriceAndDuration(gg, currencySymbol)
-            setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
         }
         else {
-            console.log(subServices, "in else")
-            
-            let selectedServices
-            let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
+            const selectedServices = isDuplicate
+                ? salonDataZustand.selectedServices.filter(item => item?.name !== name)
+                : [...(salonDataZustand.selectedServices || []), { name, price, duration }];
 
-            if (!findDup) {
-                let subServicesDetailsObj = { name: name, price: price, duration: duration, subServices }
+            setSelected(prev => isDuplicate ? prev.filter(item => item.name !== name) : [...prev, { name, price, duration }]);
 
-                setSelected((oldState) => [...oldState, subServicesDetailsObj]);
-                selectedServices = salonDataZustand.selectedServices != undefined ?
-                    [...salonDataZustand.selectedServices, subServicesDetailsObj]
-                    : [subServicesDetailsObj]
+            let servsAndSubServs = []
+            selectedServices.forEach((item) => {
+                if (item.subServices) {
+                    servsAndSubServs.push(...item.subServices)
+                }
+                else {
+                    servsAndSubServs.push(item)
+                }
+            })
 
-            } else {
-                // remove service
-                selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
-            }
+            console.log(servsAndSubServs, "selectedServices in else")
 
-
-            let takeOutServices = selectedServices.filter(item => !item.subServices)
-            console.log(takeOutServices, "take out services")
-            console.log(subServices, "subServices")
-            let gg = [...takeOutServices, ...subServices]
-
-            console.log(gg, "gg in else")
-
-            let priceAndDuration = handlePriceAndDuration(gg, currencySymbol)
-
-            console.log(priceAndDuration, "PAD")
-            setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
-
+            setSalonDataZustand(prev => ({
+                ...prev,
+                selectedServices,
+                priceAndDuration: handlePriceAndDuration(servsAndSubServs, currencySymbol),
+            }));
         }
-
     };
 
 
-    // if (subServices == undefined) {
+    // function addService(service) {
 
-    //     console.log(subServices, "in if")
+    //     let { name, duration, price, subServices } = service
 
-    //     let selectedServices
-    //     let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
+    //     if (subServices == undefined) {
+    //         let selectedServices
+    //         let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
 
-    //     if (!findDup) {
-    //         let serviceDetailsObj = { name: name, price: price, duration: duration }
+    //         if (!findDup) {
+    //             let serviceDetailsObj = { name: name, price: price, duration: duration }
 
-    //         setSelected((oldState) => [...oldState, serviceDetailsObj]);
-    //         selectedServices = salonDataZustand.selectedServices != undefined ?
-    //             [...salonDataZustand.selectedServices, serviceDetailsObj]
-    //             : [serviceDetailsObj]
+    //             setSelected((oldState) => [...oldState, serviceDetailsObj]);
 
-    //     } else {
-    //         // remove service
-    //         selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
+    //             selectedServices = salonDataZustand.selectedServices != undefined ?
+    //                 [...salonDataZustand.selectedServices, serviceDetailsObj]
+    //                 : [serviceDetailsObj]
+
+    //         } else {
+    //             selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
+    //         }
+
+    //         let takeOutServices = selectedServices.filter(item => !item.subServices)
+    //         let getSubService = selectedServices.filter(item => item.subServices)
+
+    //         let gg = []
+
+    //         if(getSubService != undefined && getSubService.length != 0){
+    //             console.log(getSubService[0].subServices, "getSubService")   
+    //             gg = [...takeOutServices, ...getSubService[0].subServices]
+    //         }
+    //         else{
+    //             gg = [...takeOutServices]
+    //         }
+
+    //         let priceAndDuration = handlePriceAndDuration(gg, currencySymbol)
+    //         setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
+    //     }
+    //     else {
+
+    //         let selectedServices
+    //         let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
+
+    //         if (!findDup) {
+    //             let subServicesDetailsObj = { name: name, price: price, duration: duration, subServices }
+
+    //             setSelected((oldState) => [...oldState, subServicesDetailsObj]);
+    //             selectedServices = salonDataZustand.selectedServices != undefined ?
+    //                 [...salonDataZustand.selectedServices, subServicesDetailsObj]
+    //                 : [subServicesDetailsObj]
+
+    //         } else {
+    //             selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
+    //         }
+
+    //         let takeOutServices = selectedServices.filter(item => !item.subServices)
+    //         let gg = [...takeOutServices, ...subServices]
+
+    //         let priceAndDuration = handlePriceAndDuration(gg, currencySymbol)
+
+    //         setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
+
     //     }
 
-    //     let priceAndDuration = handlePriceAndDuration(selectedServices, currencySymbol)
-    //     setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices, priceAndDuration: priceAndDuration }));
+    // };
 
-    // }
-    // else{
-    //     console.log(subServices, "in else")
-    //     let selectedServices
-    //     let findDup = salonDataZustand.selectedServices?.some((item) => item?.name == name);
-
-    //     if (!findDup) {
-    //         let subServicesDetailsObj = { name: name, price: price, duration: duration }
-
-    //         setSelected((oldState) => [...oldState, subServicesDetailsObj]);
-    //         selectedServices = salonDataZustand.selectedServices != undefined ?
-    //             [...salonDataZustand.selectedServices, subServicesDetailsObj]
-    //             : [subServicesDetailsObj]
-
-    //     } else {
-    //         // remove service
-    //         selectedServices = salonDataZustand.selectedServices.filter((item) => item?.name != name);
-    //     }
-
-    //     let priceAndDuration = handlePriceAndDuration(subServices, currencySymbol)
-
-    //     // console.log(priceAndDuration, "PAD")
-    //     setSalonDataZustand((prevState) => ({ ...prevState, selectedServices: selectedServices[0], priceAndDuration: priceAndDuration }));
-
-    // }
-
+    console.log(selected, "selected")
 
 
     // const addService = (service) => {
@@ -417,7 +413,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
     //     }));
     // };
 
-    
+
     // matches selectedService with serviceName and ticks it
     const tickMark = (serviceName) => {
         return salonDataZustand?.selectedServices?.some(item => item?.name === serviceName);
