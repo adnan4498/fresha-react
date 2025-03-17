@@ -314,8 +314,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             let servsAndSubServs = []
 
             let subServicesUpdated = subServices.map(item => ({...item, packageName : name}))
-
-            // console.log(subServicesUpdated, "SSU") 
+   
+            // console.log(subServicesUpdated, "SSU")   
 
             if(selectedServices[0]?.subServices) { selectedServices[0].subServices = subServicesUpdated }
   
