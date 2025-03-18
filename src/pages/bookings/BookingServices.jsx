@@ -319,8 +319,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             if(selectedServices[0]?.subServices) { selectedServices[0].subServices = subServicesUpdated }
   
-            console.log(selectedServices, "selectedServices")
-            console.log(subServicesUpdated, "ss")
+            console.log(selectedServices, "selectedServices")   
+            console.log(subServicesUpdated, "ss")  
 
             selectedServices.forEach((item) => {
                 if (item.subServices) {
