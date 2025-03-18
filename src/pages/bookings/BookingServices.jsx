@@ -129,7 +129,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
         for (let items of serviceNameDiv) {
             for (let item of items) {
-                for (let services of salonDataZustand?.selectedServices) {
+                // for (let services of salonDataZustand?.selectedServices) {
+                for (let services of selected) {
                     if (item?.textContent == services?.name) {
                         selectedServicesDivs.push(item);
                     }
@@ -149,6 +150,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
         };
 
         removeNodeDuplicates();
+
+        // console.log(selectedServicesDivs, "selectedServicesDivs")
 
         setSelectedServices(selectedServicesDivs);
 
@@ -273,17 +276,52 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     const addService = (service) => {
         const { name, duration, price, subServices } = service;
-        const isDuplicate = salonDataZustand.selectedServices?.some(item => item?.name === name);
+        const isDuplicate = selected?.some(item => item?.name === name);
 
         if (subServices) {
 
-            const selectedServices = isDuplicate
-                ? salonDataZustand.selectedServices.filter(item => item?.name !== name)
-                : [...(salonDataZustand.selectedServices || []), { name, price, duration, subServices }];
+            // const selectedServices = isDuplicate
+            //     ? salonDataZustand.selectedServices.filter(item => item?.name !== name)
+            //     : [...(salonDataZustand.selectedServices || []), { name, price, duration, subServices }];
+
+            let selectedServices = []
+
+            if (isDuplicate) {
+                
+                // let getAllServices = salonDataZustand?.selectedServices
+
+                // for (let i = 0; i < subServices.length; i++) {
+                //     for (let j = 0; j < getAllServices.length; j++) {
+                //         subServices[i].name.includes(getAllServices[j].name) && getAllServices.splice(j, 1)
+                //     }
+                // }
+
+                // selectedServices = getAllServices
+
+
+
+
+
+            }
+            else{
+                selectedServices = [...(salonDataZustand.selectedServices || []), { name, price, duration, subServices }];
+            }
+
+            // console.log(selectedServices, "selectedServicessss")
 
             setSelected(prev => isDuplicate ? prev.filter(item => item.name !== name) : [...prev, { name, price, duration, subServices }]);
 
-            let servsAndSubServs = []
+            let servsAndSubServs = []  
+
+            let subServicesUpdated = subServices.map(item => ({...item, packageName : name}))
+
+            // console.log(subServicesUpdated, "SSU")   
+
+            if(selectedServices[0]?.subServices) { selectedServices[0].subServices = subServicesUpdated }
+
+            console.log(selectedServices, "selectedServices")
+            console.log(subServicesUpdated, "ss")
+
             selectedServices.forEach((item) => {
                 if (item.subServices) {
                     servsAndSubServs.push(...item.subServices)
@@ -297,7 +335,7 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             setSalonDataZustand(prev => ({
                 ...prev,
-                selectedServices,
+                selectedServices: servsAndSubServs,
                 priceAndDuration: handlePriceAndDuration(servsAndSubServs, currencySymbol),
             }));
 
@@ -328,6 +366,18 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
             }));
         }
     };
+
+
+    // let arr1 = ["a", "b", "c"]
+    // let arr2 = ["a", "b", "b", "c", "d"]
+
+    // for(let i = 0; i < arr1.length; i++){
+    //     for(let j = 0; j < arr2.length; j++){
+    //         arr1[i].includes(arr2[j]) && arr2.splice(j, 1)
+    //     }
+    // }
+
+    // console.log(arr2, "arr2")
 
     console.log(salonDataZustand?.selectedServices, "salonDataZustand.selectedServices")
     console.log(selected, "selected")
@@ -419,7 +469,8 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
     // matches selectedService with serviceName and ticks it
     const tickMark = (serviceName) => {
-        return salonDataZustand?.selectedServices?.some(item => item?.name === serviceName);
+        // return salonDataZustand?.selectedServices?.some(item => item?.name === serviceName);
+        return selected?.some(item => item?.name === serviceName);
     }
 
     const handleIsPackgeData = (subServices) => {
