@@ -311,14 +311,14 @@ const BookingServices = ({ specialistServices, toAppointmentPage, triggerUseEffe
 
             setSelected(prev => isDuplicate ? prev.filter(item => item.name !== name) : [...prev, { name, price, duration, subServices }]);
 
-            let servsAndSubServs = []  
+            let servsAndSubServs = []
 
             let subServicesUpdated = subServices.map(item => ({...item, packageName : name}))
 
-            // console.log(subServicesUpdated, "SSU")   
+            // console.log(subServicesUpdated, "SSU") 
 
             if(selectedServices[0]?.subServices) { selectedServices[0].subServices = subServicesUpdated }
-
+  
             console.log(selectedServices, "selectedServices")
             console.log(subServicesUpdated, "ss")
 
