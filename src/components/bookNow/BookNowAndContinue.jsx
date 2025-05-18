@@ -16,7 +16,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
 
     if (toAppointmentPage) {
         dynamicUrl = "bookingService/professionalWithService/makeAppointment"
-    }
+    } 
     else if (is_dynamic_url_professional_per_service) {
         dynamicUrl = "bookingService/selectProfessional/professionalPerService/makeAppointment"
     }
@@ -47,7 +47,7 @@ const BookNowAndContinue = ({ props, showBookNowBtn = false, toAppointmentPage =
 
             {/* {console.log(priceAndDuration, 'priceAndDuration')} */}
             {/* {priceAndDuration?.price != 0 && priceAndDuration != undefined ? ( */}
-            {selectedServices.length != 0 ? (
+            {selectedServices?.length != 0 ? (
 
                 <div className="fixed flex justify-between px-5 mt-10 py-5 bottom-0 w-[100%] left-0 border-t border-gray-400 text-center bg-white">
                     <div className="">
