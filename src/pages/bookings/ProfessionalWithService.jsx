@@ -15,8 +15,6 @@ const ProfessionalWithService = () => {
     const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
 
     let { servicesWithoutUnderscore, professionalsList, selectedServices } = salonDataZustand
-    console.log(salonDataZustand, "gggggg")
-
 
     professionalsList = professionalsList[0]
 

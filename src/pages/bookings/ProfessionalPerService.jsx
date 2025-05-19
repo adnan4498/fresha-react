@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { salonDataZustandStore } from '../../zustandStore';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import BookNowAndContinue from '../../components/bookNow/BookNowAndContinue';
-import { handleDrawerData, handleSelectingSpecialistInDrawer, printSpecialistNameInDropwDown } from '../../ownModules/drawerModules/drawerDataModules';
+import { handleDrawerData, printSpecialistNameInDropwDown } from '../../ownModules/drawerModules/drawerDataModules';
 import ProfessionalSelectingDrawer from '../../ownModules/drawerModules/DrawerOfProfessionals';
 
 const ProfessionalPerService = () => {
