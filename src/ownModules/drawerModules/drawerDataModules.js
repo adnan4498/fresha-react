@@ -29,13 +29,13 @@ export const handleSelectingSpecialistInDrawer = function (
   );
 
 
-  console.log(salonDataZustand?.selectedSpecialists, "salonDataZustand.selectedSpecialists")
   console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
-
-
+  
+  
   selectedSpecialistArr = selectedSpecialistArr.map((items, i, arr) => {
-
+    
     console.log(arr, "arr")
+    console.log(salonDataZustand, "salonDataZustand.selectedSpecialists")
 
     // for multiple specialists
     if (items.specialistIndex == indexState) {
@@ -45,9 +45,9 @@ export const handleSelectingSpecialistInDrawer = function (
       };
     } 
     // for single specialist
-    else if(indexState == i){
-      return getClickedSpecialist[0]
-    }
+    // else if(indexState == i){
+    //   return getClickedSpecialist[0]
+    // }
     else {
       return items;
     }
@@ -71,15 +71,16 @@ export const printSpecialistNameInDropwDown = function (
 ) {
 
   for (let i = 0; i < selectedSpecialists.length; i++) {
+
     if (selectedSpecialists[i].specialistIndex == index) {
       // for multiple Specialists
       return selectedSpecialists[i].specialistItems.memberDetails.memberName;
     }
     
-    if (selectedSpecialists[i].specialistIndex == undefined) {
-      // for single Specialists
-      return selectedSpecialists[i].memberName;
-    }
+    // if (selectedSpecialists[i].specialistIndex == undefined) {
+    //   // for single Specialists
+    //   return selectedSpecialists[i].memberName;
+    // }
 
   }
 };

@@ -28,6 +28,7 @@ const ProfessionalPerService = () => {
     // populating selectedSpecialist arr against services length. default value is Any Professional
     useEffect(() => {
         // no selectedSpecialists by user ? populate it with default value
+        console.log(selectedSpecialists, "selectedSpecialists useEffect")
         if (selectedSpecialists?.length == 0) {
             let specialists_obj_against_services_length = []
 
@@ -38,8 +39,8 @@ const ProfessionalPerService = () => {
             // setSalonDataZustand((store) => ({ ...store, salonDataZustand: { ...store.salonDataZustand, selectedSpecialists: specialists_obj_against_services_length  }, }))
 
             setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: specialists_obj_against_services_length}));
-
         }
+                
     }, [])
 
     const getImgPaths = () => {
@@ -71,7 +72,6 @@ const ProfessionalPerService = () => {
         setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
     }
 
-    console.log(salonDataZustand, "zsss")
 
     return (
         <div className='mb-28'>
