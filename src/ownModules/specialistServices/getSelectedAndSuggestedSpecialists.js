@@ -61,7 +61,8 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
   let specialists_obj_against_services_length = [];
   for (let i = 0; i < selectedServices.length; i++) {
     specialists_obj_against_services_length.push({
-      specialistItems: { memberDetails: { memberName: `Any Professional` } },
+      // specialistItems: { memberDetails: { memberName: `Any Professional` } },
+      specialistItems: { memberDetails: { memberName: getSpecialist[0]?.memberName || "Any Professional" } },
       specialistIndex: i,
       serviceName: selectedServices[i].name,
     });
@@ -72,15 +73,6 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
     selectedSpecialists: specialists_obj_against_services_length,
     suggestedSpecialists: getSuggestedSpecialists,
   };
-
-  console.log(addSpecialistsToStorage, "addSpecialistsToStorage");
-  console.log(getSpecialist, "getSpecialist");
-  console.log(selectedServices, "selectedServices");
-
-  console.log(
-    specialists_obj_against_services_length,
-    "specialists_obj_against_services_length"
-  );
 
   return addSpecialistsToStorage;
 };

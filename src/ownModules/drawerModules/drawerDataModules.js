@@ -28,14 +28,7 @@ export const handleSelectingSpecialistInDrawer = function (
     (spe) => spe.memberName.includes(item.memberName)
   );
 
-
-  console.log(selectedSpecialistInDrawer, "selectedSpecialistInDrawer")
-  
-  
   selectedSpecialistArr = selectedSpecialistArr.map((items, i, arr) => {
-    
-    console.log(arr, "arr")
-    console.log(salonDataZustand, "salonDataZustand.selectedSpecialists")
 
     // for multiple specialists
     if (items.specialistIndex == indexState) {
