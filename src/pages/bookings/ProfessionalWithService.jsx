@@ -27,7 +27,8 @@ const ProfessionalWithService = () => {
       selectedServices,
       servicesWithoutUnderscore,
       specialist,
-      salonDataZustand
+      salonDataZustand,
+      setSalonDataZustand
     };
     
     const get_selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);

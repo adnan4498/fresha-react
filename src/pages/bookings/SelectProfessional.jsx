@@ -70,8 +70,6 @@ const SelectProfessional = () => {
     // adds selected and suggested specialists to store
     const get_Selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
 
-    console.log(get_Selected_and_suggested_specialists, "get_Selected_and_suggested_specialists")
-
     let mergedArr = { ...get_Selected_and_suggested_specialists, professionalsOfServices: professionalsOfServices }
     setSalonDataZustand(mergedArr);
 
