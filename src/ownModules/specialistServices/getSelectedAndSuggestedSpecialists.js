@@ -1,13 +1,14 @@
 import { getSpecialistsOfService } from "./getSpecialistsOfService";
 
 export const getSelectedAndSuggestedSpecialists = (props) => {
+
   let professionalsList = props.professionalsList;
   let selectedServices = props.selectedServices;
   let servicesWithoutUnderscore = props.servicesWithoutUnderscore;
-  let specialistOfServices = props.specialist || props.professionalsOfServices;
+  let specialistOfServices = props.specialist || props.professionalsOfServices
 
   let salonDataZustand = props.salonDataZustand;
-
+  
   const gettingSelectedSpecialist = () => {
     const get_professionals_with_services_obj = getSpecialistsOfService(
       professionalsList,
@@ -16,9 +17,7 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
     );
 
     // const filterSpecialists = get_professionals_with_services_obj.filter(item => item.memberName == specialist.memberName)
-    const filterSpecialists = get_professionals_with_services_obj.filter(
-      (item) => item.memberName == specialistOfServices.memberName
-    );
+    const filterSpecialists = get_professionals_with_services_obj.filter((item) => item.memberName == specialistOfServices.memberName);
 
     return filterSpecialists;
   };
@@ -58,21 +57,10 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
 
   let getSuggestedSpecialists = gettingSuggestedSpecialists();
 
-  let specialists_obj_against_services_length = [];
-  for (let i = 0; i < selectedServices.length; i++) {
-    specialists_obj_against_services_length.push({
-      // specialistItems: { memberDetails: { memberName: `Any Professional` } },
-      specialistItems: { memberDetails: { memberName: getSpecialist[0]?.memberName || "Any Professional" } },
-      specialistIndex: i,
-      serviceName: selectedServices[i].name,
-    });
-  }
-
   let addSpecialistsToStorage = {
     ...salonDataZustand,
-    selectedSpecialists: specialists_obj_against_services_length,
+    selectedSpecialists: getSpecialist,
     suggestedSpecialists: getSuggestedSpecialists,
   };
-
   return addSpecialistsToStorage;
 };

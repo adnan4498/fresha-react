@@ -58,29 +58,45 @@ const MakeAppointment = () => {
     return getImgs;
   };
 
+
+
   let getSpecialistsImgs = handleSpecialistsImgs();
 
-  let selectedSpecialistsNames = selectedSpecialists.map(
-    (item) => item.specialistItems.memberDetails.memberName
-  );
+      console.log(selectedSpecialists, "selectedSpecialists")
 
-  selectedSpecialistsNames = removingDuplicates(selectedSpecialistsNames);
+  // get specialist name and img with duplicates removed
+  let handleSpecialistNamesAndImgs = () => {
+    let selectedSpecialistsNames = selectedSpecialists.map(
+      (item) => item.specialistItems.memberDetails.memberName
+    );
 
-  let getNameImg = []
+    selectedSpecialistsNames = removingDuplicates(selectedSpecialistsNames);
 
-  for(let i = 0; i < selectedSpecialistsNames.length; i++){
-    for(let j = 0; j < selectedSpecialists.length; j++){
-      if(selectedSpecialistsNames[i] == selectedSpecialists[j].specialistItems.memberDetails.memberName){
-        getNameImg.push({name : selectedSpecialistsNames[i], image : selectedSpecialists[j].specialistItems.memberDetails.memberImg})
-        break;
+    let getNameImg = [];
+
+    for (let i = 0; i < selectedSpecialistsNames.length; i++) {
+      for (let j = 0; j < selectedSpecialists.length; j++) {
+        if ( selectedSpecialistsNames[i] == selectedSpecialists[j].specialistItems.memberDetails.memberName) {
+          getNameImg.push({
+            name: selectedSpecialistsNames[i],
+            image:selectedSpecialists[j].specialistItems.memberDetails?.memberImg?.slice(18),
+          });
+          break;
+        }
       }
     }
-  }
 
-  console.log(selectedSpecialists, "selectedSpecialists")
-  console.log(selectedSpecialistsNames, "selectedSpecialistsNames")
-  console.log(getNameImg, "getNameImg")
-  
+    return getNameImg
+  };
+
+  let specialistNameAndImg = handleSpecialistNamesAndImgs()
+
+  // console.log(selectedSpecialists, "selectedSpecialists")
+  // console.log(selectedSpecialistsNames, "selectedSpecialistsNames")
+  // console.log(specialistNameAndImg, "specialistNameAndImg");
+
+  console.log(specialistNameAndImg, "salonDataZustand");
+specialistNameAndImg
   let drawerProps = {
     onClose: onClose2,
     openDrawer: openDrawer2,
@@ -94,21 +110,6 @@ const MakeAppointment = () => {
     selectedSpecialistInDrawer: selectedSpecialistInDrawer,
     setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
   };
-
-  // console.log(salonDataZustand, "salonDataZustand")
-  // console.log(selectedServices, "selectedServices")
-  // console.log(selectedSpecialists, "selectedSpecialists")
-
-  // const [selectedHeading, setSelectedHeading] = useState()
-
-  // const handleSelectedHeading = () => {
-  //   if(selectedServices.length == 1 ){
-  //     setSelectedHeading(selectedSpecialists[0])
-  //   }
-  //   else{
-  //     if()
-  //   }
-  // }
 
   return (
     <div className="mb-28">
@@ -125,10 +126,10 @@ const MakeAppointment = () => {
             >
               <div className="flex items-center gap-2">
                 <div className="flex">
-                  {getSpecialistsImgs?.map((item, i) => (
+                  {specialistNameAndImg?.map((item, i) => (
                     <div className="w-7 h-7 -ml-3 border-[2px] border-white rounded-full">
                       <img
-                        src={item}
+                        src={item.image}
                         className="rounded-full w-full h-full object-cover"
                       />
                     </div>
