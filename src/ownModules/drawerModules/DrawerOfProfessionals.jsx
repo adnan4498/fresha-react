@@ -5,7 +5,8 @@ import { handleSelectingSpecialistInDrawer, printSpecialistNameInDropwDown } fro
 
 const DrawerOfProfessionals = ({ drawerProps }) => {
 
-    let { drawerData, openDrawer, setOpenDrawer, onClose, indexState, selectedSpecialists, imgPaths, selectedSpecialistInDrawer, setSelectedSpecialistInDrawer, salonDataZustand, setSalonDataZustand } = drawerProps
+    // let { drawerData, openDrawer, setOpenDrawer, onClose, indexState, selectedSpecialists, imgPaths, selectedSpecialistInDrawer, setSelectedSpecialistInDrawer, salonDataZustand, setSalonDataZustand } = drawerProps
+    let { drawerData, openDrawer, setOpenDrawer, onClose, indexState, selectedSpecialists, imgPaths, salonDataZustand, setSalonDataZustand } = drawerProps
 
     const [placement] = useState("left");
 
@@ -42,7 +43,8 @@ const DrawerOfProfessionals = ({ drawerProps }) => {
                     {drawerData?.map((item, i) => (
                         <div
                             key={i}
-                            onClick={() => handleSelectingSpecialistInDrawer(item, selectedSpecialistInDrawer, setSelectedSpecialistInDrawer, salonDataZustand, setSalonDataZustand, indexState, setOpenDrawer)}
+                            // onClick={() => handleSelectingSpecialistInDrawer(item, selectedSpecialistInDrawer, setSelectedSpecialistInDrawer, salonDataZustand, setSalonDataZustand, indexState, setOpenDrawer)}
+                            onClick={() => handleSelectingSpecialistInDrawer(item, salonDataZustand, setSalonDataZustand, indexState, setOpenDrawer)}
                             className={`border-[1px] ${printSpecialistNameInDropwDown(indexState, selectedSpecialists) == item.memberName ? "border-blue-500" : "border-gray-500"
                                 } rounded-lg py-4 h-48 flex flex-col justify-center items-center gap-4`}
                         >

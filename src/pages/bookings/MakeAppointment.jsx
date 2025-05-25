@@ -20,8 +20,7 @@ const MakeAppointment = () => {
   professionalsList = professionalsList[0];
 
   const [drawerData, setDrawerData] = useState();
-  const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] =
-    useState();
+  const [selectedSpecialistInDrawer, setSelectedSpecialistInDrawer] = useState();
   const [indexState, setIndexState] = useState();
   const [openDrawer1, setOpenDrawer1] = useState(false);
   const [openDrawer2, setOpenDrawer2] = useState(false);
@@ -58,11 +57,9 @@ const MakeAppointment = () => {
     return getImgs;
   };
 
-
-
   let getSpecialistsImgs = handleSpecialistsImgs();
 
-      console.log(selectedSpecialists, "selectedSpecialists")
+  console.log(selectedSpecialists, "selectedSpecialists");
 
   // get specialist name and img with duplicates removed
   let handleSpecialistNamesAndImgs = () => {
@@ -76,27 +73,33 @@ const MakeAppointment = () => {
 
     for (let i = 0; i < selectedSpecialistsNames.length; i++) {
       for (let j = 0; j < selectedSpecialists.length; j++) {
-        if ( selectedSpecialistsNames[i] == selectedSpecialists[j].specialistItems.memberDetails.memberName) {
+        if (
+          selectedSpecialistsNames[i] ==
+          selectedSpecialists[j].specialistItems.memberDetails.memberName
+        ) {
           getNameImg.push({
             name: selectedSpecialistsNames[i],
-            image:selectedSpecialists[j].specialistItems.memberDetails?.memberImg?.slice(18),
+            image:
+              selectedSpecialists[
+                j
+              ].specialistItems.memberDetails?.memberImg?.slice(18),
           });
           break;
         }
       }
     }
 
-    return getNameImg
+    return getNameImg;
   };
 
-  let specialistNameAndImg = handleSpecialistNamesAndImgs()
+  let specialistNameAndImg = handleSpecialistNamesAndImgs();
 
   // console.log(selectedSpecialists, "selectedSpecialists")
   // console.log(selectedSpecialistsNames, "selectedSpecialistsNames")
   // console.log(specialistNameAndImg, "specialistNameAndImg");
 
   console.log(specialistNameAndImg, "salonDataZustand");
-specialistNameAndImg
+
   let drawerProps = {
     onClose: onClose2,
     openDrawer: openDrawer2,
@@ -107,8 +110,8 @@ specialistNameAndImg
     imgPaths: getSpecialistsImgs,
     salonDataZustand: salonDataZustand,
     setSalonDataZustand: setSalonDataZustand,
-    selectedSpecialistInDrawer: selectedSpecialistInDrawer,
-    setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
+    // selectedSpecialistInDrawer: selectedSpecialistInDrawer,
+    // setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
   };
 
   return (

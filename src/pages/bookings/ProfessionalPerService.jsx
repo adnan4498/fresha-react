@@ -68,16 +68,17 @@ const ProfessionalPerService = () => {
         imgPaths: imgPaths,
         salonDataZustand: salonDataZustand,
         setSalonDataZustand: setSalonDataZustand,
-        selectedSpecialistInDrawer: selectedSpecialistInDrawer,
-        setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
+        // selectedSpecialistInDrawer: selectedSpecialistInDrawer,
+        // setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
     }
-
 
     return (
         <div className='mb-28'>
             <div>
                 <h2> Select professional</h2>
             </div>
+
+            {console.log(selectedSpecialistInDrawer, "outside")}
 
             <ProfessionalSelectingDrawer drawerProps={drawerProps} />
 
