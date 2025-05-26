@@ -107,7 +107,24 @@ const SelectProfessional = () => {
 
   const handleClickedSpecialist = (item, i) => {
     setClickedSpecialist(i)
-    setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [item] }))
+    // setSalonDataZustand((prevState) => ({ ...prevState, selectedSpecialists: [item] }))
+
+      let specialist = item
+
+        const propsObj = {
+          professionalsList,
+          selectedServices,
+          servicesWithoutUnderscore,
+          specialist,
+          salonDataZustand,
+          setSalonDataZustand,
+        //   selectedSpecialistInDrawer: selectedSpecialistInDrawer,
+        //   setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
+        };
+    
+        const get_selected_and_suggested_specialists = getSelectedAndSuggestedSpecialists(propsObj);
+        setSalonDataZustand(get_selected_and_suggested_specialists);
+
   }
 
   let toAppointmentPage = true

@@ -9,7 +9,6 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
   // const { salonDataZustand, setSalonDataZustand } = salonDataZustandStore((state) => state)
   let salonDataZustand = props.salonDataZustand;
   let setSalonDataZustand = props.setSalonDataZustand;
-  
 
   const gettingSelectedSpecialist = () => {
     const get_professionals_with_services_obj = getSpecialistsOfService(
@@ -61,7 +60,7 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
 
   let getSuggestedSpecialists = gettingSuggestedSpecialists();
 
-
+  console.log(getSpecialist, "hi 1");
 
   if (getSpecialist?.length != 0) {
     let specialists_obj_against_services_length = [];
@@ -69,7 +68,9 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
     for (let i = 0; i < selectedServices.length; i++) {
       specialists_obj_against_services_length.push({
         // specialistItems: { memberDetails: { memberName: `Any Professional` } },
-        specialistItems: { memberDetails: { memberName: getSpecialist?.memberName } },
+        specialistItems: {
+          memberDetails: { memberName: getSpecialist[0]?.memberName },
+        },
         specialistIndex: i,
         serviceName: selectedServices[i].name,
       });
@@ -81,10 +82,10 @@ export const getSelectedAndSuggestedSpecialists = (props) => {
       selectedSpecialists: specialists_obj_against_services_length,
     }));
 
-    getSpecialist = specialists_obj_against_services_length
+    getSpecialist = specialists_obj_against_services_length;
   }
 
-  console.log(getSpecialist, "hi");
+  console.log(getSpecialist, "hi 2");
 
   let addSpecialistsToStorage = {
     ...salonDataZustand,

@@ -96,9 +96,9 @@ const MakeAppointment = () => {
 
   // console.log(selectedSpecialists, "selectedSpecialists")
   // console.log(selectedSpecialistsNames, "selectedSpecialistsNames")
-  // console.log(specialistNameAndImg, "specialistNameAndImg");
+  console.log(specialistNameAndImg, "specialistNameAndImg");
 
-  console.log(specialistNameAndImg, "salonDataZustand");
+  console.log(selectedSpecialists, "selectedSpecialists");
 
   let drawerProps = {
     onClose: onClose2,
@@ -113,6 +113,22 @@ const MakeAppointment = () => {
     // selectedSpecialistInDrawer: selectedSpecialistInDrawer,
     // setSelectedSpecialistInDrawer: setSelectedSpecialistInDrawer,
   };
+
+  console.log(getSpecialistsImgs, "gggg")
+
+  let handleNameOnDrawer = (item) =>{
+    if(item.length > 1){
+      return "Multiple Professionals"
+    }
+    else{
+      if(item[0].name == "dummy"){
+        return "Any Professional"
+      }
+      else{
+        return item[0].name
+      }
+    }
+  }
 
   return (
     <div className="mb-28">
@@ -140,9 +156,14 @@ const MakeAppointment = () => {
                 </div>
 
                 <div className="font-semibold text-[14px]">
-                  {getSpecialistsImgs?.length > 1
+                  {/* {getSpecialistsImgs?.length > 1
                     ? "Multiple Professionals"
-                    : "Any Professional"}
+                    : "Any Professional"} */}
+                    {/* {specialistNameAndImg[0].name == "dummy" ? "Any Professional" : specialistNameAndImg[0].name == "dummy" ? } */}
+                    {/* {specialistNameAndImg.length > 1 && "Multiple Professionals"}
+                    {specialistNameAndImg[0].name == "dummy" ? "Any Professional" : specialistNameAndImg[0].name} */}
+
+                    {handleNameOnDrawer(specialistNameAndImg)}
                 </div>
               </div>
               <div className="text-xs pr-4">
