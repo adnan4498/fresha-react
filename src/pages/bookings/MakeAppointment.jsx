@@ -120,7 +120,7 @@ const MakeAppointment = () => {
     if(item.length > 1){
       return "Multiple Professionals"
     }
-    else{
+    else{ 
       if(item[0].name == "dummy"){
         return "Any Professional"
       }
